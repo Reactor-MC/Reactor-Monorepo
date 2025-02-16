@@ -1,0 +1,6 @@
+/target
+target
+.vscode
+.intellij
+
+data-parser/src/main/java/ink/reactor/dataparser/output

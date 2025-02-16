@@ -1,0 +1,27 @@
+import lombok.Getter;
+
+import java.util.Collection;
+import ink.reactor.dataparser.util.CopyOnWriteCollection;
+
+@Getter
+public final class ChatType {
+    public static final Collection<ChatType> ALL = new CopyOnWriteCollection<>({ALL_FIELD});
+
+    private static final String[] SENDER_CONTENT = new String[] {"sender", "content"};
+    private final Data chat, narration;
+    private final String name;
+
+    private ChatType(String name, int index, Data chat, Data narration) {
+        this.name = name;
+        this.chat = chat;
+        this.narration = narration;
+        ALL.add(this);
+    }
+
+    public static final record Data(
+        String[] parameters,
+        String translationKey
+    ){}
+
+    public static final ChatType {OBJECT_FIELD_TYPE};
+}

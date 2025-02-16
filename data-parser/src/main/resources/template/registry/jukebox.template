@@ -1,0 +1,28 @@
+import lombok.Getter;
+
+import java.util.Collection;
+import ink.reactor.dataparser.util.CopyOnWriteCollection;
+
+@Getter
+public final class JukeboxSong {
+
+    public static final Collection<JukeboxSong> ALL = new CopyOnWriteCollection<>({ALL_FIELD});
+
+    private final int comparatorOutput, lengthInSeconds;
+    private final String name, description, soundEvent;
+
+    public JukeboxSong(String name, String description, String soundEvent, int comparatorOutput, int lengthInSeconds) {
+        this.name = name;
+        this.description = description;
+        this.soundEvent = soundEvent;
+        this.comparatorOutput = comparatorOutput;
+        this.lengthInSeconds = lengthInSeconds;
+    }
+
+    private JukeboxSong(String name, int index, String description, String soundEvent, int comparatorOutput, int lengthInSeconds) {
+        this(name, description, soundEvent, comparatorOutput, lengthInSeconds);
+        ALL.add(this);
+    }
+
+    public static final JukeboxSong {OBJECT_FIELD_TYPE};
+}

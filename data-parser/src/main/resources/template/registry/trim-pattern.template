@@ -1,0 +1,27 @@
+import lombok.Getter;
+
+import ink.reactor.dataparser.util.CopyOnWriteCollection;
+import java.util.Collection;
+
+@Getter
+public final class TrimPattern {
+
+    public static final Collection<TrimPattern> ALL = new CopyOnWriteCollection<>({ALL_FIELD});
+
+    private final String assetId, description, templateItem;
+    private final boolean decal;
+
+    public TrimPattern(String assetId, String description, String templateItem, boolean decal) {
+        this.assetId = assetId;
+        this.description = description;
+        this.templateItem = templateItem;
+        this.decal = decal;
+    }
+
+    private TrimPattern(String assetId, int index, String description, String templateItem, boolean decal) {
+        this(assetId, description, templateItem, decal);
+        ALL.add(this);
+    }
+
+    public static final TrimPattern {OBJECT_FIELD_TYPE};
+}

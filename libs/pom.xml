@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ink.reactor</groupId>
+    <artifactId>libs</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>Reactor-Libs</name>
+
+    <parent>
+        <groupId>ink.reactor</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <modules>
+        <module>nbt</module>
+        <module>chat</module>
+        <module>util</module>
+        <module>item</module>
+        <module>igzip</module>
+        <module>entity</module>
+    </modules>
+
+    <build>
+        <finalName>${artifactId}</finalName>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
+</project>
