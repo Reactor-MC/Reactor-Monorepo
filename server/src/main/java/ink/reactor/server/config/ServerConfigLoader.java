@@ -47,9 +47,10 @@ public final class ServerConfigLoader {
             ip,
             port,
             JSON.toJSONString(motd),
-            viewDistance > 2 ? viewDistance : 2,
-            simulationDistance > 2 ? simulationDistance : 2,
-            config.getOrDefault("network-compression-threshold", -1)
+            Math.max(viewDistance, 2),
+            Math.max(simulationDistance, 2),
+            config.getOrDefault("network-compression-threshold", -1),
+            config.getBoolean("debug-mode")
         );
     }
 
@@ -79,7 +80,7 @@ public final class ServerConfigLoader {
             return null;
         }
         try (FileInputStream fis = new FileInputStream(favicon)) {
-            final byte byteArray[] = new byte[(int)favicon.length()];
+            final byte[] byteArray = new byte[(int)favicon.length()];
             fis.read(byteArray);
             final String faviconEncoded = Base64.getEncoder().encodeToString(byteArray);
             Logger.info("Favicon loaded successfully ");
@@ -91,6 +92,6 @@ public final class ServerConfigLoader {
     }
 
     private ServerConfig createDefaultConfig() {
-        return new ServerConfig("localhost", 25565, JSON.toJSONString(Motd.defaultMotd()), 10, 8, -1);    
+        return new ServerConfig("localhost", 25565, JSON.toJSONString(Motd.defaultMotd()), 10, 8, -1, true);
     }
 }

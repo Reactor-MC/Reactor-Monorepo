@@ -6,5 +6,6 @@ public record ServerConfig(
     String motd,
     int viewDistance,
     int simulationDistance,
-    int networkCompressionThreshold
+    int networkCompressionThreshold,
+    boolean debugMode
 ) {}

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import ink.reactor.debug.DebugPlugin;
 import org.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
 
@@ -58,8 +59,11 @@ public final class ReactorMain {
 
         server.getPluginManager().loadPlugins(new File(mainDirectory, "plugins"));
 
-        // Disable only for debug mode
-         Debug.startDebugPlugin();
+        if (config.debugMode()) {
+            final DebugPlugin debugPlugin = new DebugPlugin();
+            debugPlugin.load();
+            debugPlugin.enable();
+        }
 
         server.getPluginManager().enablePlugins();
 
