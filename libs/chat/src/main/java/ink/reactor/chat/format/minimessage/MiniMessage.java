@@ -22,8 +22,12 @@ public final class MiniMessage {
         StyleTags.registerTags();
     }
 
-    public static List<ChatComponent> format(final String text) {
+    public static List<ChatComponent> formatList(final String text) {
         return MiniMessageFormater.format(text, GLOBAL_TAGS);
+    }
+
+    public static ChatComponent[] format(final String text) {
+        return MiniMessageFormater.format(text, GLOBAL_TAGS).toArray(new ChatComponent[0]);
     }
 
     public static Map<String, MiniTag> getGlobalTags() {

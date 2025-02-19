@@ -1,14 +1,12 @@
 package ink.reactor.api.command;
 
-import java.util.Collection;
-
 import ink.reactor.api.Reactor;
 import ink.reactor.chat.component.ChatComponent;
 import ink.reactor.chat.format.ChatLegacy;
 import ink.reactor.api.plugin.service.permission.PermissionService;
 
 public interface CommandSender {
-    void sendMessage(final Collection<ChatComponent> components);
+    void sendMessage(final ChatComponent[] components);
     void sendMessage(final ChatComponent component);
     void sendMessage(final String message);
     void sendMessage(final String... messages);
