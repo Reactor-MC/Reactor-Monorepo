@@ -1,22 +1,21 @@
 package ink.reactor.chat.format.minimessage;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import ink.reactor.chat.component.ChatComponent;
-import ink.reactor.chat.component.RawComponent;
-import ink.reactor.chat.format.minimessage.TagTokenizer.Token;
-import ink.reactor.chat.format.minimessage.TagTokenizer.TokenType;
+import ink.reactor.chat.component.FullComponent;
 import ink.reactor.chat.format.minimessage.tag.ColorTags;
 import ink.reactor.chat.format.minimessage.tag.StyleTags;
-import ink.reactor.chat.util.StringUtil;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public final class MiniMessage {
  
-    private static final Map<String, MessageTag> GLOBAL_TAGS = new Object2ObjectOpenHashMap<>();
+    private static final Map<String, MiniTag> GLOBAL_TAGS = new Object2ObjectOpenHashMap<>();
 
     static {
         ColorTags.registerTags();
@@ -24,61 +23,33 @@ public final class MiniMessage {
     }
 
     public static List<ChatComponent> format(final String text) {
-        final List<Token> tokens = TagTokenizer.tokenize(text);
-        final List<ChatComponent> components = new ArrayList<>();
-
-        CurrentTag currentTag = null;
-
-        final int size = tokens.size();
-        for (int i = 0; i < size; i++) {
-            final Token token = tokens.get(i);
-
-            if (token.type() == TokenType.TEXT) {
-                if (currentTag == null) {
-                    components.add(new RawComponent(token.value()));
-                    continue;
-                }
-                currentTag.tag.parse(currentTag.isCloseTag, token.value(), currentTag.args, components);
-                currentTag = null;
-                continue;
-            }
-
-            final boolean isCloseTag = token.value().charAt(1) == '/';
-            final int beginIndex = (isCloseTag) ? 2 : 1;
-            final String tagContent = token.value().substring(beginIndex, token.value().length()-1); // Remove '</' and '>'
-
-            final List<String> args = StringUtil.split(tagContent, ':');
-            final MessageTag messageTag = GLOBAL_TAGS.get(args.get(0));
-            if (messageTag == null) {
-                components.add(new RawComponent(token.value()));
-                continue;
-            }
-
-            // Special case, when you open another tag without leave a space blank
-            if (i+1 != size && tokens.get(i+1).type() == TokenType.TAG) {
-                messageTag.parse(false, "", args, components);
-                continue;
-            }
-
-            currentTag = new CurrentTag(messageTag, args, isCloseTag);
-        }
-
-        return components;
+        return MiniMessageFormater.format(text, GLOBAL_TAGS);
     }
 
-    public static Map<String, MessageTag> getGlobalTags() {
+    public static Map<String, MiniTag> getGlobalTags() {
         return GLOBAL_TAGS;
     }
 
-    public static void registerTag(final MessageTag tag, final String... aliases) {
+    public static void registerTag(final MiniTag tag, final String... aliases) {
         for (final String alias : aliases) {
             GLOBAL_TAGS.put(alias, tag);
         }
     }
 
-    private static record CurrentTag(
-        MessageTag tag,
-        List<String> args,
-        boolean isCloseTag
-    ) {}
+    public static void registerTag(final Consumer<FullComponent> onAdd, final Consumer<FullComponent> onClose, final boolean autoCloseable, final String... aliases) {
+        for (final String alias : aliases) {
+            GLOBAL_TAGS.put(alias, new MiniTag() {
+                public void parse(FullComponent fullComponent, List<String> args, List<ChatComponent> output) {
+                    onAdd.accept(fullComponent);
+                }
+                public void onClose(FullComponent nextComponent) {
+                    onClose.accept(nextComponent);
+                }
+                @Override
+                public boolean autoCloseableTag() {
+                    return autoCloseable;
+                }               
+            });
+        }
+    }
 }

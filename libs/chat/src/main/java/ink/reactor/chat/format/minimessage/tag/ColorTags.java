@@ -4,30 +4,16 @@ import java.util.List;
 
 import ink.reactor.chat.ChatColor;
 import ink.reactor.chat.component.ChatComponent;
-import ink.reactor.chat.component.ColoredComponent;
-import ink.reactor.chat.format.minimessage.MessageTag;
+import ink.reactor.chat.component.FullComponent;
 import ink.reactor.chat.format.minimessage.MiniMessage;
+import ink.reactor.chat.format.minimessage.MiniTag;
 
 public final class ColorTags {
 
     public static void registerTags() {
-        registerTag(ChatColor.BLACK);
-        registerTag(ChatColor.DARK_BLUE);
-        registerTag(ChatColor.DARK_GREEN);
-        registerTag(ChatColor.DARK_AQUA);
-        registerTag(ChatColor.DARK_RED);
-        registerTag(ChatColor.DARK_PURPLE);
-        registerTag(ChatColor.GOLD);
-        registerTag(ChatColor.GRAY);
-        registerTag(ChatColor.DARK_GRAY);
-        registerTag(ChatColor.BLUE);
-        registerTag(ChatColor.GREEN);
-        registerTag(ChatColor.AQUA);
-        registerTag(ChatColor.RED);
-        registerTag(ChatColor.LIGHT_PURPLE);
-        registerTag(ChatColor.YELLOW);
-        registerTag(ChatColor.WHITE);
-        
+        for (final ChatColor legacyChatColor : ChatColor.LEGACY_COLORS) {
+            registerTag(legacyChatColor);
+        }
         MiniMessage.registerTag(new ColorTag(), "color");
     }
 
@@ -35,32 +21,40 @@ public final class ColorTags {
         MiniMessage.registerTag(chatColorTag(color), color.getName());
     }
 
-    public static MessageTag chatColorTag(final ChatColor color) {
-        return (isCloseTag, message, args, output) -> {
-            if (isCloseTag) {
-                output.add(new ColoredComponent("", ChatColor.WHITE));
-                return;
+    public static MiniTag chatColorTag(final ChatColor color) {
+        return new MiniTag() {
+            @Override
+            public void parse(FullComponent fullComponent, List<String> args, List<ChatComponent> output) {
+                fullComponent.setColor(color);
             }
-            output.add(new ColoredComponent(message, color));
+            @Override
+            public void onClose(FullComponent nextComponent) {
+                nextComponent.setColor(ChatColor.WHITE);
+            }
+            @Override
+            public boolean autoCloseableTag() {
+                return true;
+            }
         };
     }
 
-    private static final class ColorTag implements MessageTag {
+    private static final class ColorTag implements MiniTag {
         @Override
-        public void parse(boolean isCloseTag, String message, List<String> args, List<ChatComponent> output) {
-            if (isCloseTag) {
-                output.add(new ColoredComponent("", ChatColor.WHITE));
-                return;
-            }
+        public void parse(FullComponent fullComponent, List<String> args, List<ChatComponent> output) {
             if (args.get(1).isEmpty()) { // when not color is set <color:>
-                output.add(new ColoredComponent(message, ChatColor.WHITE));
+                fullComponent.setColor(ChatColor.WHITE);
                 return;
             }
-            ChatColor color = ChatColor.byLegacyName(message);
+            ChatColor color = ChatColor.byLegacyName(fullComponent.getText());
             if (color == null) {
                 color = ChatColor.hex(args.get(1));
             }
-            output.add(new ColoredComponent(message, color));
+            fullComponent.setColor(color);
+        }
+
+        @Override
+        public void onClose(FullComponent nextComponent) {
+            nextComponent.setColor(ChatColor.WHITE);
         }
     }
 }

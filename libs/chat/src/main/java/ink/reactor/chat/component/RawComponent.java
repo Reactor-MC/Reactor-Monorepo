@@ -39,4 +39,9 @@ public final class RawComponent implements ChatComponent {
     public String toString() {
         return toJson();
     }
+
+    @Override
+    public void setToDefault() {
+        this.text = "";
+    }
 }

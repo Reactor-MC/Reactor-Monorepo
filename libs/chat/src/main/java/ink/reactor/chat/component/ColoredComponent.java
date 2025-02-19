@@ -64,6 +64,16 @@ public class ColoredComponent implements ChatComponent {
             underlined == FALSE;
     }
 
+    public int getAmountStyles(final byte state) {
+        int size = 0;
+        if (bold == state) size++;
+        if (italic == state) size++;
+        if (obfuscated == state) size++;
+        if (strikethrough == state) size++;
+        if (underlined == state) size++;
+        return size;
+    }
+
     public final void reset() {
         bold = FALSE;
         color = ChatColor.WHITE;
@@ -124,5 +134,16 @@ public class ColoredComponent implements ChatComponent {
     @Override
     public String toString() {
         return toJson();
+    }
+
+    @Override
+    public void setToDefault() {
+        this.text = "";
+        this.color = null;
+        this.bold = UNDEFINED;
+        this.italic = UNDEFINED;
+        this.obfuscated = UNDEFINED;
+        this.strikethrough = UNDEFINED;
+        this.underlined = UNDEFINED;
     }
 }

@@ -30,7 +30,6 @@ public class PlayerJoinListener {
         fullComponent.setClickEvent(ClickEvent.openUrl("https://github.com/Reactor-Minecraft/Reactor"));
         fullComponent.setHoverEvent(HoverEvent.showText("a"));
 
-        System.out.println(fullComponent.toJson());
         event.getPlayer().sendMessage(fullComponent);
 
         event.getPlayer().setTabHeaderFooter(

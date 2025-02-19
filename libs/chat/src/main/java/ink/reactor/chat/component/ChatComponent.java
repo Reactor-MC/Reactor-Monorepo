@@ -37,4 +37,5 @@ public interface ChatComponent {
 
     String getText();
     void setText(final String newText);
+    void setToDefault();
 }

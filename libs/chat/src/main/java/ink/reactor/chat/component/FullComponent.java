@@ -58,4 +58,11 @@ public final class FullComponent extends ColoredComponent {
     public String toString() {
         return toJson();
     }
+
+    @Override
+    public void setToDefault() {
+        super.setToDefault();
+        clickEvent = null;
+        hoverEvent = null;
+    }
 }

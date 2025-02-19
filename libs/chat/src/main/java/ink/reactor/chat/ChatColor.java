@@ -39,6 +39,11 @@ public final class ChatColor {
         YELLOW = new ChatColor("yellow", 'e', 255, 255, 85),
         WHITE = new ChatColor("white", 'f', 255, 255, 255);
 
+    public static final ChatColor[] LEGACY_COLORS = {
+        BLACK, DARK_BLUE, DARK_GREEN, DARK_AQUA, DARK_RED, DARK_PURPLE, GOLD,
+        GRAY, DARK_GRAY, BLUE, GREEN, AQUA, RED, LIGHT_PURPLE, YELLOW, WHITE
+    };
+
     /** The character code associated with the color. */
     private final char code;
 
@@ -370,5 +375,28 @@ public final class ChatColor {
             return cachedName;
         }
         return (this.cachedName = getName().getBytes());
+    }
+
+    public static ChatColor approximateToLegacy(final ChatColor color) {
+        if (color.isLegacy()) {
+            return color;
+        }
+    
+        ChatColor closest = null;
+        double minDistance = Double.MAX_VALUE;
+
+        for (final ChatColor legacy : ChatColor.LEGACY_COLORS) {
+            final double distance =
+                Math.pow(color.red - legacy.red, 2) +
+                Math.pow(color.green - legacy.green, 2) +
+                Math.pow(color.blue - legacy.blue, 2);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closest = legacy;
+            }
+        }
+
+        return closest;
     }
 }
