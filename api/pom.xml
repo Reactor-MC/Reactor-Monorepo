@@ -4,7 +4,6 @@
 	
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ink.reactor</groupId>
     <artifactId>api</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
@@ -22,7 +21,7 @@
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>2.3</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <!-- Add reactor libraries -->
         <dependency>

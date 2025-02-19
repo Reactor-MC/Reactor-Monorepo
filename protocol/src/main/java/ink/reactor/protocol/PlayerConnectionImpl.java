@@ -4,37 +4,26 @@ import ink.reactor.api.player.Player;
 import ink.reactor.api.player.connection.PacketOutbound;
 import ink.reactor.api.player.connection.PlayerConnection;
 import ink.reactor.chat.component.ChatComponent;
+
 import io.netty.channel.socket.SocketChannel;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public final class PlayerConnectionImpl implements PlayerConnection {
 
     private final SocketChannel channel;
     private Player player;
 
-    public boolean isFirstConfig = true;
+    private boolean isFirstConfig = true;
 
+    private final KeepAliveManager keepAliveManager = new KeepAliveManager(this);
     public volatile ConnectionState state = ConnectionState.HANDSHAKE;
 
     PlayerConnectionImpl(SocketChannel channel) {
         this.channel = channel;
-    }
-
-    public Player getPlayer() {
-        return player;
-    };
-
-    public SocketChannel getChannel() {
-        return channel;
-    }
-
-    public void keepAlive() {
-        if (state == ConnectionState.PLAY) {
-            sendPacket(null);
-            return;
-        }
-        if (state == ConnectionState.CONFIGURATION) {
-            sendPacket(null);
-        }
     }
 
     public void sendPacket(final PacketOutbound packet) {
@@ -62,11 +51,7 @@ public final class PlayerConnectionImpl implements PlayerConnection {
         });
     };
 
-    public void disconnect(ChatComponent[] reason) {
+    public void disconnect(ChatComponent... reason) {
         channel.close();
     };
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
 }

@@ -11,7 +11,7 @@ final class AcknowledgedHandler implements PacketHandler {
     @Override
     public void handle(PlayerConnectionImpl connection, int packetId, PacketInData data) {
         connection.state = ConnectionState.CONFIGURATION;
-        connection.isFirstConfig = false;
+        connection.setFirstConfig(true);
     }
 
     @Override

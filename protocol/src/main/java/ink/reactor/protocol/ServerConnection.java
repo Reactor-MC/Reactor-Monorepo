@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.tinylog.Logger;
+
 import ink.reactor.protocol.handler.configuration.ConfigurationHandler;
 import ink.reactor.protocol.handler.handshake.HandshakeHandler;
 import ink.reactor.protocol.handler.login.LoginHandler;
@@ -59,20 +61,24 @@ public final class ServerConnection {
 
     public void tick() {
         if (playersNetwork.isEmpty()) {
+            Logger.info("ENPTY");
             return;
         }
 
+        final long time = System.currentTimeMillis();
         final Iterator<PlayerConnectionImpl> iterator = playersNetwork.iterator();
+
         while (iterator.hasNext()) {
             final PlayerConnectionImpl connection = iterator.next();
-
-            //connection.keepAlive();
-
+            Logger.info("TICK");
             if (!connection.getChannel().isActive()) {
                 connection.getChannel().close();
                 iterator.remove();
                 continue;
             }
+
+            connection.getKeepAliveManager().keepAlive();
+            connection.getKeepAliveManager().tryKick(time);
         }
     }
 

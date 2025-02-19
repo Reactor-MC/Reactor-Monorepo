@@ -9,7 +9,8 @@ public final class ConfigurationHandler {
             new ClientInfoHandler(),
             new ClientKnownPackHandler(),
             new ClientAcknowledgeFinish(),
-            new ClientCustomPayloadHandler()
+            new ClientCustomPayloadHandler(),
+            new ClientConfigKeepAlive()
         );
     }
 }

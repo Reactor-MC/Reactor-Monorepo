@@ -38,6 +38,8 @@ public final class MainThread implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("ASD");
+        Logger.info("TICKING MIAN");
         serverConnection.tick();
         scheduler.tick();
     }

@@ -2,6 +2,7 @@
 target
 .vscode
 .intellij
+.idea
 logs
 
 data-parser/src/main/java/ink/reactor/dataparser/output
