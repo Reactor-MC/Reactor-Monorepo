@@ -9,7 +9,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class ItemStackByteDeserializer {
 
-    public static final ItemStack readItemStack(final ReadBuffer buffer) {
+    public static ItemStack readItemStack(final ReadBuffer buffer) {
         final int amount = buffer.readVarInt();
         final int material = buffer.readVarInt();
         final int componentCount = buffer.readVarInt();

@@ -1,6 +1,9 @@
 package ink.reactor.api;
 
+import lombok.Getter;
+
 public final class Reactor {
+    @Getter
     private static ReactorServer server = null;
 
     public static void setServer(final ReactorServer server) {
@@ -8,9 +11,5 @@ public final class Reactor {
             throw new IllegalStateException("Server is already started");
         }
         Reactor.server = server;
-    }
-
-    public static ReactorServer getServer() {
-        return server;
     }
 }

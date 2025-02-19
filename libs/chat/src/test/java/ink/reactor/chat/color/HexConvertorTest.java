@@ -13,7 +13,7 @@ public class HexConvertorTest {
 
     @Test
     public void compareHex() {
-        Assertions.assertEquals(EMERALD_RGB.toHex(), EMERALD_HEX);
+        Assertions.assertEquals(EMERALD_HEX, EMERALD_RGB.toHex());
     }
 
     @Test

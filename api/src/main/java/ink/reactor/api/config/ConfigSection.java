@@ -1,9 +1,12 @@
 package ink.reactor.api.config;
 
+import lombok.Getter;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+@Getter
 public class ConfigSection  {
 
     private final Map<String, Object> map;
@@ -85,10 +88,6 @@ public class ConfigSection  {
     public ConfigSection getSection(final String key) {
         final Object object = map.get(key);
         return (object instanceof Map) ? new ConfigSection((Map<String, Object>)object) : null;
-    }
-
-    public Map<String, Object> getMap() {
-        return map;
     }
 
     @Override

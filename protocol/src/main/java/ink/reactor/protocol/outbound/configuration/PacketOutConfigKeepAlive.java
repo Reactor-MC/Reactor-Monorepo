@@ -14,7 +14,6 @@ public final class PacketOutConfigKeepAlive implements PacketOutbound {
 
     @Override
     public byte[] write() {
-        System.out.println("CONFIG KEPP");
         final ExpectedSizeBuffer expectedSizeBuffer = new ExpectedSizeBuffer(DataSize.LONG);
         expectedSizeBuffer.writeLong(payload);
         return expectedSizeBuffer.buffer;

@@ -2,7 +2,9 @@ package ink.reactor.nbt;
 
 import ink.reactor.nbt.tags.CompoundTag;
 import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import lombok.Getter;
 
+@Getter
 public abstract class TagNBT {
 
     public static TagNBT END_TAG = new CompoundTag(null, null);
@@ -36,9 +38,5 @@ public abstract class TagNBT {
         return obj == this || (obj instanceof TagNBT tagNBT)
             && tagNBT.getId() == this.getId()
             && tagNBT.key.equals(this.key);
-    }
-
-    public Object getKey() {
-        return key;
     }
 }

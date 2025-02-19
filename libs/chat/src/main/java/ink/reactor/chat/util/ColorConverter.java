@@ -28,6 +28,9 @@ public final class ColorConverter {
     }
 
     public static int[] hexToRGB(String hex) {
+        if (hex.charAt(0) == '#') {
+            hex = hex.substring(1);
+        }
         int red, green, blue;
         if (hex.length() == 3) {
             // RGB to RRGGBB

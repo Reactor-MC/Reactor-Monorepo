@@ -4,6 +4,7 @@ port: 25565
 view-distance: 10
 simulation-distance: 8
 network-compression-threshold: 256
+
 motd:
   line1: "                      &bReactor &7[1.21.4]&r"
   line2: "       &3&lFASTER &7| &3&lMODULAR &7| &3&lSERVER IN JAVA"

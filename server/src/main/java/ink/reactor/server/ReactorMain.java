@@ -53,7 +53,7 @@ public final class ReactorMain {
         final ReactorServerImpl server = new ReactorServerImpl(config, mainThread, console);
 
         Reactor.setServer(server);
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> server.onExit()));
+        Runtime.getRuntime().addShutdownHook(new Thread(server::onExit));
         ProtocolConnector.setPlayerCreator(ReactorPlayer::new);
 
         server.getPluginManager().loadPlugins(new File(mainDirectory, "plugins"));
