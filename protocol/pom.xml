@@ -22,12 +22,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>ink.reactor</groupId>
-            <artifactId>igzip</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.116.Final</version>

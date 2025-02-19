@@ -22,7 +22,6 @@
         <module>chat</module>
         <module>util</module>
         <module>item</module>
-        <module>igzip</module>
         <module>entity</module>
     </modules>
 
