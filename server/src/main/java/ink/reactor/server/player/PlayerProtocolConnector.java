@@ -29,6 +29,8 @@ public final class PlayerProtocolConnector {
             players.add(reactorPlayer);
             byUUID.put(reactorPlayer.getUuid(), reactorPlayer);
 
+            Reactor.getServer().getWorldManager().getDefaultWorld().addPlayer(reactorPlayer);
+
             readWriteLock.writeLock().unlock();
             return reactorPlayer;
         };
@@ -38,6 +40,8 @@ public final class PlayerProtocolConnector {
 
             players.remove(player);
             byUUID.remove(player.getUuid());
+
+            player.getWorld().removePlayer(player);
 
             readWriteLock.readLock().unlock();
         };

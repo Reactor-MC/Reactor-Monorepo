@@ -1,5 +1,6 @@
 package ink.reactor.api.world;
 
+import ink.reactor.api.player.Player;
 import ink.reactor.util.LocationUtil;
 import ink.reactor.api.world.chunk.Chunk;
 import ink.reactor.api.world.data.Biome;
@@ -10,9 +11,11 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @RequiredArgsConstructor
-public class World {
+public abstract class World {
     private static int WORLDS_AMOUNT = 0;
 
     private boolean isLoaded = true;
@@ -25,6 +28,10 @@ public class World {
     private final String name;
     private final WorldType worldType;
     private final Biome biome;
+
+    private final List<Player> players;
+
+    private long ticks;
 
     @Override
     public int hashCode() {
@@ -64,5 +71,14 @@ public class World {
 
     public Chunk getChunk(final int x, final int z) {
         return chunks.get(LocationUtil.compressXZ(x, z));
+    }
+
+    public void addPlayer(Player player) {
+        if (players.contains(player)) return;
+        players.add(player);
+    }
+
+    public void removePlayer(Player player) {
+        players.remove(player);
     }
 }

@@ -2,6 +2,7 @@ package ink.reactor.server;
 
 import ink.reactor.api.player.Player;
 import ink.reactor.server.player.ReactorPlayer;
+import ink.reactor.server.world.ReactorWorld;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import org.tinylog.Logger;
 
@@ -39,7 +40,15 @@ final class ReactorServerImpl implements ReactorServer {
 
     private final WorldManager worldManager = new WorldManager(
         VanillaChunkBuilder::new,
-        new World(new Long2ObjectOpenHashMap<>(), "default", WorldType.OVERWORLD, Biome.PLAINS));
+        new ReactorWorld(
+                new Long2ObjectOpenHashMap<>(),
+                "default",
+                WorldType.OVERWORLD,
+                Biome.PLAINS,
+                new ArrayList<>(),
+                0L
+        )
+    );
 
     private final Map<UUID, ReactorPlayer> playersByUUID = new Object2ObjectOpenHashMap<>();
     private final Collection<Player> players = new ArrayList<>();

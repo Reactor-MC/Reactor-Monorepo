@@ -16,7 +16,7 @@ public final class PlayHandler {
         final WorldManager worldManager = Reactor.getServer().getWorldManager();
 
         connection.sendPackets(
-            new PacketOutLoginPlay(connection,worldManager.getDefaultWorld()),
+            new PacketOutLoginPlay(connection, worldManager.getDefaultWorld()),
             new PacketOutPlayerPosition(connection.getPlayer()),
             new PacketOutGameEvent(PacketOutGameEvent.WAITING_FOR_LEVEL_CHUNKS, 0F)
         );
