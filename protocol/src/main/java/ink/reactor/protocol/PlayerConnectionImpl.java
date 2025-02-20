@@ -5,6 +5,9 @@ import ink.reactor.api.player.connection.PacketOutbound;
 import ink.reactor.api.player.connection.PlayerConnection;
 import ink.reactor.chat.component.ChatComponent;
 
+import ink.reactor.protocol.outbound.configuration.PacketOutConfigDisconnected;
+import ink.reactor.protocol.outbound.login.PacketOutLoginDisconnect;
+import ink.reactor.protocol.outbound.play.PacketOutPlayDisconnected;
 import io.netty.channel.socket.SocketChannel;
 
 import lombok.Getter;
@@ -52,6 +55,20 @@ public final class PlayerConnectionImpl implements PlayerConnection {
     };
 
     public void disconnect(ChatComponent... reason) {
-        channel.close();
+        if (reason == null) {
+            channel.close();
+            return;
+        }
+        if (state == ConnectionState.LOGIN) {
+            sendPacket(new PacketOutLoginDisconnect(reason));
+            return;
+        }
+        if (state == ConnectionState.PLAY) {
+            sendPacket(new PacketOutPlayDisconnected(reason));
+            return;
+        }
+        if (state == ConnectionState.CONFIGURATION) {
+            sendPacket(new PacketOutConfigDisconnected(reason));
+        }
     };
 }

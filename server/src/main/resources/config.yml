@@ -4,6 +4,7 @@ port: 25565
 view-distance: 10
 simulation-distance: 8
 network-compression-threshold: 256
+tcp-fast-open: true
 
 debug-mode: true
 

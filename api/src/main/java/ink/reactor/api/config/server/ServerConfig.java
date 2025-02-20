@@ -7,5 +7,6 @@ public record ServerConfig(
     int viewDistance,
     int simulationDistance,
     int networkCompressionThreshold,
-    boolean debugMode
+    boolean debugMode,
+    boolean tcpFastOpen
 ) {}

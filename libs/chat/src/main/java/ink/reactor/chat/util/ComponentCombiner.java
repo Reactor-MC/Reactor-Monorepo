@@ -26,7 +26,7 @@ public final class ComponentCombiner {
             return json;
         }   
         final StringBuilder builder = new StringBuilder(json.length() + (components.length * 50));
-        builder.append(json.substring(0, json.length()-1));
+        builder.append(json, 0, json.length()-1);
         builder.append(",\"extra\":[");
         final int size = components.length;
         for (int i = 1; i < size; i++) {

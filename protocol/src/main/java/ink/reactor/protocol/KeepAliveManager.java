@@ -16,19 +16,12 @@ public final class KeepAliveManager {
     private long payload = 0;
 
     private int countdown = TickUnit.SECONDS.toTicks(5);
-    private int ticksWithoutKeepAlive = 0;
 
     KeepAliveManager(PlayerConnectionImpl playerConnectionImpl) {
         this.connection = playerConnectionImpl;
     }
 
     public void keepAlive() {
-        if (ticksWithoutKeepAlive >= KEEP_ALIVE_DELAY) {
-            connection.disconnect(new RawComponent("Keep alive"));
-            return;
-        }
-
-        System.out.println(countdown);
         if (--countdown > 0) {
             return;
         }
@@ -48,8 +41,6 @@ public final class KeepAliveManager {
     public void onKeepAlive(final long payload) {
         if (payload != this.payload) {
             connection.disconnect(new RawComponent("Invalid payload"));
-            return;
         }
-        ticksWithoutKeepAlive = 0;
     }
 }

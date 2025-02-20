@@ -50,7 +50,8 @@ public final class ServerConfigLoader {
             Math.max(viewDistance, 2),
             Math.max(simulationDistance, 2),
             config.getOrDefault("network-compression-threshold", -1),
-            config.getBoolean("debug-mode")
+            config.getBoolean("debug-mode"),
+            config.getBoolean("tcp-fast-open")
         );
     }
 
@@ -92,6 +93,11 @@ public final class ServerConfigLoader {
     }
 
     private ServerConfig createDefaultConfig() {
-        return new ServerConfig("localhost", 25565, JSON.toJSONString(Motd.defaultMotd()), 10, 8, -1, true);
+        return new ServerConfig(
+            "localhost",
+            25565,
+            JSON.toJSONString(Motd.defaultMotd()),
+            10, 8, -1,
+            true, true);
     }
 }

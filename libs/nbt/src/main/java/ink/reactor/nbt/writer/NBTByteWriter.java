@@ -8,7 +8,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class NBTByteWriter {
 
-    private static final FriendlyBuffer newBuffer(final NBT nbt) {
+    private static FriendlyBuffer newBuffer(final NBT nbt) {
         return new FriendlyBuffer(nbt.getTags().size() * 16, 32);
     }
 
