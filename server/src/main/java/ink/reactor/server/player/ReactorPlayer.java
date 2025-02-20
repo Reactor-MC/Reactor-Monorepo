@@ -9,8 +9,7 @@ import ink.reactor.api.player.data.PlayerInventory;
 import ink.reactor.chat.component.ChatComponent;
 import ink.reactor.chat.component.RawComponent;
 import ink.reactor.chat.util.ComponentCombiner;
-import ink.reactor.protocol.outbound.play.PacketOutSetTablist;
-import ink.reactor.protocol.outbound.play.PacketOutSystemChat;
+import ink.reactor.protocol.outbound.play.*;
 
 public final class ReactorPlayer extends Player implements InventoryHolder {
 
@@ -36,7 +35,7 @@ public final class ReactorPlayer extends Player implements InventoryHolder {
 
     @Override
     public void sendMessage(final ChatComponent[] components) {
-        getConnection().sendPackets(new PacketOutSystemChat(ComponentCombiner.toNBT(components)));  
+        getConnection().sendPackets(new PacketOutSystemChat(ComponentCombiner.toNBT(components)));
     }
 
     @Override
@@ -51,5 +50,24 @@ public final class ReactorPlayer extends Player implements InventoryHolder {
     @Override
     public void setTabHeaderFooter(final ChatComponent[] header, final ChatComponent[] footer) {
         getConnection().sendPacket(new PacketOutSetTablist(header, footer));
+    }
+
+    @Override
+    public void showTitle(final ChatComponent[] title) {
+        getConnection().sendPacket(new PacketOutSetTitleText(title));
+        getConnection().sendPacket(new PacketOutSetTitleAnimationTimes(10, 70, 20));
+    }
+
+    @Override
+    public void showTitle(final ChatComponent[] title, final ChatComponent[] subtitle) {
+        showTitle(title);
+        getConnection().sendPacket(new PacketOutSetSubtitleText(subtitle));
+    }
+
+    @Override
+    public void showTitle(final ChatComponent[] title, final ChatComponent[] subtitle, final int fadeIn, final int stay, final int fadeOut) {
+        getConnection().sendPacket(new PacketOutSetTitleText(title));
+        getConnection().sendPacket(new PacketOutSetSubtitleText(subtitle));
+        getConnection().sendPacket(new PacketOutSetTitleAnimationTimes(fadeIn, stay, fadeOut));
     }
 }

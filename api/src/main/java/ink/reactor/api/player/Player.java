@@ -50,6 +50,10 @@ public abstract class Player implements CommandSender {
     public abstract PlayerInventory getInventory();
     public abstract void setTabHeaderFooter(final ChatComponent[] header, final ChatComponent[] footer);
 
+    public abstract void showTitle(final ChatComponent[] title);
+    public abstract void showTitle(final ChatComponent[] title, final ChatComponent[] subtitle);
+    public abstract void showTitle(final ChatComponent[] title, final ChatComponent[] subtitle, int fadeIn, int stay, int fadeOut);
+
     @Override
     public final boolean equals(Object obj) {
         return obj == this || (obj instanceof Player player && player.uuid.equals(this.uuid));
