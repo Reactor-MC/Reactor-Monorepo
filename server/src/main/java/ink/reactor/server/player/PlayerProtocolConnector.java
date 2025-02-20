@@ -29,17 +29,21 @@ public final class PlayerProtocolConnector {
             players.add(reactorPlayer);
             byUUID.put(reactorPlayer.getUuid(), reactorPlayer);
 
+            Reactor.getServer().getWorldManager().getDefaultWorld().addPlayer(reactorPlayer);
+
             readWriteLock.writeLock().unlock();
             return reactorPlayer;
         };
 
         final Consumer<Player> cleanup = (player) -> {
-            readWriteLock.readLock().lock();
+            readWriteLock.writeLock().lock();
 
             players.remove(player);
             byUUID.remove(player.getUuid());
 
-            readWriteLock.readLock().unlock();
+            player.getWorld().removePlayer(player);
+
+            readWriteLock.writeLock().unlock();
         };
 
         ProtocolConnector.setConnector(creator, cleanup);

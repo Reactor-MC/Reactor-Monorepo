@@ -14,7 +14,7 @@ public final class WorldManager {
     private final Supplier<ChunkBuilder> supplierChunkBuilder;
     private World defaultWorld;
 
-    public WorldManager(Supplier<ChunkBuilder> supplierChunkBuilder, World defaultWorld) {
+    private WorldManager(Supplier<ChunkBuilder> supplierChunkBuilder, World defaultWorld) {
         this.supplierChunkBuilder = supplierChunkBuilder;
         this.defaultWorld = defaultWorld;
     }
@@ -40,5 +40,12 @@ public final class WorldManager {
 
     public ChunkBuilder getChunkBuilder() {
         return supplierChunkBuilder.get();
+    }
+
+    public static WorldManager createWorldManager(Supplier<ChunkBuilder> supplierChunkBuilder, World defaultWorld) {
+        final WorldManager worldManager = new WorldManager(supplierChunkBuilder, defaultWorld);
+        worldManager.getWorlds().add(defaultWorld);
+        worldManager.defaultWorld = defaultWorld;
+        return worldManager;
     }
 }

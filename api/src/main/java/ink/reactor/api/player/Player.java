@@ -7,6 +7,7 @@ import ink.reactor.api.player.connection.PlayerConnection;
 import ink.reactor.api.player.data.Gamemode;
 import ink.reactor.api.player.data.PlayerInventory;
 import ink.reactor.api.player.data.PlayerSkin;
+import ink.reactor.api.world.World;
 import ink.reactor.chat.ChatMode;
 import ink.reactor.chat.component.ChatComponent;
 import ink.reactor.entity.Entity;
@@ -44,7 +45,18 @@ public abstract class Player implements CommandSender {
     private double x, y, z;
     private double velocityX, velocityY, velocityZ;
     private float yaw, pitch;
+    private World world;
 
     public abstract PlayerInventory getInventory();
     public abstract void setTabHeaderFooter(final ChatComponent[] header, final ChatComponent[] footer);
+
+    @Override
+    public final boolean equals(Object obj) {
+        return obj == this || (obj instanceof Player player && player.uuid.equals(this.uuid));
+    }
+
+    @Override
+    public final int hashCode() {
+        return id;
+    }
 }
