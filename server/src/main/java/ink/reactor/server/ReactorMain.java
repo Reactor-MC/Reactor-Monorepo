@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import ink.reactor.debug.DebugPlugin;
+import ink.reactor.server.player.PlayerProtocolConnector;
 import org.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
 
@@ -12,11 +13,9 @@ import ink.reactor.api.Reactor;
 import ink.reactor.api.ReactorServer;
 import ink.reactor.api.config.YamlConfigManager;
 import ink.reactor.api.config.server.ServerConfig;
-import ink.reactor.api.player.connection.ProtocolConnector;
 import ink.reactor.server.config.ServerConfigLoader;
 import ink.reactor.server.console.Console;
 import ink.reactor.server.console.ConsoleStart;
-import ink.reactor.server.player.ReactorPlayer;
 import ink.reactor.server.tick.MainThread;
 import ink.reactor.protocol.ServerConnection;
 
@@ -55,7 +54,7 @@ public final class ReactorMain {
 
         Reactor.setServer(server);
         Runtime.getRuntime().addShutdownHook(new Thread(server::onExit));
-        ProtocolConnector.setPlayerCreator(ReactorPlayer::new);
+        PlayerProtocolConnector.start(server.getPlayers(), server.getPlayersByUUID());
 
         server.getPluginManager().loadPlugins(new File(mainDirectory, "plugins"));
 

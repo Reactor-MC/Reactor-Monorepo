@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import ink.reactor.protocol.handler.play.PlayHandler;
 import org.tinylog.Logger;
 
 import ink.reactor.protocol.handler.configuration.ConfigurationHandler;
@@ -57,6 +58,7 @@ public final class ServerConnection {
         HandshakeHandler.registerHandlers();
         LoginHandler.registerHandlers();
         ConfigurationHandler.registerHandlers();
+        PlayHandler.registerHandlers();
     }
 
     public void tick() {

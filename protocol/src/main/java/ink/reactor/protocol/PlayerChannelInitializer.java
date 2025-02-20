@@ -39,7 +39,8 @@ final class PlayerChannelInitializer extends ChannelInitializer<SocketChannel> {
 
         channel.pipeline()
             .addLast("timeout", new ReadTimeoutHandler(20))
-            .addLast("decoder", new NoCompressionDecoder(connection))
+            .addLast("decoder", new NoCompressionDecoder())
+            .addLast("manager", new NetworkManager(connection))
             .addLast("encoder", new NoCompressionEncoder());
     }
 }

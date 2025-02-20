@@ -14,22 +14,22 @@ public final class Motd {
 
     private Description description;
 
-    public static record Version(
+    public record Version(
         String name,
         int protocol
     ){}
 
-    public static record Players(
+    public record Players(
         int max,
         int online,
         SamplePlayer[] sample
     ) {}
-    public static record SamplePlayer(
+    public record SamplePlayer(
         String name,
         String id
     ){}
 
-    public static record Description(
+    public record Description(
         String text
     ){}
 

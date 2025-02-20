@@ -38,8 +38,6 @@ public final class ServerConfigLoader {
         final String ip = config.getOrDefault("ip", "localhost");
         final int port = config.getOrDefault("port", 25565);
         final Motd motd = loadMotd(config.getSection("motd"));
-        final int viewDistance = config.getInt("view-distance");
-        final int simulationDistance = config.getInt("simulation-distance");
 
         Logger.info("Host: {}:{}. Motd: {}", ip, port, motd.toString());
 
@@ -47,11 +45,12 @@ public final class ServerConfigLoader {
             ip,
             port,
             JSON.toJSONString(motd),
-            Math.max(viewDistance, 2),
-            Math.max(simulationDistance, 2),
+            Math.max(config.getInt("view-distance"), 2),
+            Math.max(config.getInt("simulation-distance"), 2),
             config.getOrDefault("network-compression-threshold", -1),
             config.getBoolean("debug-mode"),
-            config.getBoolean("tcp-fast-open")
+            config.getBoolean("tcp-fast-open"),
+            Math.max(config.getInt("ping-wait-update-ticks"), 20)
         );
     }
 
@@ -98,6 +97,8 @@ public final class ServerConfigLoader {
             25565,
             JSON.toJSONString(Motd.defaultMotd()),
             10, 8, -1,
-            true, true);
+            true, true,
+            200
+        );
     }
 }

@@ -8,6 +8,8 @@ tcp-fast-open: true
 
 debug-mode: true
 
+ping-wait-update-ticks: 200 # Ticks to wait for next player update ping. Default = 10s
+
 motd:
   line1: "                      &bReactor &7[1.21.4]&r"
   line2: "       &3&lFASTER &7| &3&lMODULAR &7| &3&lSERVER IN JAVA"

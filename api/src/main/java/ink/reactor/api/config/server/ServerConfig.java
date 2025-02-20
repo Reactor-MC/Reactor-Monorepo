@@ -8,5 +8,6 @@ public record ServerConfig(
     int simulationDistance,
     int networkCompressionThreshold,
     boolean debugMode,
-    boolean tcpFastOpen
+    boolean tcpFastOpen,
+    int pingWaitUpdateTicks
 ) {}

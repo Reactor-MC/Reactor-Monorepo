@@ -28,7 +28,8 @@ public abstract class Player implements CommandSender {
     private final UUID uuid;
 
     private Gamemode gamemode = Gamemode.SURVIVAL;
-    private int health = 20;
+    private double health = 20;
+    private long ping;
 
     private String clientInfo;
 

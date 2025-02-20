@@ -1,5 +1,8 @@
 package ink.reactor.server;
 
+import ink.reactor.api.player.Player;
+import ink.reactor.server.player.ReactorPlayer;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import org.tinylog.Logger;
 
 import ink.reactor.api.ReactorServer;
@@ -19,6 +22,11 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.UUID;
+
 @Getter
 @RequiredArgsConstructor
 final class ReactorServerImpl implements ReactorServer {
@@ -32,6 +40,9 @@ final class ReactorServerImpl implements ReactorServer {
     private final WorldManager worldManager = new WorldManager(
         VanillaChunkBuilder::new,
         new World(new Long2ObjectOpenHashMap<>(), "default", WorldType.OVERWORLD, Biome.PLAINS));
+
+    private final Map<UUID, ReactorPlayer> playersByUUID = new Object2ObjectOpenHashMap<>();
+    private final Collection<Player> players = new ArrayList<>();
 
     @Override
     public ServerScheduler getScheduler() {
@@ -56,5 +67,10 @@ final class ReactorServerImpl implements ReactorServer {
     @Override
     public int getVersionProtocol() {
         return 769;
+    }
+
+    @Override
+    public Player getPlayer(final UUID uuid) {
+        return playersByUUID.get(uuid);
     }
 }

@@ -44,3 +44,4 @@ bin/
 
 ### Reactor ###
 logs
+/config.yml

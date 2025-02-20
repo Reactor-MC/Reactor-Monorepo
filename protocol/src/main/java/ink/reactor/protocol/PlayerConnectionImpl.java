@@ -7,6 +7,7 @@ import ink.reactor.chat.component.ChatComponent;
 
 import ink.reactor.protocol.outbound.configuration.PacketOutConfigDisconnected;
 import ink.reactor.protocol.outbound.login.PacketOutLoginDisconnect;
+import ink.reactor.protocol.outbound.play.PacketOutPing;
 import ink.reactor.protocol.outbound.play.PacketOutPlayDisconnected;
 import io.netty.channel.socket.SocketChannel;
 
@@ -23,6 +24,8 @@ public final class PlayerConnectionImpl implements PlayerConnection {
     private boolean isFirstConfig = true;
 
     private final KeepAliveManager keepAliveManager = new KeepAliveManager(this);
+    private long lastPing;
+
     public volatile ConnectionState state = ConnectionState.HANDSHAKE;
 
     PlayerConnectionImpl(SocketChannel channel) {
@@ -53,6 +56,13 @@ public final class PlayerConnectionImpl implements PlayerConnection {
             channel.flush();
         });
     };
+
+    public void ping() {
+        if (state == ConnectionState.PLAY) {
+            lastPing = System.currentTimeMillis();
+            sendPacket(PacketOutPing.INSTANCE);
+        }
+    }
 
     public void disconnect(ChatComponent... reason) {
         if (reason == null) {

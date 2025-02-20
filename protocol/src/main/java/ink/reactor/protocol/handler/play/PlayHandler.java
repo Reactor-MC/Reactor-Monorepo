@@ -26,7 +26,8 @@ public final class PlayHandler {
 
     public static void registerHandlers() {
         ConnectionState.PLAY.add(
-            new ClientPlayKeepAlive()
+            new ClientPlayKeepAlive(),
+            new ClientPlayPing()
         );
     }
 }

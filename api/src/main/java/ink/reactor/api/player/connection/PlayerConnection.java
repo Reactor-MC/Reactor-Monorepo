@@ -4,9 +4,11 @@ import ink.reactor.api.player.Player;
 import ink.reactor.chat.component.ChatComponent;
 
 public interface PlayerConnection {
-    public void disconnect(final ChatComponent[] reason);
-    public void sendPacket(final PacketOutbound packet);
-    public void sendPackets(final PacketOutbound... packets);
+    void disconnect(final ChatComponent[] reason);
+    void sendPacket(final PacketOutbound packet);
+    void sendPackets(final PacketOutbound... packets);
 
-    public Player getPlayer();
+    void ping();
+
+    Player getPlayer();
 }

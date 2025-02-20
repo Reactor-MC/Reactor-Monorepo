@@ -1,9 +1,9 @@
 package ink.reactor.protocol.handler;
 
+import ink.reactor.protocol.decoder.PacketDecoded;
 import ink.reactor.protocol.handler.storage.HandlerStorageType;
 import ink.reactor.protocol.handler.storage.ArrayHandlerStorage;
 import ink.reactor.protocol.handler.storage.SingleHandlerStorage;
-import ink.reactor.protocol.inbound.PacketInData;
 import ink.reactor.protocol.PlayerConnectionImpl;
 
 public final class PacketHandlerStorage {
@@ -14,11 +14,12 @@ public final class PacketHandlerStorage {
         this.packetsHandlers = new HandlerStorageType[amountPackets];
     }
 
-    public void execute(final PlayerConnectionImpl connection, final int packetId, final PacketInData data) {
-        if (packetId >= packetsHandlers.length || packetsHandlers[packetId] == null) {
+    public void execute(final PlayerConnectionImpl connection, final PacketDecoded packetDecoded) {
+        final int packetId = packetDecoded.id();
+        if (packetId < 0 || packetId >= packetsHandlers.length || packetsHandlers[packetId] == null) {
             return;
         }
-        packetsHandlers[packetId].handle(connection, packetId, data);
+        packetsHandlers[packetId].handle(connection, packetId, packetDecoded.data());
     }
 
     public void add(final PacketHandler handler) {
