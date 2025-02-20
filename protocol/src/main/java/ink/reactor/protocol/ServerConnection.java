@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import ink.reactor.protocol.handler.play.PlayHandler;
+import io.netty.channel.kqueue.KQueueServerSocketChannel;
+import io.netty.channel.socket.ServerSocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.tinylog.Logger;
 
 import ink.reactor.protocol.handler.configuration.ConfigurationHandler;
@@ -34,18 +37,23 @@ public final class ServerConnection {
 
     public void connect(final String ip, final int port) {
         final int workerThreadCount = 1; // Late change to Runtime.getRuntime().availableProcessors();
+
+        Class<? extends ServerSocketChannel> socketChannel;
 		if (Epoll.isAvailable()) {
             bossGroup = new EpollEventLoopGroup();
             workerGroup = new EpollEventLoopGroup(workerThreadCount);
+            socketChannel = EpollServerSocketChannel.class;
         } else if (KQueue.isAvailable()) {
             bossGroup = new KQueueEventLoopGroup();
             workerGroup = new KQueueEventLoopGroup(workerThreadCount);
+            socketChannel = KQueueServerSocketChannel.class;
         } else {
             bossGroup = new NioEventLoopGroup();
             workerGroup = new NioEventLoopGroup(workerThreadCount);
+            socketChannel = NioServerSocketChannel.class;
         }
 
-        future = new ServerBootstrap().channel(EpollServerSocketChannel.class)
+        future = new ServerBootstrap().channel(socketChannel)
             .childOption(ChannelOption.WRITE_BUFFER_WATER_MARK, SERVER_WRITE_MARK)
             .childHandler(new PlayerChannelInitializer(playersNetwork))
             .group(bossGroup, workerGroup)
