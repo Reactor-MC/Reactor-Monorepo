@@ -69,6 +69,7 @@ public final class ReactorMain {
 
         serverConnection.registerDefaultHandlers();
 
+        mainThread.start();
         console.sendMessage("Server started in " + (System.currentTimeMillis() - time) + "ms");
         return console;
     }

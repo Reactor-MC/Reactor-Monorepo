@@ -15,7 +15,6 @@ public final class PacketOutPlayKeepAlive implements PacketOutbound {
 
     @Override
     public byte[] write() {
-        System.out.println("PLAY KEPP");
         final ExpectedSizeBuffer expectedSizeBuffer = new ExpectedSizeBuffer(DataSize.LONG);
         expectedSizeBuffer.writeLong(payload);
         return expectedSizeBuffer.buffer;

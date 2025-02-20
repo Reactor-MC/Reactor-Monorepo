@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import ink.reactor.api.scheduler.ServerScheduler;
+import ink.reactor.api.scheduler.TickDuration;
 import lombok.RequiredArgsConstructor;
 
 final class TickScheduler implements ServerScheduler {
@@ -55,20 +56,21 @@ final class TickScheduler implements ServerScheduler {
     }
 
     @Override
-    public void runLater(Runnable task, int delay) {
-        if (delay <= 0) {
+    public void runLater(Runnable task, TickDuration delay) {
+        final int ticks = delay.duration();
+        if (ticks <= 0) {
             nowTasks.add(task);
             return;
         }
         final LaterTask laterTask = new LaterTask(task);
-        laterTask.delay = delay;
+        laterTask.delay = ticks;
         laterTasks.add(laterTask);
     }
 
     @Override
-    public int schedule(Runnable task, int startDelay, int repeat) {
-        final ScheduleTask scheduleTask = new ScheduleTask(tasksCount++, task, repeat);
-        scheduleTask.startDelay = startDelay;
+    public int schedule(Runnable task, final TickDuration startDelay, final TickDuration repeat) {
+        final ScheduleTask scheduleTask = new ScheduleTask(tasksCount++, task, repeat.duration());
+        scheduleTask.startDelay = startDelay.duration();
         scheduleTasks.add(scheduleTask);
         return scheduleTask.id;
     }
@@ -90,7 +92,7 @@ final class TickScheduler implements ServerScheduler {
     }
 
     @RequiredArgsConstructor
-    static final class ScheduleTask{
+    private static final class ScheduleTask{
         final int id;
         final Runnable task;
         final int repeat;
@@ -99,7 +101,7 @@ final class TickScheduler implements ServerScheduler {
     }
 
     @RequiredArgsConstructor
-    static final class LaterTask{
+    private static final class LaterTask{
         final Runnable task;
         int delay;
     }

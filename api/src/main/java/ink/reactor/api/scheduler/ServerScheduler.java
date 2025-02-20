@@ -12,7 +12,7 @@ public interface ServerScheduler {
      * @param task - Task to be executed by the main thread
      * @param delay - How many ticks need wait to execute the start
      */
-    void runLater(final Runnable task, final int delay);
+    void runLater(final Runnable task, final TickDuration delay);
 
     /*
      * Run the task in this tick
@@ -20,7 +20,7 @@ public interface ServerScheduler {
      * @param startDelay - How many ticks need wait to start the task
      * @return taskId
      */
-    int schedule(final Runnable task, final int startDelay, final int repeat);
+    int schedule(final Runnable task, final TickDuration startDelay, final TickDuration repeat);
 
     /*
      * Cancel a running task

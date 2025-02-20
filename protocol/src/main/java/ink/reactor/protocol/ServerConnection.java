@@ -61,16 +61,14 @@ public final class ServerConnection {
 
     public void tick() {
         if (playersNetwork.isEmpty()) {
-            Logger.info("ENPTY");
             return;
         }
 
-        final long time = System.currentTimeMillis();
         final Iterator<PlayerConnectionImpl> iterator = playersNetwork.iterator();
 
         while (iterator.hasNext()) {
             final PlayerConnectionImpl connection = iterator.next();
-            Logger.info("TICK");
+
             if (!connection.getChannel().isActive()) {
                 connection.getChannel().close();
                 iterator.remove();
@@ -78,7 +76,6 @@ public final class ServerConnection {
             }
 
             connection.getKeepAliveManager().keepAlive();
-            connection.getKeepAliveManager().tryKick(time);
         }
     }
 
@@ -86,7 +83,7 @@ public final class ServerConnection {
         try {
             future.channel().close().sync();
         } catch(InterruptedException e) {
-            e.printStackTrace();
+            Logger.error(e);
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
