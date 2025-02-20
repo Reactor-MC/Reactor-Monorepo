@@ -36,14 +36,14 @@ public final class PlayerProtocolConnector {
         };
 
         final Consumer<Player> cleanup = (player) -> {
-            readWriteLock.readLock().lock();
+            readWriteLock.writeLock().lock();
 
             players.remove(player);
             byUUID.remove(player.getUuid());
 
             player.getWorld().removePlayer(player);
 
-            readWriteLock.readLock().unlock();
+            readWriteLock.writeLock().unlock();
         };
 
         ProtocolConnector.setConnector(creator, cleanup);

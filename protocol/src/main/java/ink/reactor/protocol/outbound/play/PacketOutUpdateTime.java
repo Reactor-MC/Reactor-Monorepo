@@ -4,20 +4,14 @@ import ink.reactor.api.player.connection.PacketOutbound;
 import ink.reactor.protocol.outbound.OutProtocol;
 import ink.reactor.util.buffer.DataSize;
 import ink.reactor.util.buffer.writer.ExpectedSizeBuffer;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public final class PacketOutUpdateTime implements PacketOutbound {
 
     private long worldAge;
     private long timeOfDay;
     private boolean timeOfTheDayIncreasing;
-
-    public PacketOutUpdateTime(long worldAge, long timeOfDay, boolean timeOfTheDayIncreasing) {
-        this.worldAge = worldAge;
-        this.timeOfTheDayIncreasing = timeOfTheDayIncreasing;
-        this.timeOfDay = timeOfDay;
-    }
 
     @Override
     public byte[] write() {

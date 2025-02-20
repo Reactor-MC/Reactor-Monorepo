@@ -7,13 +7,16 @@ import ink.reactor.api.world.data.Biome;
 import ink.reactor.api.world.data.Gamerule;
 import ink.reactor.api.world.data.WorldType;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
+@Setter
 @RequiredArgsConstructor
 public abstract class World {
     private static int WORLDS_AMOUNT = 0;
@@ -21,17 +24,15 @@ public abstract class World {
     private boolean isLoaded = true;
 
     private final Long2ObjectOpenHashMap<Chunk> chunks;
+    private final Set<Player> players = new ObjectOpenHashSet<>();
 
     private final Gamerule gamerule = new Gamerule();
     private final int id = WORLDS_AMOUNT++;
+    private long ticks;
 
     private final String name;
     private final WorldType worldType;
     private final Biome biome;
-
-    private final List<Player> players;
-
-    private long ticks;
 
     @Override
     public int hashCode() {
@@ -73,12 +74,13 @@ public abstract class World {
         return chunks.get(LocationUtil.compressXZ(x, z));
     }
 
-    public void addPlayer(Player player) {
-        if (players.contains(player)) return;
+    public void addPlayer(final Player player) {
         players.add(player);
+        player.setWorld(this);
     }
 
-    public void removePlayer(Player player) {
+    public void removePlayer(final Player player) {
         players.remove(player);
+        player.setWorld(null);
     }
 }

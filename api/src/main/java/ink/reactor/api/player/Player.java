@@ -49,4 +49,14 @@ public abstract class Player implements CommandSender {
 
     public abstract PlayerInventory getInventory();
     public abstract void setTabHeaderFooter(final ChatComponent[] header, final ChatComponent[] footer);
+
+    @Override
+    public final boolean equals(Object obj) {
+        return obj == this || (obj instanceof Player player && player.uuid.equals(this.uuid));
+    }
+
+    @Override
+    public final int hashCode() {
+        return id;
+    }
 }

@@ -10,7 +10,6 @@ import ink.reactor.api.ReactorServer;
 import ink.reactor.api.config.server.ServerConfig;
 import ink.reactor.api.plugin.PluginManager;
 import ink.reactor.api.scheduler.ServerScheduler;
-import ink.reactor.api.world.World;
 import ink.reactor.api.world.WorldManager;
 import ink.reactor.api.world.data.Biome;
 import ink.reactor.api.world.data.WorldType;
@@ -38,17 +37,9 @@ final class ReactorServerImpl implements ReactorServer {
     private final Console console;
     private final PluginManager pluginManager = new PluginManagerImpl();
 
-    private final WorldManager worldManager = new WorldManager(
+    private final WorldManager worldManager = WorldManager.createWorldManager(
         VanillaChunkBuilder::new,
-        new ReactorWorld(
-                new Long2ObjectOpenHashMap<>(),
-                "default",
-                WorldType.OVERWORLD,
-                Biome.PLAINS,
-                new ArrayList<>(),
-                0L
-        )
-    );
+        new ReactorWorld(new Long2ObjectOpenHashMap<>(), "default", WorldType.OVERWORLD, Biome.PLAINS));
 
     private final Map<UUID, ReactorPlayer> playersByUUID = new Object2ObjectOpenHashMap<>();
     private final Collection<Player> players = new ArrayList<>();

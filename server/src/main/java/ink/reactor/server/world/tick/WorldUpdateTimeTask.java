@@ -1,19 +1,17 @@
 package ink.reactor.server.world.tick;
 
-import ink.reactor.api.world.WorldManager;
-import lombok.RequiredArgsConstructor;
+import ink.reactor.api.Reactor;
+import ink.reactor.api.world.World;
 
-@RequiredArgsConstructor
+import java.util.Collection;
+
 public final class WorldUpdateTimeTask implements Runnable {
-
-    private final WorldManager manager;
 
     @Override
     public void run() {
-        manager.getWorlds().forEach(world -> {
-            long currentTicks = world.getTicks();
-            long newTicks = currentTicks + 20L;
-            world.setTime(newTicks); // Error here
-        });
+        final Collection<World> worlds = Reactor.getServer().getWorldManager().getWorlds();
+        for (final World world : worlds) {
+            world.setTicks(world.getTicks() + 5000L);
+        }
     }
 }
