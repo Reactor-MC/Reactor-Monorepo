@@ -1,0 +1,27 @@
+import lombok.Getter;
+
+import java.util.Collection;
+import ink.reactor.dataparser.util.CopyOnWriteCollection;
+
+@Getter
+public final class WolfType {
+
+    public static final Collection<WolfType> ALL = new CopyOnWriteCollection<>({ALL_FIELD});
+
+    private final String name;
+    private final String angryTexture, tameTexture, wildTexture;
+
+    public WolfType(String name, String angryTexture, String tameTexture, String wildTexture) {
+        this.name = name;
+        this.angryTexture = angryTexture;
+        this.tameTexture = tameTexture;
+        this.wildTexture = wildTexture;
+    }
+
+    private WolfType(String name, int index, String angryTexture, String tameTexture, String wildTexture) {
+        this(name, angryTexture, tameTexture, wildTexture);
+        ALL.add(this);
+    }
+
+    public static final WolfType {OBJECT_FIELD_TYPE};
+}

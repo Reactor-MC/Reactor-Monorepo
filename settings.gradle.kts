@@ -8,6 +8,7 @@ for (lib in libs) {
 include("api")
 include("protocol")
 include("server")
+include("data-parser")
 
 val features = arrayOf("debug")
 for (feature in features) {

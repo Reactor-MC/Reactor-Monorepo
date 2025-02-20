@@ -1,0 +1,10 @@
+public final class {NAME}Protocol {
+
+    public static final int {HANDSHAKE}
+
+    public static final int {LOGIN}
+
+    public static final int {CONFIGURATION}
+
+    public static final int {PLAY}
+}

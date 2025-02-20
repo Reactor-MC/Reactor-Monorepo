@@ -1,0 +1,28 @@
+import lombok.Getter;
+
+@Getter
+public final class EntityType {
+
+    private final String name;
+    private final int id;
+    private final float width, height;
+
+    public EntityType(String name, int id, double width, double height) {
+        this.name = name;
+        this.id = id;
+        this.width = (float)width;
+        this.height = (float)height;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        return object == this || (object instanceof EntityType entityType && entityType.id == this.id);
+    }
+
+    public static final EntityType {OBJECT_FIELD_TYPE};
+}

@@ -1,0 +1,28 @@
+import lombok.Getter;
+
+import java.util.Collection;
+import ink.reactor.dataparser.util.CopyOnWriteCollection;
+
+@Getter
+public final class Painting {
+
+    public static final Collection<Painting> ALL = new CopyOnWriteCollection<>({ALL_FIELD});
+
+    private final String assetId, title, author;
+    private final byte height, width;
+
+    public Painting(String assetId, byte height, byte width, String title, String author) {
+        this.assetId = assetId;
+        this.height = height;
+        this.width = width;
+        this.title = title;
+        this.author = author;
+    }
+
+    private Painting(String assetId, int index, int height, int width, String title, String author) {
+        this(assetId, (byte)height, (byte)width, title, author);
+        ALL.add(this);
+    }
+
+    public static final Painting {OBJECT_FIELD_TYPE};
+}
