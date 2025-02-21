@@ -2,6 +2,7 @@ package ink.reactor.dataparser;
 
 import java.io.IOException;
 
+import ink.reactor.dataparser.other.effect.EffectParser;
 import ink.reactor.dataparser.registry.banner.BannerParser;
 import ink.reactor.dataparser.registry.biome.BiomeParser;
 import ink.reactor.dataparser.registry.block.BlockParser;
@@ -20,22 +21,34 @@ import ink.reactor.dataparser.tag.item.ItemParser;
 
 public final class DataParser {
 
-    public static void main(String[] args) {
-        final String parserName = "packets";
-        final String option = "report";
+    public static void main(final String[] args) {
+        String parserName, option;
 
-        Parser parser = null;
-
-        if (option.equals("report")) {
-            parser = handleReport(parserName);
-        } else if (option.equals("registry")) {
-            parser = handleRegistry(parserName);
-        } else if (option.equals("tags")) {
-            parser = handleTags(parserName);
+        if (args.length == 0) {
+            parserName = "effects";
+            option = "other";
+        } else {
+            if (args.length != 2) {
+                System.out.println("Format: java -jar dataparser.jar (option) (parsername)");
+                return;
+            }
+            option = args[0];
+            parserName = args[1];
         }
 
+        parserName = parserName.toLowerCase();
+        option = option.toLowerCase();
+
+        final Parser parser = switch(option) {
+            case "other" -> handleOther(parserName);
+            case "report" -> handleReport(parserName);
+            case "tags" -> handleTags(parserName);
+            case "registry" -> handleRegistry(parserName);
+            default -> null;
+        };
+
         if (parser == null) {
-            System.out.println("Can't found the option " + option);
+            System.out.println("Can't found the option " + option + " with the parser "+ parserName);
             return;
         }
         try {
@@ -75,6 +88,13 @@ public final class DataParser {
             case "enchantment" -> new EnchantmentParser();
             case "trim-pattern" -> new TrimPatternParser();
             case "trim-material" -> new TrimMaterialParser();
+            default -> null;
+        };
+    }
+
+    private static Parser handleOther(final String parserName) {
+        return switch (parserName) {
+            case "effects" -> new EffectParser();
             default -> null;
         };
     }

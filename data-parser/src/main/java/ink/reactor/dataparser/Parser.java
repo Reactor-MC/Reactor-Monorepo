@@ -17,11 +17,10 @@ import ink.reactor.dataparser.util.AppendOptions;
 
 public interface Parser {
 
-    public static final File SRC = new File("data-parser/src/main/java");
-    public static final File OUTPUT = new File("data-parser/src/main/java/ink/reactor/dataparser/output");
-    public static final File RESOURCES = new File("data-parser/src/main/resources");
+    File OUTPUT = new File("data-parser/src/main/java/ink/reactor/dataparser/output");
+    File RESOURCES = new File("data-parser/src/main/resources");
 
-    public void load() throws IOException;
+    void load() throws IOException;
 
     default void appendString(final String string, final StringBuilder builder) {
         builder.append('"');
@@ -65,6 +64,7 @@ public interface Parser {
             string = string.substring(index+1);
         }
         return string
+            .replace(' ', '_')
             .replace('.', '_')
             .replace('/', '_')
             .toUpperCase();
