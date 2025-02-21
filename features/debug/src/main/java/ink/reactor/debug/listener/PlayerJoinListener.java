@@ -34,7 +34,16 @@ public class PlayerJoinListener {
 
         event.getPlayer().setTabHeaderFooter(
             ChatLegacy.format("&aExample &fHeader"),
-            ChatLegacy.format("&dExample &eFooter"));
+            ChatLegacy.format("&dExample &eFooter")
+        );
+
+        event.getPlayer().showTitle(
+                ChatLegacy.format("&aExample Title"),
+                ChatLegacy.format("&7Example Subtitle"),
+                10,
+                70,
+                20
+        );
 
         final ItemStack itemStack = new ItemStack(Material.DIAMOND_HELMET);
         itemStack.getComponents().put(ItemComponent.LORE, List.of(
