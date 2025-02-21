@@ -10,8 +10,12 @@ import ink.reactor.api.player.data.PlayerSkin;
 import ink.reactor.api.world.World;
 import ink.reactor.chat.ChatMode;
 import ink.reactor.chat.component.ChatComponent;
+
 import ink.reactor.entity.Entity;
 
+import ink.reactor.entity.data.MinecraftEntity;
+import ink.reactor.entity.data.adapter.LivingMetadata;
+import ink.reactor.entity.data.adapter.MinecraftEntityMetadata;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,7 +23,8 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Getter
 @Setter
-public abstract class Player implements CommandSender {
+public abstract class Player implements CommandSender, MinecraftEntityMetadata, LivingMetadata {
+    private final MinecraftEntity minecraftEntity = new MinecraftEntity();
 
     private final int id = Entity.ENTITY_ID_COUNTER.incrementAndGet();
     private final PlayerSkin skin = new PlayerSkin();
@@ -29,7 +34,6 @@ public abstract class Player implements CommandSender {
     private final UUID uuid;
 
     private Gamemode gamemode = Gamemode.SURVIVAL;
-    private double health = 20;
     private long ping;
 
     private String clientInfo;
@@ -42,9 +46,6 @@ public abstract class Player implements CommandSender {
     private boolean textFiltering;
     private boolean serverListings;
 
-    private double x, y, z;
-    private double velocityX, velocityY, velocityZ;
-    private float yaw, pitch;
     private World world;
 
     public abstract PlayerInventory getInventory();

@@ -27,12 +27,16 @@ public final class PlayerConnectionImpl implements PlayerConnection {
     private long lastPing;
 
     public volatile ConnectionState state = ConnectionState.HANDSHAKE;
+    volatile boolean online = true;
 
     PlayerConnectionImpl(SocketChannel channel) {
         this.channel = channel;
     }
 
     public void sendPacket(final PacketOutbound packet) {
+        if (!online) {
+            return;
+        }
         if (channel.eventLoop().inEventLoop()) {
             channel.writeAndFlush(packet);
             return;
@@ -41,6 +45,9 @@ public final class PlayerConnectionImpl implements PlayerConnection {
     };
 
     public void sendPackets(final PacketOutbound... packets) {
+        if (!online) {
+            return;
+        }
         if (channel.eventLoop().inEventLoop()) {
             for (final PacketOutbound packet : packets) {
                 channel.write(packet);

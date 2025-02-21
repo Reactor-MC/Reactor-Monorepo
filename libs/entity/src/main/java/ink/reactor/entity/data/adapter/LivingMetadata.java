@@ -1,12 +1,19 @@
 package ink.reactor.entity.data.adapter;
 
 import ink.reactor.entity.data.Living;
+import ink.reactor.entity.effect.MobEffect;
+import ink.reactor.entity.effect.MobEffectManager;
+import ink.reactor.item.data.potion.PotionEffectType;
 
 public interface LivingMetadata {
     Living getLiving();
 
     default float getYaw() {
         return getLiving().getYaw();
+    }
+
+    default MobEffectManager getMobEffectManager() {
+        return getLiving().getMobEffectManager();
     }
 
     default float getPitch() {
@@ -43,5 +50,17 @@ public interface LivingMetadata {
 
     default void setArrows(int arrows) {
         getLiving().setArrows(arrows);
+    }
+
+    default boolean addEffect(final MobEffect effect) {
+        return getMobEffectManager().addEffect(effect);
+    }
+
+    default MobEffect removeEffect(final PotionEffectType type) {
+        return getMobEffectManager().removeEffect(type);
+    }
+
+    default MobEffect getEffect(final PotionEffectType type) {
+        return getMobEffectManager().getEffect(type);
     }
 }

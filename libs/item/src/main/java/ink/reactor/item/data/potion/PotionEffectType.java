@@ -3,9 +3,9 @@
 * Class generator: ink.reactor.dataparser.other.effect.EffectParser (module data-parser)
 * Date: Year: 2025. Month: 02. Day: 20. Time: 22:26:31
 */
-package ink.reactor.entity.effect;
+package ink.reactor.item.data.potion;
 
-public enum EffectType {
+public enum PotionEffectType {
     SPEED,
     SLOWNESS,
     HASTE,
@@ -45,4 +45,6 @@ public enum EffectType {
     WEAVING,
     OOZING,
     INFESTED;
+
+    public final int id = ordinal();
 }

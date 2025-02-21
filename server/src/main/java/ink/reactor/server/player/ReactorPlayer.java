@@ -9,11 +9,15 @@ import ink.reactor.api.player.data.PlayerInventory;
 import ink.reactor.chat.component.ChatComponent;
 import ink.reactor.chat.component.RawComponent;
 import ink.reactor.chat.util.ComponentCombiner;
+import ink.reactor.entity.effect.MobEffect;
+import ink.reactor.item.data.potion.PotionEffectType;
 import ink.reactor.protocol.outbound.play.*;
+import ink.reactor.server.player.adapter.PlayerLiving;
 
 public final class ReactorPlayer extends Player implements InventoryHolder {
 
     private final ReactorPlayerInventory reactorPlayerInventory = new ReactorPlayerInventory(this);
+    private final PlayerLiving living = PlayerLiving.create(this);
 
     public ReactorPlayer(String name, UUID uuid, PlayerConnection connection) {
         super(connection, name, uuid);
@@ -69,5 +73,10 @@ public final class ReactorPlayer extends Player implements InventoryHolder {
         getConnection().sendPacket(new PacketOutSetTitleText(title));
         getConnection().sendPacket(new PacketOutSetSubtitleText(subtitle));
         getConnection().sendPacket(new PacketOutSetTitleAnimationTimes(fadeIn, stay, fadeOut));
+    }
+
+    @Override
+    public PlayerLiving getLiving() {
+        return living;
     }
 }

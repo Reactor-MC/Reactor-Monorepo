@@ -18,6 +18,7 @@ public final class NetworkManager extends SimpleChannelInboundHandler<PacketDeco
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) {
+        connection.online = false;
         if (connection.getPlayer() != null) {
             ProtocolConnector.getPlayerCleanup().accept(connection.getPlayer());
         }

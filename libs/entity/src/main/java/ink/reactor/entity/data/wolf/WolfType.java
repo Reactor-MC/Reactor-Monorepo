@@ -25,19 +25,20 @@ public final class WolfType {
         this.wildTexture = wildTexture;
     }
 
-    private WolfType(String name, int index, String angryTexture, String tameTexture, String wildTexture) {
-        this(name, angryTexture, tameTexture, wildTexture);
-        ALL.add(this);
+    private static WolfType vanilla(String name, String angryTexture, String tameTexture, String wildTexture) {
+        final WolfType wolfType = new WolfType(name, angryTexture, tameTexture, wildTexture);
+        ALL.add(wolfType);
+        return wolfType;
     }
 
     public static final WolfType 
-        STRIPED = new WolfType("striped",0,"minecraft:entity/wolf/wolf_striped_angry","minecraft:entity/wolf/wolf_striped_tame","minecraft:entity/wolf/wolf_striped"),
-        ASHEN = new WolfType("ashen",1,"minecraft:entity/wolf/wolf_ashen_angry","minecraft:entity/wolf/wolf_ashen_tame","minecraft:entity/wolf/wolf_ashen"),
-        WOODS = new WolfType("woods",2,"minecraft:entity/wolf/wolf_woods_angry","minecraft:entity/wolf/wolf_woods_tame","minecraft:entity/wolf/wolf_woods"),
-        RUSTY = new WolfType("rusty",3,"minecraft:entity/wolf/wolf_rusty_angry","minecraft:entity/wolf/wolf_rusty_tame","minecraft:entity/wolf/wolf_rusty"),
-        BLACK = new WolfType("black",4,"minecraft:entity/wolf/wolf_black_angry","minecraft:entity/wolf/wolf_black_tame","minecraft:entity/wolf/wolf_black"),
-        CHESTNUT = new WolfType("chestnut",5,"minecraft:entity/wolf/wolf_chestnut_angry","minecraft:entity/wolf/wolf_chestnut_tame","minecraft:entity/wolf/wolf_chestnut"),
-        PALE = new WolfType("pale",6,"minecraft:entity/wolf/wolf_angry","minecraft:entity/wolf/wolf_tame","minecraft:entity/wolf/wolf"),
-        SNOWY = new WolfType("snowy",7,"minecraft:entity/wolf/wolf_snowy_angry","minecraft:entity/wolf/wolf_snowy_tame","minecraft:entity/wolf/wolf_snowy"),
-        SPOTTED = new WolfType("spotted",8,"minecraft:entity/wolf/wolf_spotted_angry","minecraft:entity/wolf/wolf_spotted_tame","minecraft:entity/wolf/wolf_spotted");
+        STRIPED = vanilla("striped","minecraft:entity/wolf/wolf_striped_angry","minecraft:entity/wolf/wolf_striped_tame","minecraft:entity/wolf/wolf_striped"),
+        ASHEN = vanilla("ashen","minecraft:entity/wolf/wolf_ashen_angry","minecraft:entity/wolf/wolf_ashen_tame","minecraft:entity/wolf/wolf_ashen"),
+        WOODS = vanilla("woods","minecraft:entity/wolf/wolf_woods_angry","minecraft:entity/wolf/wolf_woods_tame","minecraft:entity/wolf/wolf_woods"),
+        RUSTY = vanilla("rusty","minecraft:entity/wolf/wolf_rusty_angry","minecraft:entity/wolf/wolf_rusty_tame","minecraft:entity/wolf/wolf_rusty"),
+        BLACK = vanilla("black","minecraft:entity/wolf/wolf_black_angry","minecraft:entity/wolf/wolf_black_tame","minecraft:entity/wolf/wolf_black"),
+        CHESTNUT = vanilla("chestnut","minecraft:entity/wolf/wolf_chestnut_angry","minecraft:entity/wolf/wolf_chestnut_tame","minecraft:entity/wolf/wolf_chestnut"),
+        PALE = vanilla("pale","minecraft:entity/wolf/wolf_angry","minecraft:entity/wolf/wolf_tame","minecraft:entity/wolf/wolf"),
+        SNOWY = vanilla("snowy","minecraft:entity/wolf/wolf_snowy_angry","minecraft:entity/wolf/wolf_snowy_tame","minecraft:entity/wolf/wolf_snowy"),
+        SPOTTED = vanilla("spotted","minecraft:entity/wolf/wolf_spotted_angry","minecraft:entity/wolf/wolf_spotted_tame","minecraft:entity/wolf/wolf_spotted");
 }

@@ -8,6 +8,10 @@ public record TickDuration(int duration) {
         return new TickDuration(TickUnit.MILLIS.toTicks(millis));
     }
 
+    public static TickDuration none() {
+        return new TickDuration(0);
+    }
+
     public static TickDuration ofSeconds(final int seconds) {
         return new TickDuration(TickUnit.SECONDS.toTicks(seconds));
     }

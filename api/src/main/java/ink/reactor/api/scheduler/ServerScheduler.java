@@ -23,6 +23,15 @@ public interface ServerScheduler {
     int schedule(final Runnable task, final TickDuration startDelay, final TickDuration repeat);
 
     /*
+     * Run the task in this tick
+     * @param task - Task to be executed by the main thread
+     * @return taskId
+     */
+    default int schedule(final Runnable task, final TickDuration repeat) {
+        return schedule(task, TickDuration.none(), repeat);
+    }
+
+    /*
      * Cancel a running task
      * @param taskId - The task id (returned by schedule method)
      * @return if the task exists or no

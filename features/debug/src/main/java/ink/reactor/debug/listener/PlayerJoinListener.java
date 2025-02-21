@@ -3,22 +3,27 @@ package ink.reactor.debug.listener;
 import java.util.List;
 import java.util.Map;
 
+import ink.reactor.api.player.Player;
 import ink.reactor.api.player.event.PlayerJoinEvent;
 import ink.reactor.api.plugin.listener.Listener;
+import ink.reactor.api.scheduler.TickDuration;
 import ink.reactor.chat.ChatColor;
 import ink.reactor.chat.component.FullComponent;
 import ink.reactor.chat.format.ChatLegacy;
 import ink.reactor.chat.interactivity.ClickEvent;
 import ink.reactor.chat.interactivity.HoverEvent;
+import ink.reactor.entity.effect.MobEffect;
 import ink.reactor.item.ItemStack;
 import ink.reactor.item.Material;
 import ink.reactor.item.component.ItemComponent;
+import ink.reactor.item.data.potion.PotionEffectType;
 
 public class PlayerJoinListener {
 
     @Listener
     public void onJoin(final PlayerJoinEvent event) {
-        event.getPlayer().sendMessageLegacy("""
+        final Player player = event.getPlayer();
+        player.sendMessageLegacy("""
 
             &bReactor &7- Debug plugin 
 
@@ -30,14 +35,16 @@ public class PlayerJoinListener {
         fullComponent.setClickEvent(ClickEvent.openUrl("https://github.com/Reactor-Minecraft/Reactor"));
         fullComponent.setHoverEvent(HoverEvent.showText("a"));
 
-        event.getPlayer().sendMessage(fullComponent);
+        player.addEffect(new MobEffect(PotionEffectType.STRENGTH, 0, TickDuration.ofSeconds(5).duration()));
 
-        event.getPlayer().setTabHeaderFooter(
+        player.sendMessage(fullComponent);
+
+        player.setTabHeaderFooter(
             ChatLegacy.format("&aExample &fHeader"),
             ChatLegacy.format("&dExample &eFooter")
         );
 
-        event.getPlayer().showTitle(
+        player.showTitle(
                 ChatLegacy.format("&aExample Title"),
                 ChatLegacy.format("&7Example Subtitle"),
                 10,
@@ -54,12 +61,5 @@ public class PlayerJoinListener {
 
         itemStack.getComponents().put(ItemComponent.CUSTOM_NAME, ChatLegacy.format("&aCustom &e&lItem"));
         event.getPlayer().getInventory().setItem(36, itemStack);
-    }
-
-    public static void main(String[] args) {
-        final FullComponent fullComponent = new FullComponent("    Go to github page", ChatColor.YELLOW);
-        fullComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Reactor-Minecraft/Reactor"));
-      
-        System.out.println(fullComponent.toJson());
     }
 }

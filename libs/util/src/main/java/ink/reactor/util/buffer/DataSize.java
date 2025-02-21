@@ -9,6 +9,7 @@ public final class DataSize {
         SHORT = 2,
         CHAR = 2,
         INT = 4,
+        MAX_VAR_INT = 5,
         FLOAT = 4,
         DOUBLE = 8;
 
@@ -53,7 +54,7 @@ public final class DataSize {
         return 5;
     }
 
-    public static int varLong(final int i) {
+    public static int varLong(final long i) {
         if (i < 0) { // Negative numbers use 10 bytes
             return 10;
         }

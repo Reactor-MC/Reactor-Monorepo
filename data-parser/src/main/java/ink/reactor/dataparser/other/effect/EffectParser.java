@@ -28,6 +28,6 @@ public final class EffectParser implements Parser {
             }
         }
 
-        writeFile(getClass(), template.replace("{OBJECT_FIELD_TYPE}", builder.toString()), "EffectType");
+        writeFile(getClass(), template.replace("{OBJECT_FIELD_TYPE}", builder.toString()), "PotionEffectType");
     }
 }

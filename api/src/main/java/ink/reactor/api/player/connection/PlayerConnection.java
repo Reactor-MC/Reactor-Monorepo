@@ -11,4 +11,6 @@ public interface PlayerConnection {
     void ping();
 
     Player getPlayer();
+
+    boolean isOnline();
 }

@@ -18,9 +18,10 @@ public final class WolfType {
         this.wildTexture = wildTexture;
     }
 
-    private WolfType(String name, int index, String angryTexture, String tameTexture, String wildTexture) {
-        this(name, angryTexture, tameTexture, wildTexture);
-        ALL.add(this);
+    private static WolfType vanilla(String name, String angryTexture, String tameTexture, String wildTexture) {
+        final WolfType wolfType = new WolfType(name, angryTexture, tameTexture, wildTexture);
+        ALL.add(wolfType);
+        return wolfType;
     }
 
     public static final WolfType {OBJECT_FIELD_TYPE};
