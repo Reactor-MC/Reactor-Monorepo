@@ -9,9 +9,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public final class PacketOutUpdateTime implements PacketOutbound {
 
-    private long worldAge;
-    private long timeOfDay;
-    private boolean timeOfTheDayIncreasing;
+    private final long worldAge;
+    private final long timeOfDay;
+    private final boolean timeOfTheDayIncreasing;
 
     @Override
     public byte[] write() {

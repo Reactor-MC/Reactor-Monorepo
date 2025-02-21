@@ -46,11 +46,10 @@ public class PlayerJoinListener {
 
         player.showTitle(
                 ChatLegacy.format("&aExample Title"),
-                ChatLegacy.format("&7Example Subtitle"),
-                10,
-                70,
-                20
+                ChatLegacy.format("&7Example Subtitle")
         );
+
+        event.getPlayer().sendActionBar(ChatLegacy.format("&dAction bar text example"));
 
         final ItemStack itemStack = new ItemStack(Material.DIAMOND_HELMET);
         itemStack.getComponents().put(ItemComponent.LORE, List.of(

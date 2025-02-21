@@ -54,6 +54,9 @@ public abstract class Player implements CommandSender, MinecraftEntityMetadata, 
     public abstract void showTitle(final ChatComponent[] title);
     public abstract void showTitle(final ChatComponent[] title, final ChatComponent[] subtitle);
     public abstract void showTitle(final ChatComponent[] title, final ChatComponent[] subtitle, int fadeIn, int stay, int fadeOut);
+    public abstract void clearTitles();
+
+    public abstract void sendActionBar(final ChatComponent[] component);
 
     @Override
     public final boolean equals(Object obj) {

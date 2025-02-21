@@ -7,7 +7,7 @@ import ink.reactor.util.buffer.writer.ExpectedSizeBuffer;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class PacketOutSetTitleAnimationTimes implements PacketOutbound {
+public final class PacketOutSetTitleAnimationTimes implements PacketOutbound {
 
     private final int fadeIn;
     private final int stay;

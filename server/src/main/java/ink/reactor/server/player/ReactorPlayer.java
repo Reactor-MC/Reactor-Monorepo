@@ -76,6 +76,15 @@ public final class ReactorPlayer extends Player implements InventoryHolder {
     }
 
     @Override
+    public void clearTitles() {
+        getConnection().sendPacket(new PacketOutClearTitles(true));
+    }
+
+    @Override
+    public void sendActionBar(ChatComponent[] component) {
+        getConnection().sendPacket(new PacketOutSetActionBarText(component));
+    }
+  
     public PlayerLiving getLiving() {
         return living;
     }

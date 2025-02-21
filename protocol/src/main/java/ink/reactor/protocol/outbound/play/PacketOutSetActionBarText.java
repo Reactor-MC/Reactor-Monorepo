@@ -6,24 +6,22 @@ import ink.reactor.chat.util.ComponentCombiner;
 import ink.reactor.nbt.writer.NBTByteWriter;
 import ink.reactor.protocol.outbound.OutProtocol;
 import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import lombok.AllArgsConstructor;
 
-public final class PacketOutSetSubtitleText implements PacketOutbound {
+@AllArgsConstructor
+public final class PacketOutSetActionBarText implements PacketOutbound {
 
-    private final ChatComponent[] subtitle;
-
-    public PacketOutSetSubtitleText(ChatComponent[] component) {
-        this.subtitle = component;
-    }
+    private final ChatComponent[] actionBarText;
 
     @Override
     public byte[] write() {
         final FriendlyBuffer buffer = new FriendlyBuffer(100);
-        NBTByteWriter.writeNBT(ComponentCombiner.toNBT(subtitle), buffer);
+        NBTByteWriter.writeNBT(ComponentCombiner.toNBT(actionBarText), buffer);
         return buffer.compress();
     }
 
     @Override
     public int getId() {
-        return OutProtocol.PLAY_SET_SUBTITLE_TEXT;
+        return OutProtocol.PLAY_SET_ACTION_BAR_TEXT;
     }
 }

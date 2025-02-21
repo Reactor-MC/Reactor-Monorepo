@@ -7,19 +7,19 @@ import ink.reactor.util.buffer.writer.ExpectedSizeBuffer;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public final class PacketOutPlayKeepAlive implements PacketOutbound {
+public final class PacketOutPingResponse implements PacketOutbound {
 
     private final long payload;
 
     @Override
     public byte[] write() {
-        final ExpectedSizeBuffer expectedSizeBuffer = new ExpectedSizeBuffer(DataSize.LONG);
-        expectedSizeBuffer.writeLong(payload);
-        return expectedSizeBuffer.buffer;
+        final ExpectedSizeBuffer buffer = new ExpectedSizeBuffer(DataSize.LONG);
+        buffer.writeLong(payload);
+        return buffer.compress();
     }
 
     @Override
     public int getId() {
-        return OutProtocol.PLAY_KEEP_ALIVE;
+        return OutProtocol.PLAY_PONG_RESPONSE;
     }
 }
