@@ -12,5 +12,5 @@ public final class Entity {
 
     private final int id = ENTITY_ID_COUNTER.incrementAndGet();
     private final EntityType type;
-    private final Object data;
+    private final Object metadata;
 }

@@ -23,11 +23,10 @@ public final class WolfVariantParser implements Parser {
             builder.append('\n');
             builder.append("        ");
             builder.append(toFieldName(entry.getKey()));
-            builder.append(" = new WolfType(");
+            builder.append(" = vanilla(");
 
             append(builder,
                 entry.getKey(),
-                i,
                 wolfType.getString("angry_texture"),
                 wolfType.getString("tame_texture"),
                 wolfType.getString("wild_texture")

@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import ink.reactor.api.scheduler.TickDuration;
 import ink.reactor.debug.DebugPlugin;
 import ink.reactor.server.player.PlayerProtocolConnector;
+import ink.reactor.server.player.processor.PlayerProcessor;
 import ink.reactor.server.world.tick.WorldUpdateTimeTask;
 import org.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
@@ -65,7 +66,8 @@ public final class ReactorMain {
             debugPlugin.load();
             debugPlugin.enable();
 
-            server.getScheduler().schedule(new WorldUpdateTimeTask(), TickDuration.ofSeconds(1), TickDuration.ofSeconds(1));
+            server.getScheduler().schedule(new PlayerProcessor(), TickDuration.ofSeconds(1));
+            server.getScheduler().schedule(new WorldUpdateTimeTask(), TickDuration.ofSeconds(1));
         }
 
         server.getPluginManager().enablePlugins();

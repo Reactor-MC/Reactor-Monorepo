@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public final class MinecraftEntity implements MinecraftEntityMetadata {
+public class MinecraftEntity implements MinecraftEntityMetadata {
     private boolean onFire, sneaking, swimming, invisible, glowingEffect;
     private double x, y, z;
     private double velocityX, velocityY, velocityZ;

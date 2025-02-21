@@ -8,7 +8,6 @@ import ink.reactor.api.scheduler.TickDuration;
 import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
 
 public final class PlayerProtocolConnector {
@@ -20,30 +19,25 @@ public final class PlayerProtocolConnector {
             }
         }, TickDuration.ofSeconds(1), new TickDuration(Reactor.getServer().getConfig().pingWaitUpdateTicks()));
 
-        final ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-
         final ProtocolConnector.ProtocolPlayerCreator creator = (name, uuid, connection) -> {
-            readWriteLock.writeLock().lock();
-
             final ReactorPlayer reactorPlayer = new ReactorPlayer(name,uuid,connection);
-            players.add(reactorPlayer);
-            byUUID.put(reactorPlayer.getUuid(), reactorPlayer);
 
-            Reactor.getServer().getWorldManager().getDefaultWorld().addPlayer(reactorPlayer);
+            Reactor.getServer().getScheduler().runNow(() -> {
+                players.add(reactorPlayer);
+                byUUID.put(reactorPlayer.getUuid(), reactorPlayer);
 
-            readWriteLock.writeLock().unlock();
+                Reactor.getServer().getWorldManager().getDefaultWorld().addPlayer(reactorPlayer);
+            });
+
             return reactorPlayer;
         };
 
         final Consumer<Player> cleanup = (player) -> {
-            readWriteLock.writeLock().lock();
-
-            players.remove(player);
-            byUUID.remove(player.getUuid());
-
-            player.getWorld().removePlayer(player);
-
-            readWriteLock.writeLock().unlock();
+            Reactor.getServer().getScheduler().runNow(() -> {
+                players.remove(player);
+                byUUID.remove(player.getUuid());
+                player.getWorld().removePlayer(player);
+            });
         };
 
         ProtocolConnector.setConnector(creator, cleanup);
