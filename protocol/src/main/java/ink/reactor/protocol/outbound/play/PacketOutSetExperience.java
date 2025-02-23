@@ -15,7 +15,7 @@ public class PacketOutSetExperience implements PacketOutbound {
 
     @Override
     public byte[] write() {
-        final ExpectedSizeBuffer buffer = new ExpectedSizeBuffer(DataSize.FLOAT + DataSize.INT * 2);
+        final ExpectedSizeBuffer buffer = new ExpectedSizeBuffer(DataSize.FLOAT + DataSize.varInt(level) + DataSize.varInt(totalExperience));
         buffer.writeFloat(experienceBar);
         buffer.writeVarInt(level);
         buffer.writeVarInt(totalExperience);
