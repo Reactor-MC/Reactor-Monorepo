@@ -30,7 +30,7 @@ final class PlayerChannelInitializer extends ChannelInitializer<SocketChannel> {
         config.setOption(ChannelOption.TCP_NODELAY, true);
 
         if (Reactor.getServer().getConfig().tcpFastOpen()) {
-            config.setOption(ChannelOption.TCP_FASTOPEN, 1);
+            config.setOption(ChannelOption.TCP_FASTOPEN, Reactor.getServer().getConfig().tcpFastOpenConnections());
             config.setOption(ChannelOption.TCP_FASTOPEN_CONNECT,true);
         }
 

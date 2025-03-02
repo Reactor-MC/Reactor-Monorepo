@@ -7,6 +7,7 @@ public record ServerConfig(
     int viewDistance,
     int simulationDistance,
     int networkCompressionThreshold,
+    int tcpFastOpenConnections,
     boolean debugMode,
     boolean tcpFastOpen,
     int pingWaitUpdateTicks
