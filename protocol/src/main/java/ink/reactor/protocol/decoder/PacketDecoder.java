@@ -9,6 +9,7 @@ final class PacketDecoder {
 
         while (numRead < 5) {
             if (!buf.isReadable()) {
+                buf.clear();
                 return -1;
             }
     
