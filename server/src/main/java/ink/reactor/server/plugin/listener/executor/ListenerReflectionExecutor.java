@@ -2,9 +2,9 @@ package ink.reactor.server.plugin.listener.executor;
 
 import java.lang.invoke.MethodHandle;
 
+import ink.reactor.util.event.Cancellable;
 import org.tinylog.Logger;
 
-import ink.reactor.api.plugin.event.Cancellable;
 import ink.reactor.api.plugin.listener.EventExecutor;
 import ink.reactor.api.plugin.listener.Listener;
 import lombok.RequiredArgsConstructor;

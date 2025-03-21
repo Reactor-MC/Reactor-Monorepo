@@ -1,7 +1,7 @@
 package ink.reactor.chat.component;
 
 import ink.reactor.chat.ChatColor;
-import ink.reactor.chat.component.serializer.JsonComponentSerializer;
+import ink.reactor.chat.component.serializer.ColoredSerializer;
 import ink.reactor.nbt.NBT;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class ColoredComponent implements ChatComponent {
 
     @Override
     public byte[] toJsonBytes() {
-        return JsonComponentSerializer.toJson(this);
+        return ColoredSerializer.toJson(this);
     }
 
     @Override
@@ -58,7 +58,6 @@ public class ColoredComponent implements ChatComponent {
         return
             bold == FALSE &&
             italic == FALSE &&
-            obfuscated == FALSE &&
             obfuscated == FALSE &&
             strikethrough == FALSE &&
             underlined == FALSE;

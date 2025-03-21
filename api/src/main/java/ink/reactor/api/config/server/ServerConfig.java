@@ -1,14 +1,13 @@
 package ink.reactor.api.config.server;
 
+import java.io.File;
+
 public record ServerConfig(
     String ip,
     int port,
-    String motd,
-    int viewDistance,
-    int simulationDistance,
-    int networkCompressionThreshold,
-    int tcpFastOpenConnections,
     boolean debugMode,
-    boolean tcpFastOpen,
-    int pingWaitUpdateTicks
+    int pingWaitUpdateTicks,
+    Motd defaultMotd,
+
+    File serverFolder
 ) {}

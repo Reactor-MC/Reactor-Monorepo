@@ -1,7 +1,6 @@
 package ink.reactor.api.world;
 
 import ink.reactor.api.player.Player;
-import ink.reactor.api.world.data.Border;
 import ink.reactor.util.LocationUtil;
 import ink.reactor.api.world.chunk.Chunk;
 import ink.reactor.api.world.data.Biome;

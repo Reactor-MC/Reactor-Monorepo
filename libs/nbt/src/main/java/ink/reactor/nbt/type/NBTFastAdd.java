@@ -41,7 +41,7 @@ public final class NBTFastAdd implements NBT {
 
     @Override
     public void writeTags(final FriendlyBuffer buffer) {
-        final TagNBT[] tags = this.tags.getArray(); // Don't create a iterator object = Fast iteration
+        final TagNBT[] tags = this.tags.getArray(); // Don't create an iterator object = Fast iteration
         for (final TagNBT tag : tags) {
             if (tag != null) {
                 buffer.writeByte(tag.getId());

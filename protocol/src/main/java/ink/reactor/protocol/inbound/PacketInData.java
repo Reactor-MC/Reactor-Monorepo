@@ -55,4 +55,27 @@ public final class PacketInData {
         buffer.readBytes(abyte);
         return BitSet.valueOf(abyte);
     }
+
+    public static int readVarIntSafely(final ByteBuf buf) {
+        int numRead = 0;
+        int result = 0;
+
+        while (numRead < 5) {
+            if (!buf.isReadable()) {
+                buf.clear();
+                return -1;
+            }
+
+            byte read = buf.readByte();
+            int value = (read & 0x7F);
+            result |= (value << (7 * numRead));
+
+            numRead++;
+
+            if ((read & 0x80) != 0x80) {
+                return result;
+            }
+        }
+        throw new RuntimeException("VarInt is too big");
+    }
 }

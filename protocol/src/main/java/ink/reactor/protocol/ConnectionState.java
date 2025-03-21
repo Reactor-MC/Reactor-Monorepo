@@ -1,7 +1,7 @@
 package ink.reactor.protocol;
 
 import ink.reactor.protocol.handler.PacketHandler;
-import ink.reactor.protocol.handler.PacketHandlerStorage;
+import ink.reactor.protocol.handler.storage.PacketHandlerStorage;
 
 public enum ConnectionState {
     HANDSHAKE(2),
@@ -11,13 +11,19 @@ public enum ConnectionState {
 
     public final PacketHandlerStorage handlerStorage;
 
-    private ConnectionState(int amountInboundPackets) {
+    ConnectionState(int amountInboundPackets) {
         this.handlerStorage = new PacketHandlerStorage(amountInboundPackets);
     }
 
     public void add(final PacketHandler... handlers) {
         for (final PacketHandler handler : handlers) {
             handlerStorage.add(handler);
+        }
+    }
+
+    public void remove(final PacketHandler... handlers) {
+        for (final PacketHandler handler : handlers) {
+            handlerStorage.remove(handler);
         }
     }
 }

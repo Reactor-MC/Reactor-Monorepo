@@ -3,8 +3,10 @@ package ink.reactor.chat.component.serializer;
 import ink.reactor.chat.buffer.ChatBufferWrite;
 import ink.reactor.chat.component.FullComponent;
 import ink.reactor.chat.interactivity.HoverEvent;
+import lombok.experimental.UtilityClass;
 
-final class FullSerializer {
+@UtilityClass
+public final class FullSerializer {
 
     private static final byte[]
         CLICK_EVENT_START = ",\"clickEvent\":{\"action\":\"".getBytes(),
@@ -18,7 +20,7 @@ final class FullSerializer {
         CLICK_EVENT_OVERHEAD = 38, // ,"clickEvent":{"action":"","value":""}
         HOVER_OVERHEAD = 41;       // ,"hoverEvent":{"action":"","contents":{}}
 
-    static final byte[] toJson(final FullComponent full) {
+    public static byte[] toJson(final FullComponent full) {
         final byte[] hover = processHoverEvent(full.getHoverEvent());
 
         final byte[] textBytes = full.getText().getBytes();

@@ -2,7 +2,6 @@ package ink.reactor.protocol;
 
 import java.util.List;
 
-import ink.reactor.api.Reactor;
 import ink.reactor.protocol.decoder.NoCompressionDecoder;
 import ink.reactor.protocol.encoder.NoCompressionEncoder;
 
@@ -29,8 +28,8 @@ final class PlayerChannelInitializer extends ChannelInitializer<SocketChannel> {
         final ChannelConfig config = channel.config();
         config.setOption(ChannelOption.TCP_NODELAY, true);
 
-        if (Reactor.getServer().getConfig().tcpFastOpen()) {
-            config.setOption(ChannelOption.TCP_FASTOPEN, Reactor.getServer().getConfig().tcpFastOpenConnections());
+        if (ProtocolOptions.OPTIONS.isTcpFastOpen()) {
+            config.setOption(ChannelOption.TCP_FASTOPEN, ProtocolOptions.OPTIONS.getTcpFastOpenConnections());
             config.setOption(ChannelOption.TCP_FASTOPEN_CONNECT,true);
         }
 

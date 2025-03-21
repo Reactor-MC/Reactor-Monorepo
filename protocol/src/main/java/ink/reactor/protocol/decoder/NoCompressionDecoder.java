@@ -12,13 +12,13 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 public final class NoCompressionDecoder extends ByteToMessageDecoder {
 
     @Override
-    protected void decode(final ChannelHandlerContext channelhandlercontext, final ByteBuf in, final List<Object> out) throws Exception {
+    protected void decode(final ChannelHandlerContext channelhandlercontext, final ByteBuf in, final List<Object> out) {
         if (in.readableBytes() < 1) {
             return;
         }
     
         in.markReaderIndex();
-        final int packetLength = PacketDecoder.readVarIntSafely(in);
+        final int packetLength = PacketInData.readVarIntSafely(in);
     
         if (packetLength == -1) {
             in.resetReaderIndex();

@@ -1,21 +1,26 @@
 package ink.reactor.chat.component.serializer;
 
-import ink.reactor.chat.buffer.ChatBufferWrite;
+import lombok.experimental.UtilityClass;
 
-final class RawSerializer {
+@UtilityClass
+public final class RawSerializer {
     
     static final byte[] JSON_START = "{\"text\":\"".getBytes();
     static final int JSON_OVERHEAD = 11; // {"text":""}
 
-    static final byte[] toJson(final String text) {
+    public static byte[] toJson(final String text) {
         final byte[] textBytes = text.getBytes();
-        final ChatBufferWrite buffer = new ChatBufferWrite(JSON_OVERHEAD + textBytes.length);
+        final byte[] buffer = new byte[JSON_OVERHEAD + textBytes.length];
 
-        buffer.writeBytes(JSON_START);
-        buffer.writeBytes(textBytes);
-        buffer.writeByte('"');
-        buffer.writeByte('}');
+        int index = JSON_START.length;
+        System.arraycopy(JSON_START, 0, buffer, 0, index);
 
-        return buffer.getBuffer();
+        buffer[index] = '"';
+        System.arraycopy(textBytes, 0, buffer, index, textBytes.length);
+        index += textBytes.length;
+        buffer[index++] = '"';
+        buffer[index] = '}';
+
+        return buffer;
     }
 }

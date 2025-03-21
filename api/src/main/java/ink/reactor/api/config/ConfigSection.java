@@ -1,105 +1,81 @@
 package ink.reactor.api.config;
 
-import lombok.Getter;
-
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-@Getter
-public class ConfigSection  {
+public record ConfigSection(Map<String, Object> data) {
 
-    private final Map<String, Object> map;
-
-    public ConfigSection(Map<String, Object> map) {
-        this.map = map;
+    public Object get(final String key) {
+        return data.get(key);
     }
 
     @SuppressWarnings("unchecked")
     public <T> T get(final String key, final Class<T> clazz) {
-        final Object object = map.get(key);
-        if (object == null) {
-            return null;
-        }
-        return object.getClass().equals(clazz) ? (T)object : null;
-    }
-
-    public Object get(final String key) {
-        return map.get(key);
+        final Object object = data.get(key);
+        return (object != null && object.getClass().equals(clazz)) ? (T) object : null;
     }
 
     public <T> T getOrDefault(final String key, final T defaultValue) {
         @SuppressWarnings("unchecked")
-        final T value = get(key, (Class<T>)defaultValue.getClass());
+        final T value = get(key, (Class<T>) defaultValue.getClass());
         return (value == null) ? defaultValue : value;
     }
 
     @SuppressWarnings("unchecked")
     public <T> List<T> getList(final String key, final Class<T> clazz) {
-        if (!(map.get(key) instanceof List list)) {
+        if (!(data.get(key) instanceof List<?> list)) {
             return null;
         }
-        final Iterator<?> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Object next = iterator.next();
-            if (next == null || !(next.getClass().equals(clazz))) {
-                iterator.remove();
-            }
-        }
-        return (List<T>)list;
+        list.removeIf(next -> next == null || !(next.getClass().equals(clazz)));
+        return (List<T>) list;
     }
 
-    @SuppressWarnings("unchecked")
     public List<String> getStringList(final String key) {
-        if (!(map.get(key) instanceof List list)) {
-            return null;
-        }
-        final Iterator<?> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Object next = iterator.next();
-            if (next == null || !(next instanceof String)) {
-                iterator.remove();
-            }
-        }
-        return (List<String>)list;
+        return getList(key, String.class);
     }
 
     public String getString(final String key) {
-        final Object object = map.get(key);
-        return (object instanceof String) ? ((String)object) : null;
+        final Object object = data.get(key);
+        return (object != null) ? object.toString() : null;
     }
 
     public int getInt(final String key) {
-        final Object object = map.get(key);
-        return (object instanceof Number) ? ((Number)object).intValue() : 0;
+        return (data.get(key) instanceof Number number) ? number.intValue() : 0;
+    }
+
+    public int getIntMax(final String key, final int max) {
+        return Math.max(getInt(key), max);
     }
 
     public boolean getBoolean(final String key) {
-        final Object object = map.get(key);
-        return (object instanceof Boolean) ? ((Boolean)object) : false;
+        return (data.get(key) instanceof Boolean b) ? b : false;
+    }
+
+    public long getLong(final String key) {
+        return (data.get(key) instanceof Number number) ? number.longValue() : 0;
     }
 
     public double getDouble(final String key) {
-        final Object object = map.get(key);
-        return (object instanceof Number) ? ((Number)object).doubleValue() : 0;
+        return (data.get(key) instanceof Number number) ? number.doubleValue() : 0;
+    }
+
+    public float getFloat(final String key) {
+        return (data.get(key) instanceof Number number) ? number.floatValue() : 0;
     }
 
     @SuppressWarnings("unchecked")
     public ConfigSection getSection(final String key) {
-        final Object object = map.get(key);
-        return (object instanceof Map) ? new ConfigSection((Map<String, Object>)object) : null;
+        final Object object = data.get(key);
+        return (data.get(key) instanceof Map) ? new ConfigSection((Map<String, Object>) object) : null;
     }
 
     @Override
     public String toString() {
-        return map.toString();
+        return data.toString();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        return (obj instanceof ConfigSection other) ? other.map.equals(this.map) : false;
+        return obj == this || (obj instanceof ConfigSection other && other.data.equals(this.data));
     }
 }

@@ -14,7 +14,7 @@ public class LegacyFormatTest {
     @Test
     public void checkOutput() {
         final ChatComponent[] components = ChatLegacy.format(INPUT);
-        assertEquals(components.length, 3);
+        assertEquals(3, components.length);
 
         final ColoredComponent first = (ColoredComponent)components[0]; // Hi, this is a
         assertEquals(ChatColor.GREEN, first.getColor());

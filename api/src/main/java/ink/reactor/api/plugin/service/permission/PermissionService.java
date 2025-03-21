@@ -8,14 +8,14 @@ public interface PermissionService {
     /**
      * Get online user ranks
      * @param user id to search
-     *  @return a collection of all user ranks, false if user isn't in cache
+     * @return a collection of all user ranks, null if user isn't in cache
      */
     Collection<UserRank> getRanks(final String user);
 
     /**
      * Get online user permissions
      * @param user id to search
-     * @return all user permissions, false if user isn't in cache
+     * @return all user permissions, null if user isn't in cache
      */
     Set<String> getPermissions(final String user);
 
@@ -29,7 +29,7 @@ public interface PermissionService {
     /**
      * Set ranks to a player. If player don't exist in database, create it
      * @param user id to search
-     * @param ranks collections of ranks
+     * @param rank collections of ranks
      */
     void setRanks(final String user, final Collection<Rank> rank);
 
@@ -50,14 +50,14 @@ public interface PermissionService {
     /**
      * Get user permissions instance in cache.
      * @param user id to search
-     * @return user permissions, false if user isn't in cache
+     * @return user permissions, null if user isn't in cache
      */
     UserPermissions getUserInfo(final String user);
 
     /**
      * Check if user contains all permissions
      * @param user id to search
-     * @param permissions permission
+     * @param permission permission
      * @return true if user has all permissions, false if user isn't in cache
      */
     boolean hasPermission(final String user, final String permission);
@@ -88,7 +88,7 @@ public interface PermissionService {
     /**
      * Set permissions to user. If player don't exist in database, create it
      * @param user id to search
-     * @param permissions an array of all permissions
+     * @param permission an array of all permissions
      */
     void setPermission(final String user, final String permission);
 

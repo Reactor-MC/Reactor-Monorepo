@@ -11,7 +11,7 @@ public final class WorldUpdateTimeTask implements Runnable {
     public void run() {
         final Collection<World> worlds = Reactor.getServer().getWorldManager().getWorlds();
         for (final World world : worlds) {
-            world.setTicks(world.getTicks() + 5000L);
+            world.setTicks(world.getTicks() + 20L);
         }
     }
 }

@@ -1,7 +1,6 @@
 package ink.reactor.server.tick;
 
 import lombok.AllArgsConstructor;
-import org.tinylog.Logger;
 
 final class ScheduleTasks {
 

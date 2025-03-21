@@ -3,8 +3,10 @@ package ink.reactor.chat.component.serializer;
 import ink.reactor.chat.buffer.ChatBufferWrite;
 import ink.reactor.chat.component.ChatComponent;
 import ink.reactor.chat.component.ColoredComponent;
+import lombok.experimental.UtilityClass;
 
-final class ColoredSerializer {
+@UtilityClass
+public final class ColoredSerializer {
 
     private static final byte[]
         COLOR = ",\"color\":\"".getBytes(),
@@ -23,7 +25,7 @@ final class ColoredSerializer {
         OBFUSCATED_OVERHEAD = 14,     // ,"obfuscated":
         STRIKETHROUGH_OVERHEAD = 17;  // ,"strikethrough":
 
-    static final byte[] toJson(final ColoredComponent coloredComponent) {
+    public static byte[] toJson(final ColoredComponent coloredComponent) {
         final byte[] textBytes = coloredComponent.getText().getBytes();
         final ChatBufferWrite bufferWrite = new ChatBufferWrite(getColoredSize(textBytes, coloredComponent));
         bufferWrite.writeBytes(RawSerializer.JSON_START);
@@ -35,7 +37,7 @@ final class ColoredSerializer {
         return bufferWrite.getBuffer();
     }
 
-    static final int getColoredSize(final byte[] textBytes, final ColoredComponent component) {
+    static int getColoredSize(final byte[] textBytes, final ColoredComponent component) {
         int size = JSON_OVERHEAD + textBytes.length +
             size(component.getBold(), BOLD_OVERHEAD) +
             size(component.getItalic(), ITALIC_OVERHEAD) +

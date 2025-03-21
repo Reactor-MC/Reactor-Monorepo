@@ -39,6 +39,7 @@ public final class Registries {
             nbt.addString("biomes", "minecraft:badlands");
             NBTByteWriter.writeNBT(nbt, buffer);
         }
+
         return buffer.compress();
     }
 

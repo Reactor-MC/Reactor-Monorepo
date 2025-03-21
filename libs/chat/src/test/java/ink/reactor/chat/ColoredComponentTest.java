@@ -9,13 +9,12 @@ import ink.reactor.chat.component.ColoredComponent;
 
 public class ColoredComponentTest {
 
-    private static final String INPUT = "Hi, this a colored component with styles"; 
+    private static final String INPUT = "Hi, this a colored component with styles";
 
     @Test
     public void checkWithoutStyles() {
-        final String component = new ColoredComponent(INPUT).toJson();
         final String expectedJson = JSONObject.of("text", INPUT).toString();
-        Assertions.assertEquals(expectedJson, component);
+        Assertions.assertEquals(expectedJson, new ColoredComponent(INPUT).toJson());
     }
 
     @Test
@@ -29,13 +28,13 @@ public class ColoredComponentTest {
         component.setColor(ChatColor.AQUA);
 
         final String expectedJson = JSONObject.of(
-            "text", INPUT,
-            "color", "aqua",
-            "bold", true,
-            "italic", false,
-            "underlined", true,
-            "obfuscated", false,
-            "strikethrough", false
+                "text", INPUT,
+                "color", "aqua",
+                "bold", true,
+                "italic", false,
+                "underlined", true,
+                "obfuscated", false,
+                "strikethrough", false
         ).toString();
 
         Assertions.assertEquals(expectedJson, component.toJson());

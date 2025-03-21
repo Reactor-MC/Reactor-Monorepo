@@ -1,0 +1,3 @@
+enable-modules:
+  commands: true
+  chat: true

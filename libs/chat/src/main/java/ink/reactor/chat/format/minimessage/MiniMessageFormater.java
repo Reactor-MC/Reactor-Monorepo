@@ -12,7 +12,7 @@ import ink.reactor.chat.component.FullComponent;
 import ink.reactor.chat.component.RawComponent;
 import ink.reactor.chat.format.minimessage.TagTokenizer.Token;
 import ink.reactor.chat.format.minimessage.TagTokenizer.TokenType;
-import ink.reactor.chat.util.StringUtil;
+import ink.reactor.util.StringUtil;
 
 final class MiniMessageFormater {
 

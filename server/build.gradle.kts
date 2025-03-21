@@ -14,3 +14,9 @@ dependencies {
 
     implementation(project(":features:debug"))
 }
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "ink.reactor.server.ReactorMain"
+    }
+}

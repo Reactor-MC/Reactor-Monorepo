@@ -23,9 +23,9 @@ public final class IntArrayTag extends TagNBT {
 
     @Override
     public void write(final FriendlyBuffer buffer) {
-        final ExpectedSizeBuffer expectedSizeBuffer = buffer.getCurrentBuffer();
-
         buffer.tryResize((value.length + 1) * DataSize.INT);
+
+        final ExpectedSizeBuffer expectedSizeBuffer = buffer.getCurrentBuffer();
         expectedSizeBuffer.writeInt(value.length);
 
         for (final int integer : value) {

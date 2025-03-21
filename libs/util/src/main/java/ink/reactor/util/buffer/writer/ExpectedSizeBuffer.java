@@ -1,11 +1,12 @@
 package ink.reactor.util.buffer.writer;
 
 import java.nio.charset.StandardCharsets;
+import java.util.BitSet;
 import java.util.UUID;
 
 /*
  * Unsafe but faster buffer for write data.
- * If you known exactly what is the size of the buffer,
+ * If you have known exactly what is the size of the buffer,
  * use this alternative to improve performance
  */
 public final class ExpectedSizeBuffer implements WriteBuffer {
@@ -125,12 +126,6 @@ public final class ExpectedSizeBuffer implements WriteBuffer {
     }
 
     @Override
-    public void writeUUID(UUID uuid) {
-        writeLong(uuid.getMostSignificantBits());
-        writeLong(uuid.getLeastSignificantBits());
-    }
-
-    @Override
     public void writeLong(long value) {
         buffer[index++] = (byte)(value >>> 56);
         buffer[index++] = (byte)(value >>> 48);
@@ -162,6 +157,21 @@ public final class ExpectedSizeBuffer implements WriteBuffer {
         buffer[index++] = (byte) (l >> 16);
         buffer[index++] = (byte) (l >> 8);
         buffer[index++] = (byte) (l);
+    }
+
+    @Override
+    public void writeUUID(UUID uuid) {
+        writeLong(uuid.getMostSignificantBits());
+        writeLong(uuid.getLeastSignificantBits());
+    }
+
+    @Override
+    public void writeBitSet(final BitSet bitSet) {
+        final long[] bitSetArray = bitSet.toLongArray();
+        writeVarInt(bitSetArray.length);
+        for (final long value : bitSetArray) {
+            writeLong(value);
+        }
     }
 
     @Override

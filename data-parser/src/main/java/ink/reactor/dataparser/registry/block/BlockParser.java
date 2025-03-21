@@ -21,9 +21,9 @@ public final class BlockParser implements Parser {
                 continue;
             }
             builder.append('\n');
-            builder.append("        ");
+            builder.append("\t");
             builder.append(toFieldName(block.getString("name")));
-            builder.append(" = add(new Block(");
+            builder.append("=of(");
 
             JSONArray drops = block.getJSONArray("drops");
 
@@ -31,19 +31,19 @@ public final class BlockParser implements Parser {
                 block.getIntValue("id"),
                 block.getDoubleValue("resistance")
             );
-            builder.append(',');
-            if (drops == null || drops.isEmpty()) {
-                builder.append(0);
-            } else if (drops.size() == 1) {
-                builder.append(drops.getFirst());
-            } else {
-                final String dropsString = drops.toString();
-                builder.append("new char[] {");
-                builder.append(dropsString.subSequence(1, dropsString.length() -1));
-                builder.append('}');
+            if (drops != null && !drops.isEmpty()) {
+                builder.append(',');
+                if (drops.size() == 1) {
+                    builder.append(drops.getFirst());
+                } else {
+                    final String dropsString = drops.toString();
+                    builder.append("new char[] {");
+                    builder.append(dropsString.subSequence(1, dropsString.length() -1));
+                    builder.append('}');
+                }
             }
 
-            builder.append("))");
+            builder.append(")");
 
             if (++i != array.size()) {
                 builder.append(',');

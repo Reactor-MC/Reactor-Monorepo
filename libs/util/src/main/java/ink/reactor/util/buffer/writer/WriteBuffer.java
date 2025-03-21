@@ -1,5 +1,6 @@
 package ink.reactor.util.buffer.writer;
 
+import java.util.BitSet;
 import java.util.UUID;
 
 public interface WriteBuffer {
@@ -14,11 +15,13 @@ public interface WriteBuffer {
     void writeShort(final int value);
     void writeChar(final char character);
     void writeInt(final int value);
-    void writeUUID(final UUID uuid);
     void writeLong(final long value);
     void writeFloat(final float value);
     void writeDouble(final double value);
     void writeString(final String string);
+
+    void writeUUID(final UUID uuid);
+    void writeBitSet(final BitSet bitSet);
 
     void revert(final int amountBytes);
     void skip(final int amountBytes);

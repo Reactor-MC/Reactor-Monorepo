@@ -19,7 +19,7 @@ import ink.reactor.server.plugin.listener.ListenerLoader;
 import ink.reactor.server.plugin.listener.ListenerManager;
 import ink.reactor.server.plugin.listener.RegisteredListener;
 import ink.reactor.server.plugin.listener.executor.ListenerConsumerExecutor;
-import ink.reactor.util.EventDispatcher;
+import ink.reactor.util.event.EventDispatcher;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 
@@ -138,12 +138,8 @@ public final class PluginManagerImpl implements PluginManager {
     @Override
     public void unloadPlugins() {
         for (final Plugin plugin : plugins) {
-            try {
-                plugin.disable();
+            if (plugin.disable()) {
                 Logger.info("Plugin " + plugin.getName() + " disabled");
-            } catch (final Exception e) {
-                Logger.error("The plugin " + plugin.getName() + " generated exception on disable");
-                Logger.error(e);
             }
         }
         plugins.clear();
@@ -152,12 +148,8 @@ public final class PluginManagerImpl implements PluginManager {
     @Override
     public void enablePlugins() {
         for (final Plugin plugin : plugins) {
-            try {
-                plugin.enable();
+            if (plugin.enable()) {
                 Logger.info("Plugin " + plugin.getName() + " enabled");
-            } catch (final Exception e) {
-                Logger.error("The plugin " + plugin.getName() + " generated exception on enable");
-                Logger.error(e);
             }
         }
     }

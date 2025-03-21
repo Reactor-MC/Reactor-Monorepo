@@ -3,6 +3,7 @@ package ink.reactor.protocol;
 import ink.reactor.api.scheduler.TickUnit;
 import ink.reactor.chat.component.RawComponent;
 import ink.reactor.protocol.outbound.configuration.PacketOutConfigKeepAlive;
+import ink.reactor.protocol.outbound.configuration.Registries;
 import ink.reactor.protocol.outbound.play.PacketOutPlayKeepAlive;
 import lombok.Getter;
 
@@ -16,23 +17,17 @@ public final class KeepAliveManager {
     private long payload = 0;
 
     private int countdown = TickUnit.SECONDS.toTicks(5);
-    private int ticksWithoutKeepAlive = 0;
 
     KeepAliveManager(PlayerConnectionImpl playerConnectionImpl) {
         this.connection = playerConnectionImpl;
     }
 
     public void keepAlive() {
-        if (++ticksWithoutKeepAlive >= KEEP_ALIVE_DELAY) {
-            connection.disconnect(new RawComponent("Keep alive"));
-            return;
-        }
-
         if (--countdown > 0) {
             return;
         }
 
-        countdown = TickUnit.SECONDS.toTicks(14);
+        countdown = KEEP_ALIVE_DELAY;
         payload++;
 
         if (connection.getState() == ConnectionState.PLAY) {
@@ -45,7 +40,6 @@ public final class KeepAliveManager {
     }
 
     public void onKeepAlive(final long payload) {
-        ticksWithoutKeepAlive = 0;
         if (payload != this.payload) {
             connection.disconnect(new RawComponent("Invalid payload"));
         }

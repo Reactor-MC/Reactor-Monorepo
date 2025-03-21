@@ -11,7 +11,7 @@ public record EconomyResponse(
     String errorMessage
 ) {
 
-    public static enum ResponseType {
+    public enum ResponseType {
         SUCCESS,
         FAILURE,
         NOT_IMPLEMENTED;

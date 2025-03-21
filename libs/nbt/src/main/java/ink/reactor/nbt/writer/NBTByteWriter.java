@@ -9,7 +9,7 @@ import lombok.experimental.UtilityClass;
 public final class NBTByteWriter {
 
     private static FriendlyBuffer newBuffer(final NBT nbt) {
-        return new FriendlyBuffer(nbt.getTags().size() * 16, 32);
+        return new FriendlyBuffer(nbt.getTags().size() * 32);
     }
 
     public static byte[] writeTags(final NBT nbt) {
@@ -40,5 +40,11 @@ public final class NBTByteWriter {
         buffer.writeByte(TagNBT.TAG_COMPOUND);
         nbt.writeTags(buffer);
         buffer.writeByte(TagNBT.TAG_END);
+    }
+
+    public static FriendlyBuffer writeNBT(final NBT nbt) {
+        final FriendlyBuffer buffer = newBuffer(nbt);
+        writeNBT(nbt, buffer);
+        return buffer;
     }
 }

@@ -11,8 +11,6 @@ import ink.reactor.protocol.PlayerConnectionImpl;
 
 final class ClientKnownPackHandler implements PacketHandler {
 
-    private static final PacketOutFinishConfiguration FINISH_CONFIGURATION = new PacketOutFinishConfiguration();
-
     private static final CachedPacket
         WOLF_VARIANT = Registries.packet(Registries.wolfVariants()),
         DAMAGE_TYPES = Registries.packet(Registries.damageTypes()),
@@ -39,7 +37,7 @@ final class ClientKnownPackHandler implements PacketHandler {
             WOLF_VARIANT
         );
 
-        connection.sendPacket(FINISH_CONFIGURATION);
+        connection.sendPacket(PacketOutFinishConfiguration.INSTANCE);
     }
 
     @Override

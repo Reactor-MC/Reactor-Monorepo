@@ -1,7 +1,8 @@
-import java.util.Collection;
-import ink.reactor.dataparser.util.CopyOnWriteCollection;
+import java.util.ArrayList;
+import java.util.List;
 
 public record Biome(
+    int id,
     String name,
     boolean hasPrecipitation,
     double temperature,
@@ -9,14 +10,29 @@ public record Biome(
     double downFall,
     Effects effects
 ) {
-    public static final Collection<Biome> ALL = new CopyOnWriteCollection<>({ALL_FIELD});
+    public static final List<Biome> ALL = new ArrayList<>({ALL_FIELD});
 
-    public static Biome add(final Biome biome) {
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        return o == this || (o instanceof Biome biome && biome.id == this.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    private static Biome add(final Biome biome) {
         ALL.add(biome);
         return biome;
-    } 
+    }
 
-    public static record Effects(
+    public record Effects(
         int fogColor,
         Integer foliageColor,
         Integer grassColor,
@@ -31,29 +47,39 @@ public record Biome(
         Particle particle
     ){
 
-        public static record MoodSound(
+        public record MoodSound(
             String sound,
             int tickDelay,
             int blockSearchExtent,
             double offSet
         ){}
 
-        public static record Music(
+        public record Music(
             int maxDelay,
             int minDelay,
             boolean replaceCurrentMusic,
             String sound
         ){}
 
-        public static record AdditionSound(
+        public record AdditionSound(
             String sound,
             double tickChance
         ){}
 
-        public static record Particle(
+        public record Particle(
             String type,
             double probability
         ){}
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        return o == this || (o instanceof Biome biome && biome.id == this.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
     public static final Biome {OBJECT_FIELD_TYPE};

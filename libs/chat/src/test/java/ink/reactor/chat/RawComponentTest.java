@@ -13,8 +13,9 @@ public class RawComponentTest {
 
     @Test
     public void checkValid() {
-        final String rawComponentJson = new RawComponent(INPUT).toJson();
+        final RawComponent rawComponent = new RawComponent(INPUT);
         final String expectedJson = JSONObject.of("text", INPUT).toString();
-        Assertions.assertEquals(expectedJson, rawComponentJson);
+        Assertions.assertEquals(expectedJson, rawComponent.toJson());
+        Assertions.assertEquals(expectedJson, new String(rawComponent.toJsonBytes()));
     }
 }

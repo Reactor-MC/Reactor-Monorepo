@@ -24,6 +24,7 @@ public final class Motd {
         int online,
         SamplePlayer[] sample
     ) {}
+
     public record SamplePlayer(
         String name,
         String id
@@ -32,20 +33,4 @@ public final class Motd {
     public record Description(
         String text
     ){}
-
-    public static Motd defaultMotd() {
-        final Motd motd = new Motd();
-        motd.players = new Players(0, 0, null);
-        motd.version = new Version("1.21.4", 769);
-        motd.description = new Description("A Minecraft Server");
-        return motd;
-    }
-
-    @Override
-    public String toString() {
-        return "Motd: " +
-                players + ", " +
-                version + ", " +
-                description;
-    }
 }

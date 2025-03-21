@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Base64;
 
+import ink.reactor.protocol.ProtocolOptions;
 import org.tinylog.Logger;
 
 import com.alibaba.fastjson2.JSON;
@@ -22,47 +23,61 @@ public final class ServerConfigLoader {
         this.serverDirectory = serverDirectory;
     }
 
-    public ServerConfig load(final YamlConfigManager fileUtil) {
+    public ServerConfig load(final YamlConfigManager yaml) {
         final File configFile = new File(serverDirectory, "config.yml");
         Logger.info("Loading config from " + configFile.getAbsolutePath());
-        if (!configFile.exists()) {
-            fileUtil.write("config.yml", configFile);
+
+        if (!configFile.exists() && !yaml.write("config.yml", configFile)) {
+            return null;
         }
 
-        final ConfigSection config = fileUtil.getConfig(configFile);
+        final ConfigSection config = yaml.getConfig(configFile);
         if (config == null) {
-            Logger.info("Can't found config.yml in the .jar");
-            return createDefaultConfig();
+            return null;
         }
 
         final String ip = config.getOrDefault("ip", "localhost");
         final int port = config.getOrDefault("port", 25565);
-        final Motd motd = loadMotd(config.getSection("motd"));
-        final int tcpFastOpenConnections = config.getInt("tcp-fast-open-connections");
 
-        Logger.info("Host: {}:{}. Motd: {}. TCP Fast Open Connections: {}", ip, port, motd.toString(), tcpFastOpenConnections);
+        Logger.info("Host: {}:{}", ip, port);
 
-        return new ServerConfig(
-                ip,
-                port,
-                JSON.toJSONString(motd),
-                Math.max(config.getInt("view-distance"), 2),
-                Math.max(config.getInt("simulation-distance"), 2),
-                config.getOrDefault("network-compression-threshold", -1),
-                tcpFastOpenConnections,
+        final ServerConfig serverConfig = new ServerConfig(
+                ip, port,
                 config.getBoolean("debug-mode"),
-                config.getBoolean("tcp-fast-open"),
-                Math.max(config.getInt("ping-wait-update-ticks"), 20)
-        );
+                config.getIntMax("ping-wait-update-ticks", 20),
+                loadMotd(config.getSection("motd")),
+                serverDirectory);
+
+        if (serverConfig.debugMode()) {
+            Logger.info("Debug mode enabled");
+        }
+
+        loadProtocolOptions(config, serverConfig);
+
+        return serverConfig;
+    }
+
+    private void loadProtocolOptions(final ConfigSection config, final ServerConfig serverConfig) {
+        final ProtocolOptions protocol = ProtocolOptions.OPTIONS;
+
+        protocol.setSimulationDistance(config.getIntMax("simulation-distance", 2));
+        protocol.setViewDistance(config.getIntMax("view-distance", 2));
+        protocol.setDefaultMotdJson(JSON.toJSONString(serverConfig.defaultMotd()));
+        protocol.setTcpFastOpen(config.getBoolean("tcp-fast-open"));
+        protocol.setTcpFastOpenConnections(config.getIntMax("tcp-fast-open-connections", 1));
     }
 
     private Motd loadMotd(final ConfigSection motdSection) {
+        final Motd motd = new Motd();
+        motd.setPlayers(new Motd.Players(0, 0, null));
+        motd.setVersion(new Motd.Version("1.21.4", 769));
+        motd.setDescription(new Motd.Description("A Minecraft Server"));
+
         if (motdSection == null) {
             Logger.info("Can't found motd section in the config.yml");
-            return Motd.defaultMotd();
+            return motd;
         }
 
-        final Motd motd = Motd.defaultMotd();
         final String line1 = motdSection.getOrDefault("line1", "A reactor server");
         final String line2 = motdSection.getOrDefault("line2", "Example of motd");
         final int protocol = motdSection.getOrDefault("protocol-version", 767);
@@ -91,17 +106,5 @@ public final class ServerConfigLoader {
             Logger.error(e, "Error while encoding favicon to Base64");
             return null;
         }
-    }
-
-    private ServerConfig createDefaultConfig() {
-        return new ServerConfig(
-                "localhost",
-                25565,
-                JSON.toJSONString(Motd.defaultMotd()),
-                10, 8, -1,
-                3, true,
-                true,
-                200
-        );
     }
 }

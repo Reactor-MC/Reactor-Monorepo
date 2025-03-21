@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
+
+import ink.reactor.api.plugin.Plugin;
 import lombok.Getter;
 import org.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
@@ -16,6 +18,8 @@ import ink.reactor.util.StringUtil;
 
 @Getter
 public class YamlConfigManager {
+
+    private static final File SERVER_FOLDER = new File("");
 
     private final File datafolder;
     private final Yaml yaml;
@@ -29,10 +33,11 @@ public class YamlConfigManager {
         this.classLoader = classLoader;
     }
 
-    public ConfigSection getConfig(String file) {
-        if (!file.endsWith(".yml") && !file.endsWith(".yaml")) {
-            file = file + ".yml";
-        }
+    public YamlConfigManager(Plugin plugin) {
+        this(new File(SERVER_FOLDER, "plugins/" + plugin.getName()), new Yaml(), plugin.getClass().getClassLoader());
+    }
+
+    public ConfigSection getConfig(final String file) {
         final File fileObj = writeInSubFolder(file);
         return (fileObj == null) ? null : getConfig(fileObj);
     }

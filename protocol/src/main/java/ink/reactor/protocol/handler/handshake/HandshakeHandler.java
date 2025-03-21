@@ -1,11 +1,12 @@
 package ink.reactor.protocol.handler.handshake;
 
+import ink.reactor.protocol.ProtocolOptions;
 import ink.reactor.protocol.handler.PacketHandler;
 import ink.reactor.protocol.inbound.InProtocol;
 import ink.reactor.protocol.inbound.PacketInData;
 import ink.reactor.protocol.inbound.handshake.PacketInStatus;
 import ink.reactor.protocol.outbound.handshake.PacketOutStatus;
-import ink.reactor.api.Reactor;
+
 import ink.reactor.protocol.ConnectionState;
 import ink.reactor.protocol.PlayerConnectionImpl;
 
@@ -19,7 +20,7 @@ public final class HandshakeHandler implements PacketHandler {
     @Override
     public void handle(PlayerConnectionImpl connection, int packetId, PacketInData data) {
         if (data.buffer.readableBytes() == 0) { // Status Request
-            connection.sendPacket(new PacketOutStatus(Reactor.getServer().getConfig().motd()));
+            connection.sendPacket(new PacketOutStatus(ProtocolOptions.OPTIONS.getDefaultMotdJson()));
             return;
         }
 
@@ -34,7 +35,7 @@ public final class HandshakeHandler implements PacketHandler {
                 connection.state = ConnectionState.LOGIN;
                 break;
             case TRANSFER:
-                // TODO: Que se conecte networkManager.channel.connect()
+                // TODO: networkManager.channel.connect()
                 connection.getChannel().close();
                 break;
             default:

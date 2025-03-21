@@ -1,0 +1,9 @@
+parser-color:
+  legacy: true
+  mini-message: false
+
+format: "%player_name% > %message%"
+
+keyword-filter:
+  - "black"
+  - "nigger"

@@ -1,12 +1,13 @@
 import lombok.Getter;
 
-import ink.reactor.dataparser.util.CopyOnWriteCollection;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public final class Block {
     public static final char[] NONE_DROPS = new char[0];
 
-    public static final CopyOnWriteCollection<Block> ALL = new CopyOnWriteCollection<>({ALL_FIELD});
+    public static final List<Block> ALL = new ArrayList<>({ALL_FIELD});
 
     private final char id;
     private final float resistance;
@@ -14,21 +15,26 @@ public final class Block {
 
     public Block(int id, double resistance, char[] drops) {
         this.id = (char)id;
-        this.resistance = (short) (resistance >= 10000 ? Material.UNBREAKABLE : resistance);
+        this.resistance = (short) (resistance >= 10000 ? -1 : resistance);
         this.drops = drops;
     }
 
-    public Block(int id, double resistance, int drop) {
-        this(id, resistance, (drop == 0 ? NONE_DROPS : new char[] {(char)drop}));
-    }
-
-    private static Block add(final Block block) {
+    private static Block of(final int id, final double resistance, final int drop) {
+        final Block block = new Block(id, resistance, new char[] { (char)drop });
         ALL.add(block);
         return block;
     }
 
-    public Material[] getMaterialDrops() {
-        return Material.byIds(drops);
+    private static Block of(final int id, final double resistance, final char[] drops) {
+        final Block block = new Block(id, resistance, drops);
+        ALL.add(block);
+        return block;
+    }
+
+    private static Block of(final int id, final double resistance) {
+        final Block block = new Block(id, resistance, NONE_DROPS);
+        ALL.add(block);
+        return block;
     }
 
     public boolean hasDrops() {

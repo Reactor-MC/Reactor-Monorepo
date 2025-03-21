@@ -22,9 +22,7 @@ public final class ConsoleStart {
                 .completer(new ConsoleCompleter())
                 .build();
 
-            final Console console = new Console(new ConsoleLineReader(terminal, reader));
-
-            return console;
+            return new Console(new ConsoleLineReader(terminal, reader));
         } catch (final IOException e) {
             Logger.error(e, "Error creating the console");
         }

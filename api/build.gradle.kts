@@ -18,4 +18,6 @@ dependencies {
     api(project(":libs:zlib"))
     api(project(":libs:entity"))
     api(project(":libs:item"))
+    api(project(":libs:world"))
+    api(project(":libs:command"))
 }

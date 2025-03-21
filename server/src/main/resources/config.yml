@@ -1,4 +1,4 @@
-ip: "localhost"
+ip: "0.0.0.0"
 port: 25565
 
 view-distance: 10
@@ -11,7 +11,7 @@ debug-mode: true
 ping-wait-update-ticks: 200 # Ticks to wait for next player update ping. Default = 10s
 
 motd:
-  line1: "                      &bReactor &7[1.21.4]&r"
+  line1: "                      &eReactor &7[1.21.4]&r"
   line2: "       &3&lFASTER &7| &3&lMODULAR &7| &3&lSERVER IN JAVA"
   protocol-version: 769
   version-name: "1.21.4"

@@ -2,6 +2,7 @@ package ink.reactor.api.plugin;
 
 import ink.reactor.api.Reactor;
 import ink.reactor.api.ReactorServer;
+import org.tinylog.Logger;
 
 public abstract class Plugin {
 
@@ -20,31 +21,61 @@ public abstract class Plugin {
         if (state != DISABLED) {
             return false;
         }
-        onLoad();
-        state = LOADED;
-        return true;
+        try {
+            onLoad();
+            state = LOADED;
+            return true;
+        } catch (final Exception e) {
+            Logger.error("An exception occurred when trying to disable the plugin " + getName(), e);
+            return false;
+        }
     }
 
     public final boolean enable() {
         if (state != LOADED) {
             return false;
         }
-        onEnable();
-        state = ENABLED;
-        return true;
+        try {
+            onEnable();
+            state = ENABLED;
+            return true;
+        } catch (final Exception e) {
+            Logger.error("An exception occurred when trying to enable the plugin " + getName(), e);
+            return false;
+        }
     }
 
     public final boolean disable() {
         if (state != ENABLED) {
             return false;
         }
-        onDisable();
-        state = DISABLED;
-        return true;
+        try {
+            onDisable();
+            state = DISABLED;
+            return true;
+        } catch (final Exception e) {
+            Logger.error("An exception occurred when trying to disable the plugin " + getName(), e);
+            return false;
+        }
+    }
+
+    public final boolean loadAndEnable() {
+        if (state == LOADED) {
+            return enable();
+        }
+        return load() && enable();
     }
 
     public final int getState() {
         return state;
+    }
+
+    public final String getStateName() {
+        return switch (state) {
+            case LOADED -> "loaded";
+            case ENABLED -> "enabled";
+            default -> "disabled";
+        };
     }
 
     public abstract String getName();

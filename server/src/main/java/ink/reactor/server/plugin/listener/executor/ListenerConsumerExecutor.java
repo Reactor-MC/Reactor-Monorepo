@@ -2,9 +2,9 @@ package ink.reactor.server.plugin.listener.executor;
 
 import java.util.function.Consumer;
 
-import ink.reactor.api.plugin.event.Cancellable;
 import ink.reactor.api.plugin.listener.EventExecutor;
 import ink.reactor.api.plugin.listener.Listener;
+import ink.reactor.util.event.Cancellable;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

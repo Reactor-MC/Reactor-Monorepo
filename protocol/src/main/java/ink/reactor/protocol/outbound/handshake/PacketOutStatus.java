@@ -9,7 +9,7 @@ import ink.reactor.util.buffer.writer.ExpectedSizeBuffer;
 
 public final class PacketOutStatus implements PacketOutbound {
 
-    private String json;
+    private final String json;
 
     public PacketOutStatus(final String json) {
         this.json = json;

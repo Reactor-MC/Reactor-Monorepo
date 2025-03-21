@@ -1,6 +1,7 @@
 package ink.reactor.util.buffer.writer;
 
 import java.nio.charset.StandardCharsets;
+import java.util.BitSet;
 import java.util.UUID;
 
 import ink.reactor.util.buffer.DataSize;
@@ -98,12 +99,6 @@ public class FriendlyBuffer implements WriteBuffer {
     }
 
     @Override
-    public final void writeUUID(final UUID uuid) {
-        tryResize(DataSize.UUID);
-        currentBuffer.writeUUID(uuid);
-    }
-
-    @Override
     public final void writeLong(final long v) {
         tryResize(DataSize.LONG);
         currentBuffer.writeLong(v);
@@ -119,6 +114,23 @@ public class FriendlyBuffer implements WriteBuffer {
     public final void writeDouble(final double v) {
         tryResize(DataSize.DOUBLE);
         currentBuffer.writeDouble(v);
+    }
+
+    @Override
+    public final void writeUUID(final UUID uuid) {
+        tryResize(DataSize.UUID);
+        currentBuffer.writeUUID(uuid);
+    }
+
+    @Override
+    public void writeBitSet(final BitSet bitSet) {
+        final long[] bitSetArray = bitSet.toLongArray();
+        tryResize(DataSize.varInt(bitSetArray.length) + (DataSize.LONG * bitSetArray.length));
+
+        currentBuffer.writeVarInt(bitSetArray.length);
+        for (final long value : bitSetArray) {
+            currentBuffer.writeLong(value);
+        }
     }
 
     @Override

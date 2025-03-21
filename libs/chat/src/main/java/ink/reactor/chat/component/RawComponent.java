@@ -1,6 +1,6 @@
 package ink.reactor.chat.component;
 
-import ink.reactor.chat.component.serializer.JsonComponentSerializer;
+import ink.reactor.chat.component.serializer.RawSerializer;
 import ink.reactor.nbt.NBT;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +22,7 @@ public final class RawComponent implements ChatComponent {
 
     @Override
     public byte[] toJsonBytes() {
-        return JsonComponentSerializer.toJson(this);
+        return RawSerializer.toJson(text);
     }
 
     @Override

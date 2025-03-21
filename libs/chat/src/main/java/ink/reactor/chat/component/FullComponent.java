@@ -2,7 +2,7 @@ package ink.reactor.chat.component;
 
 
 import ink.reactor.chat.ChatColor;
-import ink.reactor.chat.component.serializer.JsonComponentSerializer;
+import ink.reactor.chat.component.serializer.FullSerializer;
 import ink.reactor.chat.interactivity.ClickEvent;
 import ink.reactor.chat.interactivity.HoverEvent;
 import ink.reactor.nbt.NBT;
@@ -51,12 +51,7 @@ public final class FullComponent extends ColoredComponent {
 
     @Override
     public byte[] toJsonBytes() {
-        return JsonComponentSerializer.toJson(this);
-    }
-
-    @Override
-    public String toString() {
-        return toJson();
+        return FullSerializer.toJson(this);
     }
 
     @Override

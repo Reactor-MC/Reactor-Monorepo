@@ -12,8 +12,10 @@ public final class NetworkManager extends SimpleChannelInboundHandler<PacketDeco
     private final PlayerConnectionImpl connection;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, PacketDecoded packetDecoded) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, PacketDecoded packetDecoded) {
         connection.state.handlerStorage.execute(connection, packetDecoded);
+
+        packetDecoded.data().buffer.release();
     }
 
     @Override

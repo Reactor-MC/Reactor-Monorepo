@@ -25,7 +25,8 @@ public final class BiomeParser implements Parser {
             builder.append("        ");
             builder.append(toFieldName(entry.getKey()));
             builder.append(" = add(new Biome(");
-            append(builder, 
+            append(builder,
+                i,
                 entry.getKey(),
                 biome.getBooleanValue("has_precipitation"),
                 biome.getDoubleValue("temperature"),

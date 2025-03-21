@@ -1,8 +1,8 @@
 package ink.reactor.server.console;
 
+import ink.reactor.command.CommandSender;
 import org.jline.jansi.Ansi;
 
-import ink.reactor.api.command.CommandSender;
 import ink.reactor.chat.ChatColor;
 import ink.reactor.chat.component.ChatComponent;
 import ink.reactor.chat.component.ColoredComponent;

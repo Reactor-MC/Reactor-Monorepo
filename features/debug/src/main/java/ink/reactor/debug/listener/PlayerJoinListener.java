@@ -1,5 +1,6 @@
 package ink.reactor.debug.listener;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +18,18 @@ import ink.reactor.item.ItemStack;
 import ink.reactor.item.Material;
 import ink.reactor.item.component.ItemComponent;
 import ink.reactor.item.data.potion.PotionEffectType;
+import ink.reactor.protocol.outbound.play.chunk.PacketOutChunkFinish;
+import ink.reactor.protocol.outbound.play.chunk.PacketOutChunkStart;
+import ink.reactor.protocol.outbound.play.chunk.PacketOutChunkUpdateData;
+import ink.reactor.world.block.Block;
+import ink.reactor.world.chunk.vanilla.array.VanillaChunk;
+import ink.reactor.world.chunk.vanilla.array.VanillaHeightMap;
+import ink.reactor.world.chunk.vanilla.palette.VanillaPaletteChunk;
+import ink.reactor.world.data.WorldType;
 
 public class PlayerJoinListener {
+
+
 
     @Listener
     public void onJoin(final PlayerJoinEvent event) {
@@ -40,8 +51,8 @@ public class PlayerJoinListener {
         player.sendMessage(fullComponent);
 
         player.setTabHeaderFooter(
-            ChatLegacy.format("&aExample &fHeader"),
-            ChatLegacy.format("&dExample &eFooter")
+                ChatLegacy.format("&aExample &fHeader"),
+                ChatLegacy.format("&dExample &eFooter")
         );
 
         player.showTitle(
@@ -53,14 +64,23 @@ public class PlayerJoinListener {
 
         final ItemStack itemStack = new ItemStack(Material.DIAMOND_HELMET);
         itemStack.getComponents().put(ItemComponent.LORE, List.of(
-            512,
-            "test",
-            Map.of("Key", "value")
+                512,
+                "test",
+                Map.of("Key", "value")
         ));
 
         itemStack.getComponents().put(ItemComponent.CUSTOM_NAME, ChatLegacy.format("&aCustom &e&lItem"));
         event.getPlayer().getInventory().setItem(36, itemStack);
 
         event.getPlayer().setExperience(3500F);
+
+        final VanillaChunk chunk = VanillaChunk.of(0, 0, WorldType.OVERWORLD);
+
+        chunk.setBlock(0, 0, 0, Block.GRASS_BLOCK.getId());
+
+        event.getPlayer().sendPacket(PacketOutChunkStart.INSTANCE);
+        event.getPlayer().sendPacket(new PacketOutChunkUpdateData(chunk));
+        event.getPlayer().sendPacket(new PacketOutChunkFinish(1));
     }
+
 }

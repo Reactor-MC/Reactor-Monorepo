@@ -25,6 +25,7 @@ import ink.reactor.protocol.ServerConnection;
 public final class ReactorMain {
     public static void main(String[] args) {
         final Console console = startServer();
+
         if (console != null) {
             console.run();
         }
@@ -37,6 +38,10 @@ public final class ReactorMain {
         final File mainDirectory = new File("").getAbsoluteFile();
         final ServerConfig config = new ServerConfigLoader(mainDirectory)
             .load(new YamlConfigManager(mainDirectory, new Yaml(), ReactorServer.class.getClassLoader()));
+
+        if (config == null) {
+            return null;
+        }
 
         try {
             serverConnection.connect(config.ip(), config.port());
@@ -62,10 +67,7 @@ public final class ReactorMain {
         server.getPluginManager().loadPlugins(new File(mainDirectory, "plugins"));
 
         if (config.debugMode()) {
-            final DebugPlugin debugPlugin = new DebugPlugin();
-            debugPlugin.load();
-            debugPlugin.enable();
-
+            new DebugPlugin().loadAndEnable();
             server.getScheduler().schedule(new PlayerProcessor(), TickDuration.ofSeconds(1));
             server.getScheduler().schedule(new WorldUpdateTimeTask(), TickDuration.ofSeconds(1));
         }
@@ -75,6 +77,7 @@ public final class ReactorMain {
         serverConnection.registerDefaultHandlers();
 
         mainThread.start();
+
         console.sendMessage("Server started in " + (System.currentTimeMillis() - time) + "ms");
         return console;
     }

@@ -1,13 +1,12 @@
 package ink.reactor.protocol.outbound.play;
 
-import ink.reactor.api.Reactor;
-import ink.reactor.api.config.server.ServerConfig;
 import ink.reactor.api.player.Player;
 import ink.reactor.api.player.connection.PacketOutbound;
 import ink.reactor.api.player.connection.PlayerConnection;
 import ink.reactor.api.world.World;
 import ink.reactor.api.world.data.Gamerule;
 import ink.reactor.api.world.data.WorldType;
+import ink.reactor.protocol.ProtocolOptions;
 import ink.reactor.protocol.outbound.OutProtocol;
 import ink.reactor.util.buffer.writer.FriendlyBuffer;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,6 @@ public final class PacketOutLoginPlay implements PacketOutbound {
 
     @Override
     public byte[] write() {
-        final ServerConfig config = Reactor.getServer().getConfig();
         final Gamerule gamerule = world.getGamerule();
 
         final Player player = connection.getPlayer();
@@ -33,8 +31,8 @@ public final class PacketOutLoginPlay implements PacketOutbound {
             buffer.writeString(worldType.name());
         }
         buffer.writeVarInt(30);
-        buffer.writeVarInt(config.viewDistance());
-        buffer.writeVarInt(config.simulationDistance());
+        buffer.writeVarInt(ProtocolOptions.OPTIONS.getViewDistance());
+        buffer.writeVarInt(ProtocolOptions.OPTIONS.getSimulationDistance());
         buffer.writeBoolean(false); // Reduced Debug Info	
         buffer.writeBoolean(gamerule.isRespawnScreen());
         buffer.writeBoolean(false); // Do limited crafting

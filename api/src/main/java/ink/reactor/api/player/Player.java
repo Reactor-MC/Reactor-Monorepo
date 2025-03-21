@@ -2,15 +2,18 @@ package ink.reactor.api.player;
 
 import java.util.UUID;
 
-import ink.reactor.api.command.CommandSender;
+import ink.reactor.api.Reactor;
+import ink.reactor.api.player.connection.PacketOutbound;
 import ink.reactor.api.player.connection.PlayerConnection;
 import ink.reactor.api.player.data.Gamemode;
 import ink.reactor.api.player.data.PlayerInventory;
 import ink.reactor.api.player.data.PlayerSkin;
+import ink.reactor.api.plugin.service.permission.PermissionService;
 import ink.reactor.api.world.World;
 import ink.reactor.chat.ChatMode;
 import ink.reactor.chat.component.ChatComponent;
 
+import ink.reactor.command.CommandSender;
 import ink.reactor.entity.Entity;
 
 import ink.reactor.entity.data.MinecraftEntity;
@@ -64,6 +67,22 @@ public abstract class Player implements CommandSender, MinecraftEntityMetadata, 
     public abstract void setExperience(float experience);
     public abstract int getLevel();
     public abstract float getRequiredExperience();
+
+    public void sendPacket(final PacketOutbound packetOutbound) {
+        getConnection().sendPacket(packetOutbound);
+    }
+
+    @Override
+    public boolean isOp() {
+        final PermissionService service = Reactor.getServer().getPluginManager().getData(PermissionService.class);
+        return (service != null && service.isOp(name));
+    }
+
+    @Override
+    public boolean hasPermission(String permission) {
+        final PermissionService service = Reactor.getServer().getPluginManager().getData(PermissionService.class);
+        return (service != null && service.hasPermission(name, permission));
+    }
 
     @Override
     public final boolean equals(Object obj) {

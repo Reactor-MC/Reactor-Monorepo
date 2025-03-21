@@ -25,8 +25,8 @@ public final class DataParser {
         String parserName, option;
 
         if (args.length == 0) {
-            parserName = "effects";
-            option = "other";
+            parserName = "biome";
+            option = "registry";
         } else {
             if (args.length != 2) {
                 System.out.println("Format: java -jar dataparser.jar (option) (parsername)");

@@ -23,9 +23,9 @@ public final class LongArrayTag extends TagNBT {
 
     @Override
     public void write(final FriendlyBuffer buffer) {
-        final ExpectedSizeBuffer expectedSizeBuffer = buffer.getCurrentBuffer();
+        buffer.tryResize((value.length * DataSize.LONG) + DataSize.INT);
 
-        buffer.tryResize((value.length + 1) * DataSize.LONG);
+        final ExpectedSizeBuffer expectedSizeBuffer = buffer.getCurrentBuffer();
         expectedSizeBuffer.writeInt(value.length);
 
         for (final long longValue : value) {

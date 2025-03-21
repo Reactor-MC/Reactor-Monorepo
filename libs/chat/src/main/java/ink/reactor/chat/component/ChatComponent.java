@@ -5,13 +5,13 @@ import ink.reactor.nbt.type.NBTFastAdd;
 import ink.reactor.nbt.type.NBTGeneral;
 
 public interface ChatComponent {
-    public static final byte
+    byte
         TRUE = 2,
         FALSE = 1,
         UNDEFINED = 0;
 
-    public static ChatComponent NEW_LINE = new RawComponent("\n");
-    public static ChatComponent EMPTY = new RawComponent("");
+    ChatComponent NEW_LINE = new RawComponent("\n");
+    ChatComponent EMPTY = new RawComponent("");
 
     byte[] toJsonBytes();
 

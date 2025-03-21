@@ -3,7 +3,7 @@ package ink.reactor.protocol.handler.play;
 import ink.reactor.protocol.outbound.play.PacketOutGameEvent;
 import ink.reactor.protocol.outbound.play.PacketOutLoginPlay;
 import ink.reactor.protocol.outbound.play.PacketOutPlayerPosition;
-import ink.reactor.util.EventDispatcher;
+import ink.reactor.util.event.EventDispatcher;
 import ink.reactor.api.Reactor;
 import ink.reactor.api.player.event.PlayerJoinEvent;
 import ink.reactor.api.world.WorldManager;

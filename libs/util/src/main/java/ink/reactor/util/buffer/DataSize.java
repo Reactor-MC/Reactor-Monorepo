@@ -7,9 +7,7 @@ public final class DataSize {
         BOOLEAN = 1,
         BYTE = 1,
         SHORT = 2,
-        CHAR = 2,
         INT = 4,
-        MAX_VAR_INT = 5,
         FLOAT = 4,
         DOUBLE = 8;
 

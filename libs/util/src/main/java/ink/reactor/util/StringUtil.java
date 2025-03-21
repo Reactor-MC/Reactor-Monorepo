@@ -1,25 +1,22 @@
 package ink.reactor.util;
 
+import lombok.experimental.UtilityClass;
+
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
+@UtilityClass
 public final class StringUtil {
-
-    private StringUtil() {
-        throw new IllegalAccessError("Util class can't be instance");
-    }
 
     /**
      * Split a string by per delimiter character
      *
-     * @param text      the string to split
+     * @param text the string to split
      * @param character delimiter character
      * @return a list of all strings
      */
     public static List<String> split(final String text, final char character) {
-        final List<String> list = new LinkedList<>();
+        final ArrayList<String> list = new ArrayList<>();
         int start = 0;
         int index;
         while ((index = text.indexOf(character, start)) != -1) {
@@ -29,6 +26,40 @@ public final class StringUtil {
         if (start == 0) {
             list.add(text);
         } else {
+            list.add(text.substring(start));
+        }
+        return list;
+    }
+
+    /**
+     * Split by char (ignoring extra)
+     * Example input: "       a  bcd        efg      h  i"
+     * Output: [a,bcd,efg,h,i]
+     *
+     * @param text to split
+     * @param charToFound to split and ignore if found extra
+     * @return a list of all split
+     */
+    public static List<String> splitIgnoreExtra(final String text, final char charToFound) {
+        final ArrayList<String> list = new ArrayList<>();
+        int length = text.length();
+        int start = -1;
+
+        for (int i = 0; i < length; i++) {
+            final char character = text.charAt(i);
+            if (character != charToFound) {
+                if (start == -1) {
+                    start = i;
+                }
+                continue;
+            }
+            if (start != -1) {
+                list.add(text.substring(start, i));
+                start = -1;
+            }
+        }
+
+        if (start != -1) {
             list.add(text.substring(start));
         }
         return list;
@@ -45,54 +76,11 @@ public final class StringUtil {
     public static int length(final String string) {
         return string == null ? 0 : string.length();
     }
-  
-    public static boolean isNullOrEmpty(final String string) {
-        return string == null || string.isEmpty();
-    }
-
-    /**
-     * Parses a string to a positive integer. Defaults to -1 if invalid.
-     *
-     * @param text the string to parse
-     * @return the parsed positive integer, or -1 if invalid
-     */
-    public static int parsePositive(final String text) {
-        return parsePositive(text, -1);
-    }
-
-    /**
-     * Parses a string to a positive integer. Returns a default value if the string is invalid.
-     *
-     * @param text         the string to parse
-     * @param errorDefault the default value to return in case of error
-     * @return the parsed positive integer, or the default value if invalid
-     */
-    public static int parsePositive(final String text, final int errorDefault) {
-        if (text.isEmpty()) {
-            return errorDefault;
-        }
-        final int length = text.length();
-        if (length == 1) {
-            final int value = text.charAt(0) - '0';
-            return value < 0 || value > 9 ? errorDefault : value;
-        }
-
-        int result = 0;
-
-        for (int i = 0; i < length; i++) {
-            final int value = text.charAt(i) - '0';
-            if (value < 0 || value > 9) {
-                return errorDefault;
-            }
-            result = (result + value) * 10;
-        }
-        return result / 10;
-    }
 
     /**
      * Convert a string to uuid.
      *
-     * @param input String to convert (with length 16)
+     * @param input String to convert (max length 16)
      * @return string converted to uuid
      */
     public static UUID stringToUUID(final String input) {
