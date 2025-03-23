@@ -1,6 +1,7 @@
 package ink.reactor.server.network;
 
 import ink.reactor.chat.component.RawComponent;
+import ink.reactor.protocol.ConnectionState;
 import ink.reactor.protocol.ProtocolConnector;
 import ink.reactor.protocol.inbound.PacketDecoded;
 import ink.reactor.protocol.handler.PacketHandlerManager;

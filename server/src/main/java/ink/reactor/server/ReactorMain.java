@@ -46,7 +46,7 @@ public final class ReactorMain {
         try {
             serverConnection.connect(config.ip(), config.port());
         } catch (final Exception e) {
-            Logger.error("Error starting the server");
+            Logger.error("Error creating the socket. IP: " + config.ip() + " - port: " + config.port());
             Logger.error(e);
             return null;
         }

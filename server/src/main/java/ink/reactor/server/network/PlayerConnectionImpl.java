@@ -76,6 +76,7 @@ public final class PlayerConnectionImpl implements PlayerConnection {
     public void disconnect() {
         this.online = false;
         this.player = null;
+        this.channel.close();
     }
 
     public void disconnect(final ChatComponent... reason) {
@@ -84,6 +85,6 @@ public final class PlayerConnectionImpl implements PlayerConnection {
             case PLAY -> sendPacket(new PacketOutPlayDisconnected(reason));
             case CONFIGURATION -> sendPacket(new PacketOutConfigDisconnected(reason));
         }
-        this.online = false;
+        disconnect();
     };
 }

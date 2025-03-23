@@ -79,7 +79,7 @@ public final class ServerConnection {
         while (iterator.hasNext()) {
             final PlayerConnectionImpl connection = iterator.next();
 
-            if (!connection.getChannel().isActive()) {
+            if (!connection.isOnline()) {
                 connection.getChannel().close();
                 iterator.remove();
                 continue;
