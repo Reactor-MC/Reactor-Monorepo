@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.tinylog.Logger;
 
 import ink.reactor.api.scheduler.ServerScheduler;
-import ink.reactor.protocol.ServerConnection;
+import ink.reactor.server.network.ServerConnection;
 
 public final class MainThread implements Runnable {
 

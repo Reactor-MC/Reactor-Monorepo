@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Base64;
 
-import ink.reactor.protocol.ProtocolOptions;
-import org.tinylog.Logger;
-
 import com.alibaba.fastjson2.JSON;
+import ink.reactor.util.DataHolder;
+import org.tinylog.Logger;
 
 import ink.reactor.api.config.ConfigSection;
 import ink.reactor.api.config.YamlConfigManager;
@@ -41,31 +40,31 @@ public final class ServerConfigLoader {
 
         Logger.info("Host: {}:{}", ip, port);
 
+        final Motd motd = loadMotd(config.getSection("motd"));
         final ServerConfig serverConfig = new ServerConfig(
                 ip, port,
                 config.getBoolean("debug-mode"),
                 config.getIntMax("ping-wait-update-ticks", 20),
-                loadMotd(config.getSection("motd")),
-                serverDirectory);
+                motd,
+                serverDirectory,
+                new ServerConfig.Game(
+                        config.getIntMax("view-distance", 2),
+                        config.getIntMax("simulation-distance", 2)
+                ),
+                new ServerConfig.Network(
+                        config.getBoolean("tcp-fast-open"),
+                        config.getIntMax("tcp-fast-open-connections", 1)
+                ),
+                new DataHolder<>(JSON.toJSONString(motd))
+        );
 
         if (serverConfig.debugMode()) {
             Logger.info("Debug mode enabled");
         }
 
-        loadProtocolOptions(config, serverConfig);
-
         return serverConfig;
     }
 
-    private void loadProtocolOptions(final ConfigSection config, final ServerConfig serverConfig) {
-        final ProtocolOptions protocol = ProtocolOptions.OPTIONS;
-
-        protocol.setSimulationDistance(config.getIntMax("simulation-distance", 2));
-        protocol.setViewDistance(config.getIntMax("view-distance", 2));
-        protocol.setDefaultMotdJson(JSON.toJSONString(serverConfig.defaultMotd()));
-        protocol.setTcpFastOpen(config.getBoolean("tcp-fast-open"));
-        protocol.setTcpFastOpenConnections(config.getIntMax("tcp-fast-open-connections", 1));
-    }
 
     private Motd loadMotd(final ConfigSection motdSection) {
         final Motd motd = new Motd();

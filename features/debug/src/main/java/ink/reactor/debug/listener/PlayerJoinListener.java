@@ -74,6 +74,8 @@ public class PlayerJoinListener {
 
         event.getPlayer().setExperience(3500F);
 
+        /*
+        TODO: FIX
         final VanillaChunk chunk = VanillaChunk.of(0, 0, WorldType.OVERWORLD);
 
         chunk.setBlock(0, 0, 0, Block.GRASS_BLOCK.getId());
@@ -81,6 +83,7 @@ public class PlayerJoinListener {
         event.getPlayer().sendPacket(PacketOutChunkStart.INSTANCE);
         event.getPlayer().sendPacket(new PacketOutChunkUpdateData(chunk));
         event.getPlayer().sendPacket(new PacketOutChunkFinish(1));
+         */
     }
 
 }

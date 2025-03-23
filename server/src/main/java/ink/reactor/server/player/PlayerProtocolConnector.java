@@ -2,7 +2,7 @@ package ink.reactor.server.player;
 
 import ink.reactor.api.Reactor;
 import ink.reactor.api.player.Player;
-import ink.reactor.api.player.connection.ProtocolConnector;
+import ink.reactor.protocol.ProtocolConnector;
 import ink.reactor.api.scheduler.TickDuration;
 
 import java.util.Collection;

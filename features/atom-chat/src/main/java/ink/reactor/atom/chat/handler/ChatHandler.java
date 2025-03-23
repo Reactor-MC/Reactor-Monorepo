@@ -1,11 +1,11 @@
 package ink.reactor.atom.chat.handler;
 
+import ink.reactor.api.player.connection.PlayerConnection;
 import ink.reactor.atom.chat.module.chat.config.ChatConfig;
 import ink.reactor.chat.component.ChatComponent;
 import ink.reactor.chat.component.RawComponent;
 import ink.reactor.chat.format.ChatLegacy;
 import ink.reactor.chat.format.minimessage.MiniMessage;
-import ink.reactor.protocol.PlayerConnectionImpl;
 import ink.reactor.protocol.handler.PacketHandler;
 import ink.reactor.protocol.inbound.InProtocol;
 import ink.reactor.protocol.inbound.PacketInData;
@@ -19,7 +19,7 @@ public final class ChatHandler implements PacketHandler {
     private final ChatConfig chatConfig;
 
     @Override
-    public void handle(PlayerConnectionImpl connection, int packetId, final PacketInData data) {
+    public void handle(PlayerConnection connection, int packetId, final PacketInData data) {
         final PacketInChatMessage packetInChatMessage = new PacketInChatMessage();
         packetInChatMessage.read(data);
 

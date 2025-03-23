@@ -85,6 +85,11 @@ public abstract class Player implements CommandSender, MinecraftEntityMetadata, 
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public final boolean equals(Object obj) {
         return obj == this || (obj instanceof Player player && player.uuid.equals(this.uuid));
     }

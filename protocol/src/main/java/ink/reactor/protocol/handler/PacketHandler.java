@@ -1,9 +1,9 @@
 package ink.reactor.protocol.handler;
 
+import ink.reactor.api.player.connection.PlayerConnection;
 import ink.reactor.protocol.inbound.PacketInData;
-import ink.reactor.protocol.PlayerConnectionImpl;
 
 public interface PacketHandler {
-    void handle(final PlayerConnectionImpl connection, final int packetId, final PacketInData data);
+    void handle(final PlayerConnection connection, final int packetId, final PacketInData data);
     int packetId();
 }

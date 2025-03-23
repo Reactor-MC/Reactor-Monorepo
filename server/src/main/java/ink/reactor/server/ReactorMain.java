@@ -20,7 +20,7 @@ import ink.reactor.server.config.ServerConfigLoader;
 import ink.reactor.server.console.Console;
 import ink.reactor.server.console.ConsoleStart;
 import ink.reactor.server.tick.MainThread;
-import ink.reactor.protocol.ServerConnection;
+import ink.reactor.server.network.ServerConnection;
 
 public final class ReactorMain {
     public static void main(String[] args) {

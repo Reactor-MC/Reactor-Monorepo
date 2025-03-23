@@ -1,5 +1,7 @@
 package ink.reactor.api.config.server;
 
+import ink.reactor.util.DataHolder;
+
 import java.io.File;
 
 public record ServerConfig(
@@ -9,5 +11,20 @@ public record ServerConfig(
     int pingWaitUpdateTicks,
     Motd defaultMotd,
 
-    File serverFolder
-) {}
+    File serverFolder,
+
+    Game game,
+    Network network,
+
+    DataHolder<String> cachedMotdJson
+) {
+    public record Game(
+        int viewDistance,
+        int simulationDistance
+    ) {}
+
+    public record Network(
+        boolean tcpFastOpen,
+        int tcpFastOpenConnections
+    ){}
+}
