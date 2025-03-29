@@ -10,11 +10,8 @@
 4) Libs – Contains libraries, some of which may depend on the API and protocol.
 5) Server – Implements the API, starts the server, and establishes a protocol connector.
 
-Recommended
 # Recommended code styles
-## General
-1) Use indentation in 4 spaces
-2) Always use "final" in method parameters
+## Install editorconfig extension (if you editor don't support)
 
 ## Split method parameters
 If a method exceeds 140 characters in width, split the parameters into multiple lines.
