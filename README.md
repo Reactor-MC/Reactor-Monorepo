@@ -17,6 +17,11 @@ What about Minestom? It’s not a bad alternative, but you have to code everythi
 
 These are the main reasons for creating Reactor: a well-structured, high-performance server focused on a modular system based on plugins and events.
 
+**Server Compliance Notice:**
+- This server software is **reverse-engineered** and not official.
+- Mojang's [EULA](https://www.minecraft.net/eula) applies to all Minecraft servers.
+- Server owners are responsible for complying with Mojang’s terms.
+
 > [!WARNING]
 > This project is in heavy development.
 > 
