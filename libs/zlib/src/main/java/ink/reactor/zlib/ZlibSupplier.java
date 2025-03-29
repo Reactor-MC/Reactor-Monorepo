@@ -14,17 +14,17 @@ public final class ZlibSupplier {
         supportIGZip = os.equals("Linux") ? UNCHECKED : NOT_SUPPORTED;
     }
 
+    public static ZLib createJavaZlib() {
+        return new JavaZlib();
+    }
+
     public static ZLib createZlib() throws ZlibException {
         if (supportIGZip == NOT_SUPPORTED) {
             return new JavaZlib();
         }
 
         if (supportIGZip == SUPPORTED) {
-            final ZLib zlib = IsalZlib.create();
-            if (zlib == null) {
-                return new JavaZlib();
-            }
-            return zlib;
+            return IsalZlib.create();
         }
 
         if (supportIGZip == UNCHECKED) {
@@ -34,7 +34,7 @@ public final class ZlibSupplier {
                 return igzip;
             } catch (final Exception e) {
                 supportIGZip = NOT_SUPPORTED;
-                throw new ZlibException("Can't create a instance of igzip. Disabling and using default java zlib", e);
+                throw new ZlibException("Can't create a instance of igzip", e);
             }
         }
         return new JavaZlib();

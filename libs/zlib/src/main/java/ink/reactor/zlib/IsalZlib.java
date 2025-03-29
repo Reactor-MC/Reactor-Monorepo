@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 final class IsalZlib implements ZLib {
 
-    private final MemorySegment deflater, inflater;
+    private MemorySegment deflater, inflater;
 
     private IsalZlib(MemorySegment deflater, MemorySegment inflater) {
         this.deflater = deflater;
@@ -17,7 +17,7 @@ final class IsalZlib implements ZLib {
     }
 
     static IsalZlib create() throws ZlibException {
-        MemorySegment deflater = null, inflater = null;
+        MemorySegment deflater, inflater;
 
         try {
             deflater = IGzip.createDeflate(IGzip.DEFAULT_LEVEL);
@@ -31,7 +31,7 @@ final class IsalZlib implements ZLib {
             try {
                 IGzip.freeDeflate(deflater);
             } catch (Throwable e1) {
-                throw new ZlibException("Error creating igzip deflate", e);
+                throw new ZlibException("Error on free igzip deflate", e);
             }
             throw new ZlibException("Error creating igzip inflate", e);
         }
@@ -40,17 +40,23 @@ final class IsalZlib implements ZLib {
     }
 
     @Override
-    public int compress(byte[] decompressedBytes, byte[] output) {
-        final CompressionConsumer compressionConsumer = new CompressionConsumer(output);
+    public int compress(final byte[] decompressedBytes, final byte[] output) {
+        if (deflater == null) {
+            return ERROR;
+        }
+        final IGzipConsumerImpl compressionConsumer = new IGzipConsumerImpl(output);
         IGzip.compress(compressionConsumer, deflater, decompressedBytes, decompressedBytes.length);
-        return compressionConsumer.compressedBytes;
+        return compressionConsumer.bytes;
     }
 
     @Override
-    public int decompress(byte[] compressedBytes, byte[] output) {
-        final DecompressionConsumer decompressionConsumer = new DecompressionConsumer(output);
+    public int decompress(final byte[] compressedBytes, final byte[] output) {
+        if (inflater == null) {
+            return ERROR;
+        }
+        final IGzipConsumerImpl decompressionConsumer = new IGzipConsumerImpl(output);
         IGzip.decompress(decompressionConsumer, inflater, compressedBytes, output.length);
-        return decompressionConsumer.decompressedBytes;
+        return decompressionConsumer.bytes;
     }
 
     @Override
@@ -59,6 +65,8 @@ final class IsalZlib implements ZLib {
             IGzip.freeDeflate(deflater);
         } catch (Throwable e) {
             throw new ZlibException("Error on free deflate", e);
+        } finally {
+            deflater = null;
         }
     }
 
@@ -68,38 +76,24 @@ final class IsalZlib implements ZLib {
             IGzip.freeInflate(inflater);
         } catch (Throwable e) {
             throw new ZlibException("Error on free inflate", e);
+        } finally {
+            inflater = null;
         }
     }
 
     @RequiredArgsConstructor
-    private static final class CompressionConsumer implements IGzipConsumer {
-        private final byte[] output;
-        private int compressedBytes;
+    private static final class IGzipConsumerImpl implements IGzipConsumer {
+        private final byte[] buffer;
+        private int bytes;
 
         @Override
         public void accept(ByteBuffer data, int resultCode) {
             if (data == null) {
-                compressedBytes = ERROR;
+                bytes = ERROR;
                 return;
             }
-            compressedBytes = data.capacity();
-            data.get(output);
-        }
-    }
-
-    @RequiredArgsConstructor
-    private static final class DecompressionConsumer implements IGzipConsumer {
-        private final byte[] output;
-        private int decompressedBytes;
-
-        @Override
-        public void accept(ByteBuffer data, int resultCode) {
-            if (data == null) {
-                decompressedBytes = ERROR;
-                return;
-            }
-            decompressedBytes = data.capacity();
-            data.get(output);
+            bytes = data.capacity();
+            data.get(buffer);
         }
     }
 }

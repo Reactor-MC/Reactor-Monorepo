@@ -10,6 +10,7 @@ import java.lang.foreign.ValueLayout;
 
 import java.lang.invoke.MethodHandle;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 public class IGzip {
 
@@ -34,11 +35,11 @@ public class IGzip {
         String libIsalPath = "";
 
         try {
-            igzipPath = IGzip.class.getClassLoader().getResource("linux-x86_64/igzip.so").toURI().toString();
+            igzipPath = Objects.requireNonNull(IGzip.class.getClassLoader().getResource("linux-x86_64/igzip.so")).toURI().toString();
             igzipPath = igzipPath.substring(igzipPath.indexOf(':')+1); // remove "file:"
 
-            libIsalPath = IGzip.class.getClassLoader().getResource("linux-x86_64/libisal.so.2.0.31").toURI().toString();
-            libIsalPath = igzipPath.substring(igzipPath.indexOf(':')+1); // remove "file:"      
+            libIsalPath = Objects.requireNonNull(IGzip.class.getClassLoader().getResource("linux-x86_64/libisal.so.2.0.31")).toURI().toString();
+            libIsalPath = libIsalPath.substring(libIsalPath.indexOf(':')+1); // remove "file:"
         } catch (final URISyntaxException e) {
             throw new RuntimeException("Failed to load native libraries", e);
         }
@@ -51,7 +52,7 @@ public class IGzip {
         }
 
         System.load(libIsalPath);
-    
+
         final SymbolLookup lookup = SymbolLookup.libraryLookup(igzipPath, Arena.global());
         final FunctionDescriptor freeDescriptor = FunctionDescriptor.ofVoid(ValueLayout.ADDRESS);
     
@@ -114,7 +115,7 @@ public class IGzip {
 
         try (final Arena arena = Arena.ofConfined()) {
             final MemorySegment output = arena.allocate(outputBufferSize);
-            final MemorySegment input = arena.allocateArray(ValueLayout.JAVA_BYTE, inputArray);
+            final MemorySegment input = arena.allocateFrom(ValueLayout.JAVA_BYTE, inputArray);
 
             final int result = (int) COMPRESS.invokeExact(deflate, input, output, inputArray.length, outputBufferSize);
 
@@ -132,7 +133,7 @@ public class IGzip {
     public static void decompress(final IGzipConsumer consumer, final MemorySegment inflate, final byte[] compressedArray, final int outputBufferSize) {
         try (final Arena arena = Arena.ofConfined()) {
             final MemorySegment output = arena.allocate(outputBufferSize);
-            final MemorySegment input = arena.allocateArray(ValueLayout.JAVA_BYTE, compressedArray);
+            final MemorySegment input = arena.allocateFrom(ValueLayout.JAVA_BYTE, compressedArray);
 
             final long decompressInfo = (long) DECOMPRESS.invokeExact(inflate, input, output, compressedArray.length, outputBufferSize);
 

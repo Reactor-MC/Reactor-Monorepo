@@ -2,6 +2,7 @@ package ink.reactor.dataparser.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,8 +25,8 @@ public final class JsonCombiner {
         final boolean orderAlphabetic = true;
         final boolean combineJsonObjectsInOne = true;
 
-        final File input = new File("src/main/resources/combiner/input");
-        final File output = new File("src/main/resources/combiner/output");
+        final File input = new File("data-parser/src/main/resources/combiner/input");
+        final File output = new File("data-parser/src/main/resources/combiner/output");
 
         if (!input.exists()) {
             System.out.println("Don't exist any files in " + input);
@@ -51,15 +52,15 @@ public final class JsonCombiner {
             load(data, file);
         }
 
-        final JSONWriter writer = JSONWriter.ofPretty();
-        writer.write(data);
-        try {
-            Files.newOutputStream(
-                new File(output, "output.json").toPath()
-            ).write(writer.getBytes());
-        } catch (IOException e) {
+        try(
+            final JSONWriter writer = JSONWriter.ofPretty();
+            final OutputStream outputStream = Files.newOutputStream(new File(output, "output" + ".json").toPath());
+        ) {
+            writer.write(data);
+            outputStream.write(writer.getBytes());
+        }  catch (IOException e) {
             e.printStackTrace();
-        }    
+        }
     }
 
     private static void load(final Map<String, Object> data, final File file) {

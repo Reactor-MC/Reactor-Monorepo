@@ -13,22 +13,21 @@ import java.nio.file.Paths;
 public final class MinecraftHashToPath {
 
     public static void main(String[] args) {
-        final String hash = "0ad27c4bc62913a7814bcd1655c8bd5c9d0e1db0"; // Example of sounds.json in 1.21.1
+        final String hash = "054ce6faf33806879f0f1f38204ee9eb080388ec"; // Example of sounds.json in 1.21.4
 
         final Path filePath = getMinecraftAssetPath(hash);
 
-        System.out.println("File in: " + filePath.toString());
+        System.out.println("File in: " + filePath);
     }
 
     public static Path getMinecraftAssetPath(final String hash) {
         if (hash == null || hash.length() < 2) {
-            throw new IllegalArgumentException("The hash need be minimun 2 of length.");
+            throw new IllegalArgumentException("The hash need be minimum 2 of length.");
         }
         final String subDir = hash.substring(0, 2);
-        final String fileName = hash;
 
         final String basePath = "~/.minecraft/assets/objects";
 
-        return Paths.get(basePath, subDir, fileName);
+        return Paths.get(basePath, subDir, hash);
     }
 }
