@@ -49,8 +49,7 @@ public class BlockDataParser implements DataParser {
 
         final JSONObject jsonObject = ParserFiles.loadJsonObject("blocks.json");
 
-        // I Heavily recommend use StringCodeGenerator for beginners
-        // When you know what exactly does, change it to OptimizedCodeGenerator for the better performance
+        // TODO: Optimize this (adding more code generators). Example: if all method parameters are booleans, use a lut table
         final BlockMethodCodeGenerator codeGenerator = new StringCodeGenerator();
 
         parseBlocks(jsonObject.entrySet(), codeGenerator);
