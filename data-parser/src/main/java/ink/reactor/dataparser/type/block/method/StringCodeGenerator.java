@@ -2,6 +2,7 @@ package ink.reactor.dataparser.type.block.method;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import ink.reactor.dataparser.type.block.BlockParserUtils;
 import ink.reactor.fission.method.JavaMethod;
 import ink.reactor.fission.method.JavaMethodParameter;
 
@@ -27,14 +28,14 @@ public class StringCodeGenerator implements BlockMethodCodeGenerator {
             if (parameter.getName().equals("id")) {
                 continue;
             }
-            if (i == 0) {
+            if (i == 0 && size == 1) {
                 builder.append("String.valueOf(").append(parameter.getName()).append(')');
             } else {
                 builder.append(parameter.getName());
             }
 
             if (++i != size) {
-                builder.append("+'-'+"); // Add parameter separator
+                builder.append("+\"-\"+"); // Add parameter separator
             } else {
                 builder.append(';');
             }
@@ -78,7 +79,11 @@ public class StringCodeGenerator implements BlockMethodCodeGenerator {
 
         builder.append('"');
         for (final Object value : values) {
-            builder.append(value);
+            if (BlockParserUtils.getValueClass(value.toString()) != String.class) {
+                builder.append(value);
+            } else {
+                builder.append(value.toString().toUpperCase());
+            }
             if (++i != size) {
                 builder.append('-');
             }

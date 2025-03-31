@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import ink.reactor.dataparser.type.block.BlockParserUtils;
 import ink.reactor.fission.classes.enums.JavaEnum;
 import ink.reactor.fission.classes.enums.JavaEnumObject;
+import ink.reactor.fission.field.JavaFieldNames;
 import ink.reactor.fission.method.JavaMethod;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,7 @@ public class BlockProperties {
 
     private boolean isValidPropertyEntry(final JSONArray values) {
         for (final Object value : values) {
-            if (!getValueClass(value.toString()).equals("String")) {
+            if (BlockParserUtils.getValueClass(value.toString()) != String.class) {
                 return false;
             }
         }
@@ -59,9 +60,9 @@ public class BlockProperties {
                 method.addParameterFinal(javaEnum.getClassName(), entry.getKey());
                 continue;
             }
-
-            String valueClass = getValueClass(entry.getValue().toString()); // json property entry is always a string, so don't matter the call to .toString()
-            method.addParameterFinal(valueClass, entry.getKey());
+            final String fieldName = (entry.getKey().equals("short")) ? "shortNumber" : entry.getKey(); // Piston has a property with this name
+            final String valueClass = BlockParserUtils.getValueClass(entry.getValue().toString()).getSimpleName(); // json property entry is always a string, so don't matter the call to .toString()
+            method.addParameterFinal(valueClass, JavaFieldNames.toFieldLocalName(fieldName));
         }
     }
 
@@ -77,34 +78,6 @@ public class BlockProperties {
             }
 
             enumObjects.add(new JavaEnumObject(valueName));
-        }
-    }
-
-    private String getValueClass(final String type) {
-        if (type.indexOf('.') != -1) {
-            return "double";
-        }
-        if (type.equals("true") || type.equals("false")) {
-            return "boolean";
-        }
-
-        try {
-            final long value = Long.parseLong(type);
-            if (value >= Byte.MAX_VALUE && value <= Byte.MAX_VALUE) {
-                return "byte";
-            }
-            if (value >= Short.MAX_VALUE && value <= Short.MAX_VALUE) {
-                return "short";
-            }
-            if (value >= Character.MAX_VALUE && value <= Character.MAX_VALUE) {
-                return "char";
-            }
-            if (value >= Integer.MAX_VALUE && value <= Integer.MAX_VALUE) {
-                return "int";
-            }
-            return "long";
-        } catch (NumberFormatException e) {
-            return "String";
         }
     }
 }
