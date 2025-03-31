@@ -52,7 +52,7 @@ public @Builder class VanillaCommons {
     }
 
     public JavaField createVanillaField(final String className, final String fieldName, final Object... parameters) {
-        return createVanillaField(false, className, fieldName, parameters);
+        return createVanillaField(true, className, fieldName, parameters);
     }
 
     public JavaMethod createVanillaMethod(@NonNull JavaClass javaClass) {

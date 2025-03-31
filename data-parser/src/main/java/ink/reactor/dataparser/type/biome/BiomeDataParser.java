@@ -6,6 +6,7 @@ import ink.reactor.dataparser.append.AppendOptions;
 import ink.reactor.dataparser.append.CustomAppender;
 import ink.reactor.dataparser.common.ParserClass;
 import ink.reactor.dataparser.common.ParserFiles;
+import ink.reactor.fission.commentary.MultiLineCommentary;
 import ink.reactor.fission.template.loader.TemplateLoader;
 
 import java.io.IOException;
@@ -15,7 +16,9 @@ public class BiomeDataParser implements DataParser {
 
     @Override
     public void parse(String packageName) throws IOException {
-        final String header = ParserClass.combineCommentaries(ParserClass.DATA_GENERATOR, ParserClass.JSON_COMBINED) + "\npackage " + packageName + ";\n";
+        final String header =
+            MultiLineCommentary.of(ParserClass.combineCommentaries(ParserClass.DATA_GENERATOR, ParserClass.JSON_COMBINED))
+            + "\npackage " + packageName + ";\n";
 
         final String template = header + TemplateLoader.load("template/biomes.template", getClass().getClassLoader());
         final JSONObject jsonObject = ParserFiles.loadJsonObject("biomes.json");

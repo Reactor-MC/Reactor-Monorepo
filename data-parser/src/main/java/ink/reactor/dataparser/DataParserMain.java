@@ -2,6 +2,7 @@ package ink.reactor.dataparser;
 
 import ink.reactor.dataparser.type.banner.BannerDataParser;
 import ink.reactor.dataparser.type.biome.BiomeDataParser;
+import ink.reactor.dataparser.type.block.BlockDataParser;
 import ink.reactor.dataparser.type.chat.ChatDataParser;
 import ink.reactor.dataparser.type.damage.DamageTypeDataParser;
 import ink.reactor.dataparser.type.dimension.DimensionDataParser;
@@ -41,13 +42,14 @@ public class DataParserMain {
         OPTIONS.put("item", new ItemDataParser());
         OPTIONS.put("entity", new EntityDataParser());
         OPTIONS.put("packet", new PacketDataParser());
+        OPTIONS.put("block", new BlockDataParser());
     }
 
     public static void main(final String[] args) {
         String parserName;
 
         if (args.length == 0) {
-            parserName = "packet";
+            parserName = "block";
             System.out.println("Using default parser " + parserName + ". Available options: " + OPTIONS.keySet());
         } else {
             parserName = args[0];

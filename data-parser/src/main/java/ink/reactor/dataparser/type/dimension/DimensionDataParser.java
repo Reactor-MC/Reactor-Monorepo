@@ -35,7 +35,7 @@ public class DimensionDataParser implements DataParser {
                 continue;
             }
             final Object monsterSpawnLightLevel = dimension.get("monster_spawn_light_level");
-            javaClass.addFields(VanillaCommons.DEFAULT.createVanillaField(CLASS_NAME, entry.getKey(),
+            javaClass.addFields(VanillaCommons.DEFAULT.createVanillaField(false, CLASS_NAME, entry.getKey(),
                     entry.getKey(),
                     dimension.getString("infiniburn"),
                     dimension.getString("effects"),
