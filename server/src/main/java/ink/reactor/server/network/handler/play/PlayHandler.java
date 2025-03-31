@@ -8,8 +8,8 @@ import ink.reactor.protocol.outbound.play.PacketOutPlayerPosition;
 import ink.reactor.util.event.EventDispatcher;
 import ink.reactor.api.Reactor;
 import ink.reactor.api.player.event.PlayerJoinEvent;
-import ink.reactor.api.world.WorldManager;
 import ink.reactor.protocol.ConnectionState;
+import ink.reactor.world.WorldManager;
 
 public final class PlayHandler {
 

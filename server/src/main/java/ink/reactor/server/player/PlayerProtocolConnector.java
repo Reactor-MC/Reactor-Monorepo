@@ -26,7 +26,7 @@ public final class PlayerProtocolConnector {
                 players.add(reactorPlayer);
                 byUUID.put(reactorPlayer.getUuid(), reactorPlayer);
 
-                Reactor.getServer().getWorldManager().getDefaultWorld().addPlayer(reactorPlayer);
+                reactorPlayer.setWorld(Reactor.getServer().getWorldManager().getDefaultWorld());
             });
 
             return reactorPlayer;
@@ -36,7 +36,7 @@ public final class PlayerProtocolConnector {
             Reactor.getServer().getScheduler().runNow(() -> {
                 players.remove(player);
                 byUUID.remove(player.getUuid());
-                player.getWorld().removePlayer(player);
+                player.setWorld(null);
             });
         };
 

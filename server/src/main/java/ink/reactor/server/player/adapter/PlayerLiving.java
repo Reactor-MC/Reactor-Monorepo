@@ -1,7 +1,7 @@
 package ink.reactor.server.player.adapter;
 
 import ink.reactor.api.player.Player;
-import ink.reactor.entity.data.Living;
+import ink.reactor.entity.type.Living;
 import ink.reactor.entity.effect.MobEffectManager;
 
 public final class PlayerLiving extends Living {

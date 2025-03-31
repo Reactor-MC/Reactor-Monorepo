@@ -1,7 +1,7 @@
 package ink.reactor.server.world.tick;
 
 import ink.reactor.api.Reactor;
-import ink.reactor.api.world.World;
+import ink.reactor.world.World;
 
 import java.util.Collection;
 

@@ -16,7 +16,7 @@ public class WolfDataParser implements DataParser {
     @Override
     public void parse(String packageName) throws IOException {
         final JavaClass javaClass = DataParserTemplateCommon.createTemplate(getClass(), CLASS_NAME, packageName);
-        JavaFields.FINAL.addFields(javaClass, String.class, "angryTexture", "biomes", "tameTexture", "wildTexture");
+        JavaFields.FINAL.addFields(javaClass, String.class, "name", "angryTexture", "biomes", "tameTexture", "wildTexture");
         DataParserTemplateCommon.addVanillaData(CLASS_NAME, javaClass);
 
         final JSONObject jsonObject = ParserFiles.loadJsonObject("wolf_variant.json");
@@ -26,6 +26,7 @@ public class WolfDataParser implements DataParser {
                 continue;
             }
             javaClass.addFields(VanillaCommons.DEFAULT.createVanillaField(CLASS_NAME, entry.getKey(),
+                    entry.getKey(),
                     wolf.getString("angry_texture"),
                     wolf.getString("biomes"),
                     wolf.getString("tame_texture"),

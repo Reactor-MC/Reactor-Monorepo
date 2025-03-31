@@ -9,16 +9,15 @@ import ink.reactor.api.player.data.Gamemode;
 import ink.reactor.api.player.data.PlayerInventory;
 import ink.reactor.api.player.data.PlayerSkin;
 import ink.reactor.api.plugin.service.permission.PermissionService;
-import ink.reactor.api.world.World;
 import ink.reactor.chat.ChatMode;
 import ink.reactor.chat.component.ChatComponent;
 
 import ink.reactor.command.CommandSender;
 import ink.reactor.entity.Entity;
 
-import ink.reactor.entity.data.MinecraftEntity;
-import ink.reactor.entity.data.adapter.LivingMetadata;
-import ink.reactor.entity.data.adapter.MinecraftEntityMetadata;
+import ink.reactor.entity.type.MinecraftEntity;
+import ink.reactor.entity.type.adapter.LivingMetadata;
+import ink.reactor.entity.type.adapter.MinecraftEntityMetadata;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -51,7 +50,7 @@ public abstract class Player implements CommandSender, MinecraftEntityMetadata, 
 
     private float experience;
 
-    private World world;
+    private Object world;
 
     public abstract PlayerInventory getInventory();
     public abstract void setTabHeaderFooter(final ChatComponent[] header, final ChatComponent[] footer);

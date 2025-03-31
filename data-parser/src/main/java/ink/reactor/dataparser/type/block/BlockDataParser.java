@@ -17,10 +17,7 @@ import ink.reactor.fission.method.JavaMethod;
 import ink.reactor.fission.method.JavaMethodParameter;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /*
     Parse blocks searching common patterns in definition types.
@@ -48,11 +45,13 @@ public class BlockDataParser implements DataParser {
         blocksClass.setCommentary(MultiLineCommentary.of(ParserClass.DATA_GENERATOR));
 
         final JSONObject jsonObject = ParserFiles.loadJsonObject("blocks.json");
+        blocksClass.setFields(new ArrayList<>(jsonObject.size()));
 
         // TODO: Optimize this (adding more code generators). Example: if all method parameters are booleans, use a lut table
         final BlockMethodCodeGenerator codeGenerator = new StringCodeGenerator();
 
         parseBlocks(jsonObject.entrySet(), codeGenerator);
+        blocksClass.addFields(JavaFields.STATIC_CONSTANTS.ofInt("AMOUNT_BLOCKS", jsonObject.size()));
 
         final Collection<JavaClass> classByTypesCollection = classByType.values();
         for (final JavaClass javaClass : classByTypesCollection) {
@@ -91,10 +90,10 @@ public class BlockDataParser implements DataParser {
             }
 
             blockProperties.createPropertyClasses(properties);
+            addStaticFieldToBlockClass(defaultState, blockName);
 
             JavaClass javaClass = classByType.get(type);
             if (javaClass != null) {
-                addStaticFieldToBlockClass(defaultState, blockName);
                 continue;
             }
 

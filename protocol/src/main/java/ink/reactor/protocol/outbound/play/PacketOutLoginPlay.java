@@ -3,9 +3,9 @@ package ink.reactor.protocol.outbound.play;
 import ink.reactor.api.player.Player;
 import ink.reactor.api.player.connection.PacketOutbound;
 import ink.reactor.api.player.connection.PlayerConnection;
-import ink.reactor.api.world.World;
-import ink.reactor.api.world.data.Gamerule;
-import ink.reactor.api.world.data.WorldType;
+import ink.reactor.world.World;
+import ink.reactor.world.data.DimensionType;
+import ink.reactor.world.data.Gamerule;
 import ink.reactor.protocol.outbound.OutProtocol;
 import ink.reactor.util.buffer.writer.FriendlyBuffer;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ public final class PacketOutLoginPlay implements PacketOutbound {
 
         buffer.writeInt(player.getId());
         buffer.writeBoolean(gamerule.isHardCore());
-        buffer.writeVarInt(WorldType.ALL.length);
-        for (final WorldType worldType : WorldType.ALL) {
+        buffer.writeVarInt(DimensionType.ALL.size());
+        for (final DimensionType worldType : DimensionType.ALL) {
             buffer.writeString(worldType.name());
         }
         buffer.writeVarInt(30);
@@ -37,7 +37,7 @@ public final class PacketOutLoginPlay implements PacketOutbound {
         buffer.writeVarInt(simulationDistance);
         buffer.writeBoolean(false); // Reduced Debug Info
         buffer.writeBoolean(gamerule.isRespawnScreen());
-        buffer.writeBoolean(false); // Do limited crafting
+        buffer.writeBoolean(false); // Do limit crafting
         PlayStateUtils.writeSpawnInfo(buffer, world, player);
         buffer.writeBoolean(false);
         return buffer.compress();

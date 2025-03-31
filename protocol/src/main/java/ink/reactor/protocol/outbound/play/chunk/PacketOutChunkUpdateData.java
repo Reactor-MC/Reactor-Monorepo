@@ -10,11 +10,19 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public final class PacketOutChunkUpdateData implements PacketOutbound {
-    private final VanillaChunk chunk;
+    private final byte[] chunk;
+
+    public PacketOutChunkUpdateData(final VanillaChunk vanillaChunk) {
+        this.chunk = VanillaChunkSerializer.serializeBlocksAndLight(vanillaChunk);
+    }
+
+    public PacketOutChunkUpdateData(final VanillaPaletteChunk vanillaPaletteChunk) {
+        this.chunk = VanillaPaletteChunkSerializer.serialize(vanillaPaletteChunk);
+    }
 
     @Override
     public byte[] write() {
-        return VanillaChunkSerializer.serializeBlocksAndLight(chunk);
+        return chunk;
     }
 
     @Override

@@ -4,33 +4,34 @@ import ink.reactor.nbt.type.NBTGeneral;
 import ink.reactor.nbt.writer.NBTByteWriter;
 import ink.reactor.util.buffer.writer.FriendlyBuffer;
 import ink.reactor.world.chunk.Chunk;
-import ink.reactor.world.chunk.ChunkHeightmap;
 import ink.reactor.world.chunk.ChunkType;
 import ink.reactor.world.chunk.exception.ChunkException;
 import ink.reactor.world.chunk.light.LightEngine;
 import ink.reactor.world.chunk.light.StaticLightEngine;
 import ink.reactor.world.chunk.vanilla.GenericHeightmap;
-import ink.reactor.world.chunk.vanilla.array.VanillaChunkSection;
-import ink.reactor.world.chunk.vanilla.array.VanillaHeightMap;
 import ink.reactor.world.data.Biome;
-import ink.reactor.world.data.WorldType;
+import ink.reactor.world.data.DimensionType;
 import ink.reactor.world.palette.PaletteWriter;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Arrays;
 import java.util.BitSet;
 
 @Getter
 @RequiredArgsConstructor
 public final class VanillaPaletteChunk implements Chunk {
-    private final WorldType type;
+    private final DimensionType type;
     private final int amountNegativeSections;
 
     private final int x, z;
     private final VanillaPaletteChunkSection[] sections;
     private final LightEngine lightEngine;
     private final GenericHeightmap heightMap;
+
+    @Override
+    public void unload() {
+
+    }
 
     @Override
     public byte getChunkType() {
@@ -141,7 +142,7 @@ public final class VanillaPaletteChunk implements Chunk {
         return (sections.length * 16 - (amountNegativeSections * 16)) - 1;
     }
 
-    public static VanillaPaletteChunk of(final int x, final int z, final WorldType worldType) {
+    public static VanillaPaletteChunk of(final int x, final int z, final DimensionType worldType) {
         final VanillaPaletteChunkSection[] sections = new VanillaPaletteChunkSection[worldType.height() / 16]; // Vanilla chunk section has 16 blocks of height
         final int amountNegativeSections = worldType.minY() < 0 ? Math.abs(worldType.minY() >> 4) : 0;
 

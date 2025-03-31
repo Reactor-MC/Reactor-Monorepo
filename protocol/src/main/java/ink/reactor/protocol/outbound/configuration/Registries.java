@@ -1,12 +1,10 @@
 package ink.reactor.protocol.outbound.configuration;
 
-import ink.reactor.api.entity.data.DamageType;
-import ink.reactor.api.world.block.Painting;
-import ink.reactor.api.world.data.Biome;
-import ink.reactor.api.world.data.Biome.Effects;
-import ink.reactor.api.world.data.WorldType;
-import ink.reactor.entity.data.wolf.WolfType;
-import ink.reactor.item.data.Banner;
+import ink.reactor.world.block.PaintingVariant;
+import ink.reactor.world.data.Biome;
+import ink.reactor.world.data.Biome.Effects;
+import ink.reactor.entity.data.DamageType;
+import ink.reactor.entity.type.wolf.WolfVariant;
 import ink.reactor.item.data.armor.TrimMaterial;
 import ink.reactor.item.data.armor.TrimPattern;
 import ink.reactor.nbt.type.NBTGeneral;
@@ -14,6 +12,8 @@ import ink.reactor.nbt.writer.NBTByteWriter;
 import ink.reactor.protocol.outbound.CachedPacket;
 import ink.reactor.protocol.outbound.OutProtocol;
 import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.world.block.BannerPattern;
+import ink.reactor.world.data.DimensionType;
 
 public final class Registries {
 
@@ -22,20 +22,20 @@ public final class Registries {
     }
 
     public static byte[] wolfVariants() {
-        final int amountWolfs = WolfType.ALL.size();
+        final int amountWolfs = WolfVariant.ALL.size();
         final FriendlyBuffer buffer = new FriendlyBuffer(amountWolfs * 64);
 
         buffer.writeString("minecraft:wolf_variant");
         buffer.writeVarInt(amountWolfs);
 
-        for (final WolfType wolfType : WolfType.ALL) {
-            buffer.writeString("minecraft:"+wolfType.getName());
+        for (final WolfVariant wolfVariant : WolfVariant.ALL) {
+            buffer.writeString("minecraft:"+wolfVariant.name());
             buffer.writeBoolean(true);
 
             final NBTGeneral nbt = new NBTGeneral();
-            nbt.addString("wild_texture", wolfType.getWildTexture());
-            nbt.addString("tame_texture", wolfType.getTameTexture());
-            nbt.addString("angry_texture", wolfType.getAngryTexture());
+            nbt.addString("wild_texture", wolfVariant.wildTexture());
+            nbt.addString("tame_texture", wolfVariant.tameTexture());
+            nbt.addString("angry_texture", wolfVariant.angryTexture());
             nbt.addString("biomes", "minecraft:badlands");
             NBTByteWriter.writeNBT(nbt, buffer);
         }
@@ -51,13 +51,13 @@ public final class Registries {
         buffer.writeVarInt(amount);
     
         for (final DamageType damageType : DamageType.ALL) {
-            buffer.writeString("minecraft:"+damageType.getName());
+            buffer.writeString("minecraft:"+damageType.name());
             buffer.writeBoolean(true);
 
             final NBTGeneral nbt = new NBTGeneral();
-            nbt.addString("message_id", damageType.getMessageId());
-            nbt.addString("scaling", damageType.getScaling());
-            nbt.addFloat("exhaustion", (float)damageType.getExhaustion());
+            nbt.addString("message_id", damageType.messageId());
+            nbt.addString("scaling", damageType.scaling());
+            nbt.addFloat("exhaustion", (float)damageType.exhaustion());
             nbt.addString("effects", "hurt");
 
             NBTByteWriter.writeNBT(nbt, buffer);
@@ -95,66 +95,66 @@ public final class Registries {
         buffer.writeVarInt(amount);
     
         for (final TrimPattern pattern : TrimPattern.ALL) {
-            buffer.writeString(pattern.getAssetId());
+            buffer.writeString(pattern.assetId());
             buffer.writeBoolean(true);
 
             final NBTGeneral nbt = new NBTGeneral();
-            nbt.addString("asset_id", pattern.getAssetId());
-            nbt.addString("template_item", pattern.getTemplateItem());
-            nbt.addString("description", pattern.getDescription());
-            nbt.addBoolean("decal", pattern.isDecal());
+            nbt.addString("asset_id", pattern.assetId());
+            nbt.addString("template_item", pattern.templateItem());
+            nbt.addString("description", pattern.description());
+            nbt.addBoolean("decal", pattern.decal());
             NBTByteWriter.writeNBT(nbt, buffer);
         }
         return buffer.compress();
     }
 
     public static byte[] banner() {
-        final int amount = Banner.ALL.size();
+        final int amount = BannerPattern.ALL.size();
         final FriendlyBuffer buffer = new FriendlyBuffer(amount * 48);
 
         buffer.writeString("minecraft:banner_pattern");
         buffer.writeVarInt(amount);
     
-        for (final Banner banner : Banner.ALL) {
-            buffer.writeString(banner.getAssetId());
+        for (final BannerPattern banner : BannerPattern.ALL) {
+            buffer.writeString(banner.assetId());
             buffer.writeBoolean(true);
 
             final NBTGeneral nbt = new NBTGeneral();
-            nbt.addString("asset_id", banner.getAssetId());
-            nbt.addString("translation_key", banner.getTranslationKey());
+            nbt.addString("asset_id", banner.assetId());
+            nbt.addString("translation_key", banner.translationKey());
             NBTByteWriter.writeNBT(nbt, buffer);
         }
         return buffer.compress();
     }
 
     public static byte[] painting() {
-        final int amount = Painting.ALL.size();
+        final int amount = PaintingVariant.ALL.size();
         final FriendlyBuffer buffer = new FriendlyBuffer(amount * 18);
 
         buffer.writeString("minecraft:painting_variant");
         buffer.writeVarInt(amount);
     
-        for (final Painting painting : Painting.ALL) {
-            buffer.writeString(painting.getAssetId());
+        for (final PaintingVariant painting : PaintingVariant.ALL) {
+            buffer.writeString(painting.assetId());
             buffer.writeBoolean(true);
 
             final NBTGeneral nbt = new NBTGeneral();
-            nbt.addString("asset_id", painting.getAssetId());
-            nbt.addInt("height", painting.getHeight());
-            nbt.addInt("width", painting.getWidth());
+            nbt.addString("asset_id", painting.assetId());
+            nbt.addInt("height", painting.height());
+            nbt.addInt("width", painting.width());
             NBTByteWriter.writeNBT(nbt, buffer);
         }
         return buffer.compress();
     }
 
     public static byte[] dimensionTypes() {
-        final int amount = WorldType.ALL.length;
+        final int amount = DimensionType.ALL.size();
         final FriendlyBuffer buffer = new FriendlyBuffer(amount * 18);
 
         buffer.writeString("minecraft:dimension_type");
         buffer.writeVarInt(amount);
     
-        for (final WorldType world : WorldType.ALL) {
+        for (final DimensionType world : DimensionType.ALL) {
             buffer.writeString("minecraft:"+world.name());
             buffer.writeBoolean(true);
 

@@ -28,6 +28,7 @@ public class StringCodeGenerator implements BlockMethodCodeGenerator {
             if (parameter.getName().equals("id")) {
                 continue;
             }
+
             if (i == 0 && size == 1) {
                 builder.append("String.valueOf(").append(parameter.getName()).append(')');
             } else {
@@ -52,6 +53,10 @@ public class StringCodeGenerator implements BlockMethodCodeGenerator {
             final JSONObject properties = state.getJSONObject("properties");
             final int differenceId = id - defaultId;
 
+            if (differenceId == 0) { // Default case
+                continue;
+            }
+
             builder
                 .append("    case ")
                 .append(combineStates(properties))
@@ -65,7 +70,7 @@ public class StringCodeGenerator implements BlockMethodCodeGenerator {
 
             builder.append(';').append('\n');
         }
-        builder.append("    default -> -1;\n");
+        builder.append("    default -> id;\n");
         builder.append("};");
     }
 

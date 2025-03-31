@@ -1,6 +1,5 @@
 package ink.reactor.debug.listener;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -21,15 +20,15 @@ import ink.reactor.item.data.potion.PotionEffectType;
 import ink.reactor.protocol.outbound.play.chunk.PacketOutChunkFinish;
 import ink.reactor.protocol.outbound.play.chunk.PacketOutChunkStart;
 import ink.reactor.protocol.outbound.play.chunk.PacketOutChunkUpdateData;
-import ink.reactor.world.block.Block;
-import ink.reactor.world.chunk.vanilla.array.VanillaChunk;
-import ink.reactor.world.chunk.vanilla.array.VanillaHeightMap;
+import ink.reactor.world.block.*;
+import ink.reactor.world.block.state.BlockFacing;
+import ink.reactor.world.block.state.BlockHalf;
+import ink.reactor.world.block.state.BlockShape;
+import ink.reactor.world.block.state.Stair;
 import ink.reactor.world.chunk.vanilla.palette.VanillaPaletteChunk;
-import ink.reactor.world.data.WorldType;
+import ink.reactor.world.data.DimensionType;
 
 public class PlayerJoinListener {
-
-
 
     @Listener
     public void onJoin(final PlayerJoinEvent event) {
@@ -74,16 +73,13 @@ public class PlayerJoinListener {
 
         event.getPlayer().setExperience(3500F);
 
-        /*
-        TODO: FIX
-        final VanillaChunk chunk = VanillaChunk.of(0, 0, WorldType.OVERWORLD);
+        final VanillaPaletteChunk chunk = VanillaPaletteChunk.of(0, 0, DimensionType.OVERWORLD);
 
-        chunk.setBlock(0, 0, 0, Block.GRASS_BLOCK.getId());
-
+        chunk.setBlock(0, 0, 0, (char) Stair.of(Blocks.STONE_STAIRS, BlockFacing.NORTH, BlockHalf.BOTTOM, BlockShape.OUTER_RIGHT, true));
         event.getPlayer().sendPacket(PacketOutChunkStart.INSTANCE);
         event.getPlayer().sendPacket(new PacketOutChunkUpdateData(chunk));
         event.getPlayer().sendPacket(new PacketOutChunkFinish(1));
-         */
+
     }
 
 }

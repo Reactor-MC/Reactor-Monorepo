@@ -2,6 +2,7 @@ package ink.reactor.dataparser.type.block.properties;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import ink.reactor.dataparser.type.block.BlockFacing;
 import ink.reactor.dataparser.type.block.BlockParserUtils;
 import ink.reactor.fission.classes.enums.JavaEnum;
 import ink.reactor.fission.classes.enums.JavaEnumObject;
@@ -55,14 +56,20 @@ public class BlockProperties {
         final Set<Map.Entry<String, Object>> entries = properties.entrySet();
 
         for (final Map.Entry<String, Object> entry : entries) {
-            final JavaEnum javaEnum = this.properties.get(entry.getKey());
-            if (javaEnum != null) {
-                method.addParameterFinal(javaEnum.getClassName(), entry.getKey());
+            final String fieldName = (entry.getKey().equals("short")) ? "shortNumber" : JavaFieldNames.toFieldLocalName(entry.getKey()); // Piston has a property with this name
+            final Class<?> valueClass = BlockParserUtils.getValueClass(entry.getValue().toString()); // json property entry is always a string, so don't matter the call to .toString()
+
+            if (valueClass != String.class) {
+                method.addParameterFinal(valueClass, fieldName);
                 continue;
             }
-            final String fieldName = (entry.getKey().equals("short")) ? "shortNumber" : entry.getKey(); // Piston has a property with this name
-            final String valueClass = BlockParserUtils.getValueClass(entry.getValue().toString()).getSimpleName(); // json property entry is always a string, so don't matter the call to .toString()
-            method.addParameterFinal(valueClass, JavaFieldNames.toFieldLocalName(fieldName));
+
+            final JavaEnum javaEnum = this.properties.get(entry.getKey());
+            if (javaEnum != null) {
+                method.addParameterFinal(javaEnum.getClassName(), fieldName);
+                continue;
+            }
+            method.addParameterFinal(valueClass, fieldName);
         }
     }
 

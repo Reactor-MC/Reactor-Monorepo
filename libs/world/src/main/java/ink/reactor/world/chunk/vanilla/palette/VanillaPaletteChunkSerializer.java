@@ -1,13 +1,6 @@
 package ink.reactor.world.chunk.vanilla.palette;
 
-import ink.reactor.nbt.type.NBTGeneral;
-import ink.reactor.nbt.writer.NBTByteWriter;
-import ink.reactor.nbt.writer.NBTStreamWriter;
 import ink.reactor.util.buffer.writer.FriendlyBuffer;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.file.Path;
 
 public class VanillaPaletteChunkSerializer {
 

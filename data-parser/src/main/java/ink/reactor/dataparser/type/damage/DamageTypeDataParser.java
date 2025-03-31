@@ -18,7 +18,7 @@ public class DamageTypeDataParser implements DataParser {
     @Override
     public void parse(String packageName) throws IOException {
         final JavaClass javaClass = DataParserTemplateCommon.createTemplate(getClass(), CLASS_NAME, packageName);
-        JavaFields.FINAL.addFields(javaClass, String.class, "deathMessageType", "messageId", "scaling");
+        JavaFields.FINAL.addFields(javaClass, String.class, "name", "deathMessageType", "messageId", "scaling");
         JavaFields.FINAL.addDoubles(javaClass, "exhaustion");
 
         DataParserTemplateCommon.addVanillaData(CLASS_NAME, javaClass);
@@ -31,6 +31,7 @@ public class DamageTypeDataParser implements DataParser {
             }
             final String deathMsg = damageType.getString("death_message_type");
             javaClass.addFields(VanillaCommons.DEFAULT.createVanillaField(CLASS_NAME, entry.getKey(),
+                    entry.getKey(),
                     deathMsg == null ? "" : deathMsg,
                     damageType.getString("message_id"),
                     damageType.getString("scaling"),

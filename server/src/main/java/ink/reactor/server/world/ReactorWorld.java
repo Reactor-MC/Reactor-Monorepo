@@ -2,18 +2,21 @@ package ink.reactor.server.world;
 
 import ink.reactor.api.Reactor;
 import ink.reactor.api.player.Player;
-import ink.reactor.api.world.World;
-import ink.reactor.api.world.chunk.Chunk;
-import ink.reactor.api.world.data.Biome;
-import ink.reactor.api.world.data.WorldType;
+import ink.reactor.world.World;
+import ink.reactor.world.chunk.Chunk;
 import ink.reactor.protocol.outbound.CachedPacket;
 import ink.reactor.protocol.outbound.play.PacketOutUpdateTime;
+import ink.reactor.world.data.DimensionType;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 
 public class ReactorWorld extends World {
 
-    public ReactorWorld(Long2ObjectOpenHashMap<Chunk> chunks, String name, WorldType worldType, Biome biome) {
-        super(chunks, name, worldType, biome);
+    public ReactorWorld(Long2ObjectOpenHashMap<Chunk> chunks, String name, DimensionType dimensionType) {
+        super(chunks, name, dimensionType);
+    }
+
+    public ReactorWorld(String name, DimensionType dimensionType) {
+        super(new Long2ObjectOpenHashMap<>(), name, dimensionType);
     }
 
     @Override

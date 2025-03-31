@@ -49,7 +49,7 @@ public class DataParserMain {
         String parserName;
 
         if (args.length == 0) {
-            parserName = "block";
+            parserName = "dimension";
             System.out.println("Using default parser " + parserName + ". Available options: " + OPTIONS.keySet());
         } else {
             parserName = args[0];

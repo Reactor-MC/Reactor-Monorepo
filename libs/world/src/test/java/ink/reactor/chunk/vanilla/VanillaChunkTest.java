@@ -5,8 +5,8 @@ import ink.reactor.world.chunk.Chunk;
 import ink.reactor.world.chunk.vanilla.array.VanillaChunk;
 import ink.reactor.world.chunk.vanilla.palette.VanillaPaletteChunk;
 import ink.reactor.world.data.Biome;
-import ink.reactor.world.data.WorldType;
 
+import ink.reactor.world.data.DimensionType;
 import ink.reactor.world.palette.PaletteWriter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ public final class VanillaChunkTest {
         Assertions.assertEquals(2, vanillaChunk.getZ());
 
         for (final int height : vanillaChunk.getHeightMap().getHeights()) {
-            Assertions.assertEquals(WorldType.OVERWORLD.minY(), height);
+            Assertions.assertEquals(DimensionType.OVERWORLD.minY(), height);
         }
         Assertions.assertEquals(4, vanillaChunk.getAmountNegativeSections());
     }
@@ -110,7 +110,7 @@ public final class VanillaChunkTest {
     }
 
     public static void main(String[] args) {
-        VanillaPaletteChunk a = VanillaPaletteChunk.of(0,0,WorldType.OVERWORLD);
+        VanillaPaletteChunk a = VanillaPaletteChunk.of(0,0,DimensionType.OVERWORLD);
         for (int z = 0; z < 15; z++) {
             for (int x = 0; x < 15; x++) {
                 a.setBlock(x,0,z,(char)(x*z));
@@ -123,7 +123,7 @@ public final class VanillaChunkTest {
         PaletteWriter.writeChunkSection(buffer, a.getSection(0));
         System.out.println(Arrays.toString(buffer.compress()));
 
-        VanillaChunk b = VanillaChunk.of(0,0,WorldType.OVERWORLD);
+        VanillaChunk b = VanillaChunk.of(0,0,DimensionType.OVERWORLD);
         for (int z = 0; z < 15; z++) {
             for (int x = 0; x < 15; x++) {
                 b.setBlock(x,0,z,(char)(x*z));
@@ -137,10 +137,10 @@ public final class VanillaChunkTest {
     }
 
     private static VanillaChunk newVanillaChunk() {
-        return VanillaChunk.of(1, 2, WorldType.OVERWORLD);
+        return VanillaChunk.of(1, 2, DimensionType.OVERWORLD);
     }
 
     private static VanillaPaletteChunk newVanillaPaletteChunk() {
-        return VanillaPaletteChunk.of(1, 2, WorldType.OVERWORLD);
+        return VanillaPaletteChunk.of(1, 2, DimensionType.OVERWORLD);
     }
 }

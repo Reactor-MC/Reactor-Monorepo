@@ -1,17 +1,10 @@
 package ink.reactor.world.chunk.vanilla.array;
 
 import ink.reactor.util.buffer.writer.WriteBuffer;
-import ink.reactor.world.block.Block;
 import ink.reactor.world.chunk.ChunkSection;
-import ink.reactor.world.chunk.light.LightEngine;
 import ink.reactor.world.chunk.light.LightHolder;
 import ink.reactor.world.data.Biome;
-import ink.reactor.world.palette.PaletteType;
 import ink.reactor.world.util.PositiveCounterUtil;
-import it.unimi.dsi.fastutil.chars.CharArraySet;
-import it.unimi.dsi.fastutil.chars.CharOpenHashSet;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -106,7 +99,7 @@ public final class VanillaChunkSection implements ChunkSection {
     }
 
     public int calculateBitsPerEntry() {
-        final int uniqueBlocks = PositiveCounterUtil.countUnique(blocks, Block.ALL.size());
+        final int uniqueBlocks = PositiveCounterUtil.countUnique(blocks, Character.MAX_VALUE);
         final int bitsPerEntry = (int) Math.ceil(Math.log(uniqueBlocks) / Math.log(2));
 
         if (bitsPerEntry < 4) return 4; // Indirect

@@ -1,0 +1,73 @@
+package ink.reactor.world.block.state;
+
+public final class HugeMushroom {
+    public static int of(final char id, final boolean down, final boolean east, final boolean north, final boolean south, final boolean up, final boolean west) {
+        final String sentence = down+"-"+east+"-"+north+"-"+south+"-"+up+"-"+west;
+        return switch(sentence) {
+            case "true-true-true-true-true-false" -> id+1;
+            case "true-true-true-true-false-true" -> id+2;
+            case "true-true-true-true-false-false" -> id+3;
+            case "true-true-true-false-true-true" -> id+4;
+            case "true-true-true-false-true-false" -> id+5;
+            case "true-true-true-false-false-true" -> id+6;
+            case "true-true-true-false-false-false" -> id+7;
+            case "true-true-false-true-true-true" -> id+8;
+            case "true-true-false-true-true-false" -> id+9;
+            case "true-true-false-true-false-true" -> id+10;
+            case "true-true-false-true-false-false" -> id+11;
+            case "true-true-false-false-true-true" -> id+12;
+            case "true-true-false-false-true-false" -> id+13;
+            case "true-true-false-false-false-true" -> id+14;
+            case "true-true-false-false-false-false" -> id+15;
+            case "true-false-true-true-true-true" -> id+16;
+            case "true-false-true-true-true-false" -> id+17;
+            case "true-false-true-true-false-true" -> id+18;
+            case "true-false-true-true-false-false" -> id+19;
+            case "true-false-true-false-true-true" -> id+20;
+            case "true-false-true-false-true-false" -> id+21;
+            case "true-false-true-false-false-true" -> id+22;
+            case "true-false-true-false-false-false" -> id+23;
+            case "true-false-false-true-true-true" -> id+24;
+            case "true-false-false-true-true-false" -> id+25;
+            case "true-false-false-true-false-true" -> id+26;
+            case "true-false-false-true-false-false" -> id+27;
+            case "true-false-false-false-true-true" -> id+28;
+            case "true-false-false-false-true-false" -> id+29;
+            case "true-false-false-false-false-true" -> id+30;
+            case "true-false-false-false-false-false" -> id+31;
+            case "false-true-true-true-true-true" -> id+32;
+            case "false-true-true-true-true-false" -> id+33;
+            case "false-true-true-true-false-true" -> id+34;
+            case "false-true-true-true-false-false" -> id+35;
+            case "false-true-true-false-true-true" -> id+36;
+            case "false-true-true-false-true-false" -> id+37;
+            case "false-true-true-false-false-true" -> id+38;
+            case "false-true-true-false-false-false" -> id+39;
+            case "false-true-false-true-true-true" -> id+40;
+            case "false-true-false-true-true-false" -> id+41;
+            case "false-true-false-true-false-true" -> id+42;
+            case "false-true-false-true-false-false" -> id+43;
+            case "false-true-false-false-true-true" -> id+44;
+            case "false-true-false-false-true-false" -> id+45;
+            case "false-true-false-false-false-true" -> id+46;
+            case "false-true-false-false-false-false" -> id+47;
+            case "false-false-true-true-true-true" -> id+48;
+            case "false-false-true-true-true-false" -> id+49;
+            case "false-false-true-true-false-true" -> id+50;
+            case "false-false-true-true-false-false" -> id+51;
+            case "false-false-true-false-true-true" -> id+52;
+            case "false-false-true-false-true-false" -> id+53;
+            case "false-false-true-false-false-true" -> id+54;
+            case "false-false-true-false-false-false" -> id+55;
+            case "false-false-false-true-true-true" -> id+56;
+            case "false-false-false-true-true-false" -> id+57;
+            case "false-false-false-true-false-true" -> id+58;
+            case "false-false-false-true-false-false" -> id+59;
+            case "false-false-false-false-true-true" -> id+60;
+            case "false-false-false-false-true-false" -> id+61;
+            case "false-false-false-false-false-true" -> id+62;
+            case "false-false-false-false-false-false" -> id+63;
+            default -> id;
+        };
+    }
+}

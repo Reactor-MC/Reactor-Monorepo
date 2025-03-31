@@ -19,6 +19,7 @@ public class TrimMaterialDataParser implements DataParser {
     public void parse(String packageName) throws IOException {
         final JavaClass javaClass = DataParserTemplateCommon.createTemplate(getClass(), CLASS_NAME, packageName);
         JavaFields.FINAL.addFields(javaClass, String.class, "assetName", "ingredient", "description", "overrideArmorAssets");
+        JavaFields.FINAL.addDoubles(javaClass, "itemModelIndex");
 
         DataParserTemplateCommon.addVanillaData(CLASS_NAME, javaClass);
 
@@ -33,7 +34,9 @@ public class TrimMaterialDataParser implements DataParser {
                     trimMaterial.getString("asset_name"),
                     trimMaterial.getJSONObject("description").getString("translate"),
                     trimMaterial.getString("ingredient"),
-                    overrideArmorAssets == null ? "" : overrideArmorAssets.firstEntry().getValue()));
+                    overrideArmorAssets == null ? "" : overrideArmorAssets.firstEntry().getValue(),
+                    trimMaterial.getDoubleValue("item_model_index")
+            ));
         }
 
         final String fileContent = javaClass.toString().replace(ParserPlaceholders.ALL_VALUES, String.valueOf(javaClass.getStaticFields()-1));

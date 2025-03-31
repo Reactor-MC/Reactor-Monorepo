@@ -2,9 +2,11 @@ package ink.reactor.world.chunk;
 
 import ink.reactor.world.chunk.light.LightEngine;
 import ink.reactor.world.data.Biome;
-import ink.reactor.world.data.WorldType;
+import ink.reactor.world.data.DimensionType;
 
 public interface Chunk {
+    void unload();
+
     int getX();
     int getZ();
     int getAmountNegativeSections();
@@ -12,7 +14,7 @@ public interface Chunk {
     int getMinY();
     int getMaxY();
 
-    WorldType getType();
+    DimensionType getType();
 
     void setBlock(final int x, int y, final int z, final char blockId);
     char getBlock(final int x, int y, final int z);
