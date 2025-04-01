@@ -1,16 +1,17 @@
 package ink.reactor.zlib;
 
-public interface ZLib {
+public interface ZLib extends AutoCloseable {
 
     int ERROR = -1;
 
-    int compress(byte[] decompressedBytes, byte[] output);
-    int decompress(byte[] compressedBytes, byte[] output) throws ZlibException;
+    byte[] compress(byte[] decompressedBytes) throws Throwable;
+    byte[] decompress(final byte[] compressedBytes, final int expectedBufferSize) throws Throwable;
 
     void disposeDecompress() throws ZlibException;
     void disposeCompress() throws ZlibException;
 
-    default void dispose() throws ZlibException {
+    @Override
+    default void close() throws ZlibException {
         disposeCompress();
         disposeDecompress();
     }

@@ -1,4 +1,4 @@
-package ink.reactor.zlib.isal;
+package ink.reactor.zlib.igzip;
 
 import java.io.File;
 import java.lang.foreign.Arena;
@@ -108,9 +108,9 @@ public class IGzip {
         FREE_INFLATE.invokeExact(inflate);
     }
 
-    public static void compress(final IGzipConsumer consumer, final MemorySegment deflate, final byte[] inputArray, int outputBufferSize) {
-        if (outputBufferSize < inputArray.length + 11) {
-            outputBufferSize += 11;
+    public static void compress(final IGzipConsumer consumer, final MemorySegment deflate, final byte[] inputArray, int outputBufferSize) throws Throwable {
+        if (outputBufferSize < inputArray.length + 32) {
+            outputBufferSize += 32;
         }
 
         try (final Arena arena = Arena.ofConfined()) {
@@ -125,12 +125,10 @@ public class IGzip {
             }
 
             consumer.accept(output.reinterpret(result).asByteBuffer(), result);
-        } catch (final Throwable e) {
-            consumer.accept(null, IGzipResult.METHOD_HANDLE_ERROR);
         }
     }
 
-    public static void decompress(final IGzipConsumer consumer, final MemorySegment inflate, final byte[] compressedArray, final int outputBufferSize) {
+    public static void decompress(final IGzipConsumer consumer, final MemorySegment inflate, final byte[] compressedArray, final int outputBufferSize) throws Throwable {
         try (final Arena arena = Arena.ofConfined()) {
             final MemorySegment output = arena.allocate(outputBufferSize);
             final MemorySegment input = arena.allocateFrom(ValueLayout.JAVA_BYTE, compressedArray);
@@ -144,11 +142,7 @@ public class IGzip {
                 consumer.accept(null, result);
                 return;
             }
-
             consumer.accept(output.reinterpret(decompressedLength).asByteBuffer(), result);
-        } catch (final Throwable e) {
-            e.printStackTrace();
-            consumer.accept(null, IGzipResult.METHOD_HANDLE_ERROR);
         }
     }
 }

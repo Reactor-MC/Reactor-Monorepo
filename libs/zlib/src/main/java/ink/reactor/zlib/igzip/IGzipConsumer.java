@@ -1,4 +1,4 @@
-package ink.reactor.zlib.isal;
+package ink.reactor.zlib.igzip;
 
 import java.nio.ByteBuffer;
 

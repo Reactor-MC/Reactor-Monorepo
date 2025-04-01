@@ -5,7 +5,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class ZlibSupplier {
 
-    private static final byte SUPPORTED = 1, UNCHECKED = -1, NOT_SUPPORTED = 0;
+    public static final byte SUPPORTED = 1, UNCHECKED = -1, NOT_SUPPORTED = 0;
 
     private static byte supportIGZip; 
 
@@ -14,9 +14,7 @@ public final class ZlibSupplier {
         supportIGZip = os.equals("Linux") ? UNCHECKED : NOT_SUPPORTED;
     }
 
-    public static ZLib createJavaZlib() {
-        return new JavaZlib();
-    }
+
 
     public static ZLib createZlib() throws ZlibException {
         if (supportIGZip == NOT_SUPPORTED) {

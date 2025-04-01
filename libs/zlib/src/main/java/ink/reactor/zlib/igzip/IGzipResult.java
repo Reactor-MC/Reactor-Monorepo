@@ -1,4 +1,4 @@
-package ink.reactor.zlib.isal;
+package ink.reactor.zlib.igzip;
 
 import java.nio.ByteBuffer;
 
@@ -6,11 +6,7 @@ public record IGzipResult(
     ByteBuffer data,
     int result
 ) {
-
     public static final int 
-        /* Error for java */
-        METHOD_HANDLE_ERROR = -100,
-
         /* Inflate Return values */
         ISAL_DECOMP_OK          = 0,  /* No errors encountered while decompressing */
         ISAL_END_INPUT          = 1,  /* End of input reached */
@@ -35,8 +31,4 @@ public record IGzipResult(
         ISAL_INVALID_STATE     = -3,
         ISAL_INVALID_LEVEL     = -4, /* Invalid Compression level set */
         ISAL_INVALID_LEVEL_BUF = -5; /* Invalid buffer specified for the compression level */
-
-    public boolean isOk() {
-        return result == 0;
-    }
 }
