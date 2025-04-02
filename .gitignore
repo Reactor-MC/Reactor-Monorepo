@@ -5,17 +5,13 @@ build/
 !**/src/test/**/build/
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+.idea
 *.iws
 *.iml
 *.ipr
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-.idea
 
 ### Eclipse ###
 .apt_generated
@@ -41,7 +37,3 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-
-### Reactor ###
-logs
-/config.yml
