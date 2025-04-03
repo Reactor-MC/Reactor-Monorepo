@@ -5,7 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public final class Packet {
-    private int packetId;
-    private PacketData data;
+public final class PacketData {
+    private byte[] buffer;
 }
