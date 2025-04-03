@@ -5,5 +5,5 @@ import ink.reactor.protocol.PacketData;
 
 public interface PacketHandler {
     void handle(final PlayerConnection connection, final int packetId, final PacketData data);
-    int packetId();
+    int id();
 }
