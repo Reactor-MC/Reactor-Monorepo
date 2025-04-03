@@ -1,4 +1,6 @@
 package ink.reactor.server;
 
-public class ReactorServer {
+import ink.reactor.api.server.Server;
+
+public class ReactorServer implements Server {
 }

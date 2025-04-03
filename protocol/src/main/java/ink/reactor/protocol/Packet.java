@@ -1,4 +1,6 @@
 package ink.reactor.protocol;
 
-public record Packet() {
-}
+public record Packet(
+    int id,
+    PacketData data
+) {}
