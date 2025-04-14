@@ -3,7 +3,7 @@ package ink.reactor.item.deserializer;
 import ink.reactor.item.ItemStack;
 import ink.reactor.item.Material;
 import ink.reactor.item.component.ItemComponentDeserializer;
-import ink.reactor.util.buffer.reader.ReadBuffer;
+import ink.reactor.buffer.reader.ReadBuffer;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

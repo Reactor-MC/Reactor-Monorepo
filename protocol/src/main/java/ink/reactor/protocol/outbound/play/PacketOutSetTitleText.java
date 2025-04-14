@@ -5,7 +5,7 @@ import ink.reactor.chat.component.ChatComponent;
 import ink.reactor.chat.util.ComponentCombiner;
 import ink.reactor.nbt.writer.NBTByteWriter;
 import ink.reactor.protocol.outbound.OutProtocol;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 
 public final class PacketOutSetTitleText implements PacketOutbound {
 
@@ -17,7 +17,7 @@ public final class PacketOutSetTitleText implements PacketOutbound {
 
     @Override
     public byte[] write() {
-        final FriendlyBuffer buffer = new FriendlyBuffer(100);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(100);
         NBTByteWriter.writeNBT(ComponentCombiner.toNBT(title), buffer);
         return buffer.compress();
     }

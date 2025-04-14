@@ -9,7 +9,7 @@ import ink.reactor.nbt.tags.ByteStringArrayTag;
 import ink.reactor.nbt.tags.CompoundTag;
 import ink.reactor.nbt.tags.ListTag;
 import ink.reactor.nbt.tags.StringTag;
-import ink.reactor.util.buffer.writer.WriteBuffer;
+import ink.reactor.buffer.writer.WriteBuffer;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

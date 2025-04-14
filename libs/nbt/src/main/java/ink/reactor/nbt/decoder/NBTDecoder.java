@@ -14,7 +14,7 @@ import ink.reactor.nbt.tags.LongTag;
 import ink.reactor.nbt.tags.ShortTag;
 import ink.reactor.nbt.tags.StringTag;
 import ink.reactor.nbt.type.NBTGeneral;
-import ink.reactor.util.buffer.reader.ReadBuffer;
+import ink.reactor.buffer.reader.ReadBuffer;
 
 import static ink.reactor.nbt.TagNBT.*;
 

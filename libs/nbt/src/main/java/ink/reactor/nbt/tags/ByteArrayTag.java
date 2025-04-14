@@ -3,8 +3,8 @@ package ink.reactor.nbt.tags;
 import java.util.Arrays;
 
 import ink.reactor.nbt.TagNBT;
-import ink.reactor.util.buffer.DataSize;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.DataSize;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 
 public final class ByteArrayTag extends TagNBT {
 
@@ -21,7 +21,7 @@ public final class ByteArrayTag extends TagNBT {
     }
 
     @Override
-    public void write(final FriendlyBuffer buffer) {
+    public void write(final DynamicSizeBuffer buffer) {
         buffer.tryResize(value.length + DataSize.INT);
         buffer.getCurrentBuffer().writeInt(value.length);
         buffer.getCurrentBuffer().writeBytes(value);

@@ -4,7 +4,7 @@ import ink.reactor.api.player.connection.PacketOutbound;
 import ink.reactor.item.ItemStack;
 import ink.reactor.item.serializer.ItemStackByteSerializer;
 import ink.reactor.protocol.outbound.OutProtocol;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -16,7 +16,7 @@ public final class PacketOutContainerSetSlot implements PacketOutbound {
 
     @Override
     public byte[] write() {
-        final FriendlyBuffer buffer = new FriendlyBuffer(4 + (itemStack.hasComponents() ? 32 : 0));
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(4 + (itemStack.hasComponents() ? 32 : 0));
         buffer.writeVarInt(windowId);
         buffer.writeVarInt(stateId);
         buffer.writeShort(slot);

@@ -2,22 +2,16 @@ package ink.reactor.protocol.outbound.play.chunk;
 
 import ink.reactor.api.player.connection.PacketOutbound;
 import ink.reactor.protocol.outbound.OutProtocol;
-import ink.reactor.world.chunk.vanilla.array.VanillaChunk;
-import ink.reactor.world.chunk.vanilla.array.VanillaChunkSerializer;
-import ink.reactor.world.chunk.vanilla.palette.VanillaPaletteChunk;
-import ink.reactor.world.chunk.vanilla.palette.VanillaPaletteChunkSerializer;
+import ink.reactor.world.chunk.vanilla.VanillaChunk;
+import ink.reactor.world.chunk.vanilla.serializer.VanillaChunkSerializer;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public final class PacketOutChunkUpdateData implements PacketOutbound {
     private final byte[] chunk;
 
-    public PacketOutChunkUpdateData(final VanillaChunk vanillaChunk) {
-        this.chunk = VanillaChunkSerializer.serializeBlocksAndLight(vanillaChunk);
-    }
-
-    public PacketOutChunkUpdateData(final VanillaPaletteChunk vanillaPaletteChunk) {
-        this.chunk = VanillaPaletteChunkSerializer.serialize(vanillaPaletteChunk);
+    public PacketOutChunkUpdateData(final VanillaChunk vanillaPaletteChunk) {
+        this.chunk = VanillaChunkSerializer.PALETTE_FORMAT.serialize(vanillaPaletteChunk);
     }
 
     @Override

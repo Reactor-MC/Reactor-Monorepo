@@ -1,14 +1,17 @@
 val fastUtil: String by project
 
 dependencies {
-    val utils = project(":libs:util")
+    val buffer = project(":libs:buffer")
     val nbt = project(":libs:nbt")
+    val util = project(":libs:util")
 
-    compileOnly(utils)
+    compileOnly(buffer)
     compileOnly(nbt)
     compileOnly(fastUtil)
+    compileOnly(util)
 
     testImplementation(fastUtil)
-    testImplementation(utils)
+    testImplementation(buffer)
     testImplementation(nbt)
+    testImplementation(util)
 }

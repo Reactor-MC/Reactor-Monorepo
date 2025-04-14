@@ -6,7 +6,7 @@ import ink.reactor.chat.util.ComponentCombiner;
 import ink.reactor.nbt.NBT;
 import ink.reactor.nbt.writer.NBTByteWriter;
 import ink.reactor.protocol.outbound.OutProtocol;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public final class PacketOutSystemChat implements PacketOutbound {
 
     @Override
     public byte[] write() {
-        final FriendlyBuffer buffer = new FriendlyBuffer(100);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(100);
         NBTByteWriter.writeNBT(nbt, buffer);
         buffer.writeBoolean(false);
         return buffer.compress();

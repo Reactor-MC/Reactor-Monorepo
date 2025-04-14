@@ -11,7 +11,7 @@ import ink.reactor.nbt.type.NBTGeneral;
 import ink.reactor.nbt.writer.NBTByteWriter;
 import ink.reactor.protocol.outbound.CachedPacket;
 import ink.reactor.protocol.outbound.OutProtocol;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 import ink.reactor.world.block.BannerPattern;
 import ink.reactor.world.data.DimensionType;
 
@@ -23,7 +23,7 @@ public final class Registries {
 
     public static byte[] wolfVariants() {
         final int amountWolfs = WolfVariant.ALL.size();
-        final FriendlyBuffer buffer = new FriendlyBuffer(amountWolfs * 64);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(amountWolfs * 64);
 
         buffer.writeString("minecraft:wolf_variant");
         buffer.writeVarInt(amountWolfs);
@@ -45,7 +45,7 @@ public final class Registries {
 
     public static byte[] damageTypes() {
         final int amount = DamageType.ALL.size();
-        final FriendlyBuffer buffer = new FriendlyBuffer(amount * 32);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(amount * 32);
 
         buffer.writeString("minecraft:damage_type");
         buffer.writeVarInt(amount);
@@ -67,7 +67,7 @@ public final class Registries {
 
     public static byte[] trimMaterial() {
         final int amount = TrimMaterial.ALL.size();
-        final FriendlyBuffer buffer = new FriendlyBuffer(amount * 128);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(amount * 128);
 
         buffer.writeString("minecraft:trim_material");
         buffer.writeVarInt(amount);
@@ -89,7 +89,7 @@ public final class Registries {
 
     public static byte[] trimPattern() {
         final int amount = TrimPattern.ALL.size();
-        final FriendlyBuffer buffer = new FriendlyBuffer(amount * 32);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(amount * 32);
 
         buffer.writeString("minecraft:trim_pattern");
         buffer.writeVarInt(amount);
@@ -110,7 +110,7 @@ public final class Registries {
 
     public static byte[] banner() {
         final int amount = BannerPattern.ALL.size();
-        final FriendlyBuffer buffer = new FriendlyBuffer(amount * 48);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(amount * 48);
 
         buffer.writeString("minecraft:banner_pattern");
         buffer.writeVarInt(amount);
@@ -129,7 +129,7 @@ public final class Registries {
 
     public static byte[] painting() {
         final int amount = PaintingVariant.ALL.size();
-        final FriendlyBuffer buffer = new FriendlyBuffer(amount * 18);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(amount * 18);
 
         buffer.writeString("minecraft:painting_variant");
         buffer.writeVarInt(amount);
@@ -149,7 +149,7 @@ public final class Registries {
 
     public static byte[] dimensionTypes() {
         final int amount = DimensionType.ALL.size();
-        final FriendlyBuffer buffer = new FriendlyBuffer(amount * 18);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(amount * 18);
 
         buffer.writeString("minecraft:dimension_type");
         buffer.writeVarInt(amount);
@@ -186,7 +186,7 @@ public final class Registries {
 
     public static byte[] biome() {
         final int amount = Biome.ALL.size();
-        final FriendlyBuffer buffer = new FriendlyBuffer(amount * 256);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(amount * 256);
 
         buffer.writeString("minecraft:worldgen/biome");
         buffer.writeVarInt(amount);

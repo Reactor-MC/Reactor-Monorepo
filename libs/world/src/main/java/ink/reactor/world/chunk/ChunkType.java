@@ -1,12 +1,18 @@
 package ink.reactor.world.chunk;
 
-public final class ChunkType {
-    /**
-     * Vanilla chunk types. Contains heightmaps, light engine and support negative cords
-     * @see ink.reactor.world.chunk.vanilla.array.VanillaChunk - Easy to understand
-     * @see ink.reactor.world.chunk.vanilla.palette.VanillaPaletteChunk
-     */
-    public static final byte
-        VANILLA = 0,
-        VANILLA_PALETTE = 1;
+public record ChunkType(
+    String name,
+    int id
+) {
+    public static final ChunkType VANILLA_ARRAY = new ChunkType("vanilla_array", 0);
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return obj == this || (obj instanceof ChunkType chunkType && chunkType.id == this.id);
+    }
 }

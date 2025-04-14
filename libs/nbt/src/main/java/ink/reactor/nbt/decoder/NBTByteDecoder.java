@@ -2,7 +2,7 @@ package ink.reactor.nbt.decoder;
 
 import ink.reactor.nbt.NBT;
 import ink.reactor.nbt.TagNBT;
-import ink.reactor.util.buffer.reader.ReadBuffer;
+import ink.reactor.buffer.reader.ReadBuffer;
 
 import lombok.experimental.UtilityClass;
 

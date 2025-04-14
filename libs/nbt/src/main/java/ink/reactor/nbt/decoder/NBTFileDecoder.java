@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import ink.reactor.nbt.NBT;
 import ink.reactor.nbt.compression.CompressionUtils;
-import ink.reactor.util.buffer.reader.BufferReader;
+import ink.reactor.buffer.reader.BufferReader;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

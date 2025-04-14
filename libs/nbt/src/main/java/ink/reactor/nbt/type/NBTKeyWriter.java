@@ -1,7 +1,7 @@
 package ink.reactor.nbt.type;
 
 import ink.reactor.nbt.writer.NBTStringWriter;
-import ink.reactor.util.buffer.writer.WriteBuffer;
+import ink.reactor.buffer.writer.WriteBuffer;
 
 final class NBTKeyWriter {
 

@@ -1,9 +1,22 @@
 package ink.reactor.api.config;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 import java.util.Map;
 
-public record ConfigSection(Map<String, Object> data) {
+@AllArgsConstructor
+@Getter
+@Setter
+public class ConfigSection {
+    private Map<String, Object> data;
+
+    public ConfigSection() {
+        data = new Object2ObjectOpenHashMap<>();
+    }
 
     public Object get(final String key) {
         return data.get(key);
@@ -69,13 +82,28 @@ public record ConfigSection(Map<String, Object> data) {
         return (data.get(key) instanceof Map) ? new ConfigSection((Map<String, Object>) object) : null;
     }
 
-    @Override
-    public String toString() {
-        return data.toString();
+    public Object set(final String key, final Object object) {
+        return data.put(key, object);
+    }
+
+    // Example: set("key1", "value", "key2", 25, "key3", "value3");
+    public void set(final Object... keyAndValues) {
+        if (keyAndValues.length % 2 != 0) {
+            throw new RuntimeException("Key and values format: key, value, key, value.");
+        }
+        String keyString = null;
+        for (Object object : keyAndValues) {
+            if (keyString == null) {
+                keyString = object.toString();
+                continue;
+            }
+            data.put(keyString, object);
+            keyString = null;
+        }
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj == this || (obj instanceof ConfigSection other && other.data.equals(this.data));
+    public String toString() {
+        return data.toString();
     }
 }

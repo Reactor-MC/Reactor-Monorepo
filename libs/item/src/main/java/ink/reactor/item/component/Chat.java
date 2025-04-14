@@ -6,11 +6,11 @@ import ink.reactor.chat.component.ChatComponent;
 import ink.reactor.chat.component.RawComponent;
 import ink.reactor.chat.util.ComponentCombiner;
 import ink.reactor.nbt.writer.NBTByteWriter;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 
 final class Chat {
 
-    static void serializeText(final FriendlyBuffer buffer, final Object component) {
+    static void serializeText(final DynamicSizeBuffer buffer, final Object component) {
         if (component instanceof ChatComponent[] components) {
             NBTByteWriter.writeNBT(ComponentCombiner.toNBT(components), buffer);
             return;
@@ -23,7 +23,7 @@ final class Chat {
         NBTByteWriter.writeNBT(componentToWrite.toNBTFastAdd(), buffer);
     }
 
-    static void serializeLore(final FriendlyBuffer buffer, final Object component) {
+    static void serializeLore(final DynamicSizeBuffer buffer, final Object component) {
         if (component instanceof Collection collection) {
             buffer.writeVarInt(collection.size());
             for (final Object object : collection) {

@@ -1,7 +1,7 @@
 package ink.reactor.nbt;
 
 import ink.reactor.nbt.tags.CompoundTag;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 import lombok.Getter;
 
 @Getter
@@ -31,7 +31,7 @@ public abstract class TagNBT {
     }
 
     public abstract byte getId();
-    public abstract void write(final FriendlyBuffer buffer);
+    public abstract void write(final DynamicSizeBuffer buffer);
 
     @Override
     public final boolean equals(final Object obj) {

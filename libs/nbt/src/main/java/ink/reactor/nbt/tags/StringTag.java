@@ -3,8 +3,8 @@ package ink.reactor.nbt.tags;
 import java.nio.charset.StandardCharsets;
 
 import ink.reactor.nbt.TagNBT;
-import ink.reactor.util.buffer.DataSize;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.DataSize;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 
 public final class StringTag extends TagNBT {
 
@@ -21,7 +21,7 @@ public final class StringTag extends TagNBT {
     }
 
     @Override
-    public void write(final FriendlyBuffer buffer) {
+    public void write(final DynamicSizeBuffer buffer) {
         final byte[] valueBytes = value.getBytes(StandardCharsets.UTF_8);
         buffer.tryResize(DataSize.SHORT + valueBytes.length);
         buffer.writeShort(valueBytes.length);

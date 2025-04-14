@@ -9,7 +9,7 @@ import ink.reactor.nbt.NBT;
 import ink.reactor.nbt.decoder.NBTByteDecoder;
 import ink.reactor.nbt.type.NBTGeneral;
 import ink.reactor.nbt.writer.NBTByteWriter;
-import ink.reactor.util.buffer.reader.BufferReader;
+import ink.reactor.buffer.reader.BufferReader;
 
 public class EncoderDecoderTest {
 

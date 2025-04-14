@@ -41,7 +41,7 @@ public abstract class World {
     public void unload() {
         this.isLoaded = false;
         for (final Chunk chunk : chunks.values()) {
-            chunk.unload();
+            chunk.clear();
         }
         chunks.clear();
     }
@@ -52,14 +52,14 @@ public abstract class World {
         }
         final Chunk oldChunk = chunks.put(LocationUtil.compressXZ(chunk.getX(), chunk.getZ()), chunk);
         if (oldChunk != null) {
-            oldChunk.unload();
+            oldChunk.clear();
         }
     }
 
     public Chunk unloadChunk(final int x, final int z) {
         final Chunk oldChunk = chunks.remove(LocationUtil.compressXZ(x, z));
         if (oldChunk != null) {
-            oldChunk.unload();
+            oldChunk.clear();
         }
         return oldChunk;
     }

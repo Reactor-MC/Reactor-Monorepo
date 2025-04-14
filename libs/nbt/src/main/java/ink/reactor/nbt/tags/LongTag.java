@@ -2,7 +2,7 @@ package ink.reactor.nbt.tags;
 
 import ink.reactor.nbt.NumericTag;
 import ink.reactor.nbt.TagNBT;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 
 public final class LongTag extends NumericTag {
     
@@ -38,7 +38,7 @@ public final class LongTag extends NumericTag {
     }
 
     @Override
-    public void write(final FriendlyBuffer buffer) {
+    public void write(final DynamicSizeBuffer buffer) {
         buffer.writeLong(value);
     }
 

@@ -6,7 +6,7 @@ import ink.reactor.nbt.NBT;
 import ink.reactor.nbt.TagNBT;
 import ink.reactor.nbt.collection.NBTCollection;
 import ink.reactor.nbt.writer.NBTStringWriter;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 
 /*
  * Nbt specialized in fast add and iteration
@@ -40,7 +40,7 @@ public final class NBTFastAdd implements NBT {
     }
 
     @Override
-    public void writeTags(final FriendlyBuffer buffer) {
+    public void writeTags(final DynamicSizeBuffer buffer) {
         final TagNBT[] tags = this.tags.getArray(); // Don't create an iterator object = Fast iteration
         for (final TagNBT tag : tags) {
             if (tag != null) {

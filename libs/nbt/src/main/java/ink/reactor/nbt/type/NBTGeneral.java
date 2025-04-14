@@ -6,7 +6,7 @@ import java.util.Map;
 import ink.reactor.nbt.NBT;
 import ink.reactor.nbt.TagNBT;
 import ink.reactor.nbt.writer.NBTStringWriter;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 /*
@@ -37,7 +37,7 @@ public final class NBTGeneral implements NBT {
     }
 
     @Override
-    public void writeTags(final FriendlyBuffer buffer) {
+    public void writeTags(final DynamicSizeBuffer buffer) {
         final Collection<TagNBT> tags = this.tags.values();
         for (final TagNBT tag : tags) {
             if (tag != null) {

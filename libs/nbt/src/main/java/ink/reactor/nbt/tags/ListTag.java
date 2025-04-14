@@ -3,7 +3,7 @@ package ink.reactor.nbt.tags;
 import java.util.Collection;
 
 import ink.reactor.nbt.TagNBT;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 
 public final class ListTag<T extends TagNBT> extends TagNBT {
 
@@ -22,7 +22,7 @@ public final class ListTag<T extends TagNBT> extends TagNBT {
     }
 
     @Override
-    public void write(final FriendlyBuffer buffer) {
+    public void write(final DynamicSizeBuffer buffer) {
         buffer.writeByte(listId);
         buffer.writeInt(values.size());
         for (final TagNBT tag : values) {

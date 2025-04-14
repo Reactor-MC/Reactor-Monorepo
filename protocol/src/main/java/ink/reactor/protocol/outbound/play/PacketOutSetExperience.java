@@ -2,8 +2,8 @@ package ink.reactor.protocol.outbound.play;
 
 import ink.reactor.api.player.connection.PacketOutbound;
 import ink.reactor.protocol.outbound.OutProtocol;
-import ink.reactor.util.buffer.DataSize;
-import ink.reactor.util.buffer.writer.ExpectedSizeBuffer;
+import ink.reactor.buffer.DataSize;
+import ink.reactor.buffer.writer.ExpectedSizeBuffer;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

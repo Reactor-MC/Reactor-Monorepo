@@ -4,7 +4,7 @@ import static ink.reactor.item.component.ItemComponent.*;
 
 import ink.reactor.item.data.Rarity;
 import ink.reactor.nbt.decoder.NBTByteDecoder;
-import ink.reactor.util.buffer.reader.ReadBuffer;
+import ink.reactor.buffer.reader.ReadBuffer;
 import it.unimi.dsi.fastutil.bytes.Byte2ObjectOpenHashMap;
 import lombok.experimental.UtilityClass;
 

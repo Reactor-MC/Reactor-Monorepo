@@ -3,11 +3,11 @@ package ink.reactor.item.component;
 import ink.reactor.item.data.CustomModelData;
 import ink.reactor.nbt.NBT;
 import ink.reactor.nbt.writer.NBTByteWriter;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 
 final class CustomData {
 
-    static boolean serializeNBT(final FriendlyBuffer buffer, final Object component) {
+    static boolean serializeNBT(final DynamicSizeBuffer buffer, final Object component) {
         if (component instanceof NBT nbt) {
             NBTByteWriter.writeNBT(nbt, buffer);
             return true;
@@ -15,7 +15,7 @@ final class CustomData {
         return false;
     }
 
-    static boolean serializeModelData(final FriendlyBuffer buffer, final Object component) {
+    static boolean serializeModelData(final DynamicSizeBuffer buffer, final Object component) {
         if (!(component instanceof CustomModelData customModelData)) {
             return false;
         }

@@ -7,7 +7,7 @@ import ink.reactor.world.World;
 import ink.reactor.world.data.DimensionType;
 import ink.reactor.world.data.Gamerule;
 import ink.reactor.protocol.outbound.OutProtocol;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public final class PacketOutLoginPlay implements PacketOutbound {
         final Gamerule gamerule = world.getGamerule();
 
         final Player player = connection.getPlayer();
-        final FriendlyBuffer buffer = new FriendlyBuffer(50);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(50);
 
         buffer.writeInt(player.getId());
         buffer.writeBoolean(gamerule.isHardCore());

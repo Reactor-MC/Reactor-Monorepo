@@ -14,7 +14,6 @@ public final class PlayerEffectsManager extends MobEffectManager {
 
     @Override
     public void tick() {
-        System.out.println("EA -" + (effects == null));
         if (effects == null) {
             return;
         }
@@ -24,7 +23,6 @@ public final class PlayerEffectsManager extends MobEffectManager {
             if (effect == null || effect.tick()) {
                 continue;
             }
-            System.out.println("SEND REMOVED?");
             player.getConnection().sendPacket(new PacketOutRemovePotionEffect(player.getId(), effect.getType()));
             effects[i] = null;
             bitmask &= ~(1L << effect.getType().id);

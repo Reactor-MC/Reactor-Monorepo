@@ -1,6 +1,6 @@
 rootProject.name = "reactor"
 
-val libs = arrayOf("util", "nbt", "chat", "item", "entity", "world", "zlib", "command")
+val libs = arrayOf("util", "nbt", "chat", "item", "entity", "world", "zlib", "buffer", "command")
 for (lib in libs) {
     include("libs:$lib")
 }
@@ -10,7 +10,7 @@ include("protocol")
 include("server")
 include("data-parser")
 
-val features = arrayOf("debug", "atom-chat")
-for (feature in features) {
-    include("features:$feature")
+val plugins = arrayOf("debug", "atom-chat")
+for (plugin in plugins) {
+    include("plugins:$plugin")
 }

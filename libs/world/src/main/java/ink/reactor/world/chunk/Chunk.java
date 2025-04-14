@@ -1,11 +1,12 @@
 package ink.reactor.world.chunk;
 
+import ink.reactor.world.chunk.heightmap.ChunkHeightmap;
 import ink.reactor.world.chunk.light.LightEngine;
 import ink.reactor.world.data.Biome;
 import ink.reactor.world.data.DimensionType;
 
 public interface Chunk {
-    void unload();
+    void clear();
 
     int getX();
     int getZ();
@@ -29,7 +30,7 @@ public interface Chunk {
 
     LightEngine getLightEngine();
 
-    byte getChunkType();
+    ChunkType getChunkType();
 
     ChunkSection[] getSections();
     ChunkHeightmap getHeightMap();

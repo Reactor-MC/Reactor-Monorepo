@@ -1,12 +1,12 @@
 package ink.reactor.protocol.outbound.play;
 
 import ink.reactor.api.player.Player;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 import ink.reactor.world.World;
 
 final class PlayStateUtils {
 
-    static void writeSpawnInfo(final FriendlyBuffer buffer, final World world, final Player player) {
+    static void writeSpawnInfo(final DynamicSizeBuffer buffer, final World world, final Player player) {
    
         buffer.writeVarInt(world.getDimensionType().id());
         buffer.writeString("minecraft:" + world.getDimensionType().name());

@@ -13,6 +13,7 @@ dependencies {
     api("org.tinylog:tinylog-api:2.8.0-M1")
 
     api(project(":libs:util"))
+    api(project(":libs:buffer"))
     api(project(":libs:nbt"))
     api(project(":libs:chat"))
     api(project(":libs:zlib"))

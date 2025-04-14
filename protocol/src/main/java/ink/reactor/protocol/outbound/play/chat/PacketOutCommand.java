@@ -4,7 +4,7 @@ import ink.reactor.api.player.connection.PacketOutbound;
 import ink.reactor.command.Command;
 import ink.reactor.command.argument.ArgumentType;
 import ink.reactor.protocol.outbound.OutProtocol;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public final class PacketOutCommand implements PacketOutbound {
 
     @Override
     public byte[] write() {
-        final FriendlyBuffer buffer = new FriendlyBuffer(30);
+        final DynamicSizeBuffer buffer = new DynamicSizeBuffer(30);
 
         final List<ArgumentType> argumentTypes = command.getArgs().argumentTypes();
 

@@ -3,12 +3,12 @@ package ink.reactor.item.component;
 import ink.reactor.item.data.Food;
 import ink.reactor.item.data.consumable.Consumable;
 import ink.reactor.item.data.consumable.ConsumableAnimation;
-import ink.reactor.util.buffer.reader.ReadBuffer;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.reader.ReadBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 
 final class ConsumableComponent {
 
-    static boolean serializeFood(final FriendlyBuffer buffer, final Object component) {
+    static boolean serializeFood(final DynamicSizeBuffer buffer, final Object component) {
         if (component instanceof Food food) {
             buffer.writeVarInt(food.getNutrition());
             buffer.writeFloat(food.getSaturation());
@@ -18,7 +18,7 @@ final class ConsumableComponent {
         return false;
     }
 
-    static boolean serializeConsumable(final FriendlyBuffer buffer, final Object component) {
+    static boolean serializeConsumable(final DynamicSizeBuffer buffer, final Object component) {
         if (component instanceof Consumable consumable) {
             buffer.writeFloat(consumable.durationSeconds());
             buffer.writeVarInt(consumable.animation().ordinal());

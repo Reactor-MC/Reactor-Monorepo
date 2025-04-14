@@ -37,12 +37,12 @@ public final class StaticLightEngine implements LightEngine {
 
         if (lightLevel <= 0) {
             holder = (darknessLightHolder == null)
-                    ? darknessLightHolder = new DarknessLightHolder()
-                    : darknessLightHolder;
+                ? darknessLightHolder = new DarknessLightHolder()
+                : darknessLightHolder;
         } else if (lightLevel >= 15) {
             holder = (fullBrightLightHolder == null)
-                    ? fullBrightLightHolder = new SpecificLightHolder(15)
-                    : fullBrightLightHolder;
+                ? fullBrightLightHolder = new SpecificLightHolder(15)
+                : fullBrightLightHolder;
         } else {
             holder = new SpecificLightHolder(lightLevel);
         }

@@ -2,7 +2,7 @@ package ink.reactor.item.component;
 
 import static ink.reactor.item.component.ItemComponent.*;
 
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 import it.unimi.dsi.fastutil.bytes.Byte2ObjectMap.Entry;
 import it.unimi.dsi.fastutil.bytes.Byte2ObjectMap.FastEntrySet;
 import it.unimi.dsi.fastutil.bytes.Byte2ObjectOpenHashMap;
@@ -11,7 +11,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class ItemComponentSerializer {
 
-    public static void serialize(final Byte2ObjectOpenHashMap<Object> components, final FriendlyBuffer buffer) {
+    public static void serialize(final Byte2ObjectOpenHashMap<Object> components, final DynamicSizeBuffer buffer) {
         final FastEntrySet<Object> entries = components.byte2ObjectEntrySet();
 
         for (final Entry<Object> entry : entries) {
@@ -25,7 +25,7 @@ public final class ItemComponentSerializer {
         }
     }
 
-    private static boolean trySerialize(final byte id, final Object component, final FriendlyBuffer buffer) {
+    private static boolean trySerialize(final byte id, final Object component, final DynamicSizeBuffer buffer) {
         switch (id) {
             case CUSTOM_DATA:
                 return CustomData.serializeNBT(buffer, component);

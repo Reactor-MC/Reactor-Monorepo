@@ -18,7 +18,7 @@ import ink.reactor.nbt.tags.LongArrayTag;
 import ink.reactor.nbt.tags.LongTag;
 import ink.reactor.nbt.tags.ShortTag;
 import ink.reactor.nbt.tags.StringTag;
-import ink.reactor.util.buffer.writer.FriendlyBuffer;
+import ink.reactor.buffer.writer.DynamicSizeBuffer;
 
 public interface NBT {
 
@@ -34,7 +34,7 @@ public interface NBT {
     boolean addOrSet(final TagNBT nbt);
 
     TagNBT remove(final Object key);
-    void writeTags(final FriendlyBuffer buffer);
+    void writeTags(final DynamicSizeBuffer buffer);
 
     Collection<TagNBT> getTags();
 

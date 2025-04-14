@@ -3,11 +3,11 @@ package ink.reactor.world.chunk;
 import ink.reactor.world.data.Biome;
 
 public interface ChunkSection {
-    void setBlockId(final int x, final int y, final int z, final char id);
-    char getBlockId(final int x, final int y, final int z);
+    char getBlock(final int x, final int y, final int z);
+    void setBlock(final int x, final int y, final int z, final char id);
 
-    void setBiome(final byte biome, final int x, final int y, final int z);
     byte getBiomeId(final int x, final int y, final int z);
+    void setBiome(final byte biome, final int x, final int y, final int z);
 
     default void setBiome(final Biome biome, final int x, final int y, final int z) {
         setBiome((byte)biome.id(), x, y, z);
@@ -21,4 +21,5 @@ public interface ChunkSection {
     int getNonEmptyBlocks();
 
     boolean isEmpty();
+    boolean isLoaded();
 }
