@@ -1,3 +1,10 @@
+> [!WARNING]
+> I deprecated this project because it had major design flaws and was written in a poorly scalable and unoptimized way.
+> At the same time, it was the first time I had worked on such a large project, and I didn't know how to structure it properly.
+> To see the new code, go to: https://github.com/Reactor-MC/Reactor
+
+# Old description:
+
 <img src=".github/banner.png">
 
 # Reactor
@@ -21,8 +28,3 @@ These are the main reasons for creating Reactor: a well-structured, high-perform
 - This server software is **reverse-engineered** and not official.
 - Mojang's [EULA](https://www.minecraft.net/eula) applies to all Minecraft servers.
 - Server owners are responsible for complying with Mojang’s terms.
-
-> [!WARNING]
-> This project is in heavy development.
-> 
-> It is not ready for production.
